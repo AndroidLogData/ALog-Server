@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class CrashController {
@@ -26,6 +28,13 @@ public class CrashController {
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> crashDataSave(@RequestBody CrashData data) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        Set<String> set = data.getDeviceFeatures().keySet();
+
+        for (String s : set) {
+            map.put(s.replace(".", "-"), data.getDeviceFeatures().get(s));
+        }
+
         this.repository.save(new CrashData(data.getTime(),
                 data.getAndroidVersion(),
                 data.getAppVersionCode(),
@@ -35,6 +44,7 @@ public class CrashController {
                 data.getLogcat(),
                 data.getDeviceID(),
                 data.getDisplay(),
+                map,
                 data.getEnvironment(),
                 data.getBuild()));
 
