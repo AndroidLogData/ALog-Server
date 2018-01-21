@@ -13,6 +13,11 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+war {
+	baseName = 'LogData-Server'
+}
 
 group = 'com.logdata'
 version = '0.0.1-SNAPSHOT'
@@ -24,6 +29,8 @@ repositories {
 
 
 dependencies {
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
