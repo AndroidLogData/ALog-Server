@@ -67,7 +67,7 @@ public class LogDataController {
         return "logdata";
     }
 
-    public Set<String> getTag() {
+    private Set<String> getTag() {
         List<LogData> logData = this.repository.findAll();
 
         Set<String> tagSet = new HashSet<String>();
@@ -79,7 +79,7 @@ public class LogDataController {
         return tagSet;
     }
 
-    public Set<String> getPackageName() {
+    private Set<String> getPackageName() {
         List<LogData> logData = this.repository.findAll();
 
         Set<String> packageNameSet = new HashSet<String>();
