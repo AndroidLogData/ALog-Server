@@ -4,21 +4,21 @@ import org.springframework.data.annotation.Id;
 
 public class LogData {
     @Id
-    public String id;
-    public String packageName;
-    public String level;
-    public String tag;
-    public String message;
-    public long time;
-    public long totalMemory;
-    public long availMemory;
-    public double memoryPercentage;
-    public boolean lowMemory;
-    public long threshold;
-    public int dalvikPss;
-    public int nativePss;
-    public int otherPss;
-    public int totalPss;
+    private String id;
+    private String packageName;
+    private String level;
+    private String tag;
+    private String message;
+    private long time;
+    private long totalMemory;
+    private long availMemory;
+    private double memoryPercentage;
+    private boolean lowMemory;
+    private long threshold;
+    private int dalvikPss;
+    private int nativePss;
+    private int otherPss;
+    private int totalPss;
 
     public LogData() {
     }

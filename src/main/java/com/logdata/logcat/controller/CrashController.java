@@ -1,20 +1,21 @@
 package com.logdata.logcat.controller;
 
+import com.logdata.logcat.model.ChartData;
 import com.logdata.logcat.model.CrashData;
 import com.logdata.logcat.repository.CrashDataRepository;
+import com.logdata.logcat.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class CrashController {
@@ -22,7 +23,37 @@ public class CrashController {
     private CrashDataRepository repository;
 
     @RequestMapping(value = "/crash", method = RequestMethod.GET)
-    public String crashPage() {
+    public String crashPage(Model model) {
+        List<CrashData> crashData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+        Object display = crashData.get(0).getDisplay().get("0");
+
+        Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
+        Set<String> deviceFeaturesKey = crashData.get(0).getDeviceFeatures().keySet();
+
+        for (String s : deviceFeaturesKey) {
+            deviceFeatures.put(s.replace("-", "."), crashData.get(0).getDeviceFeatures().get(s));
+        }
+
+        HashSet<ChartData> chartData = new HashSet<ChartData>();
+        for (CrashData data : crashData) {
+            chartData.add(new ChartData(data.getTime()));
+        }
+
+        model.addAttribute("crash", this.repository.findAll());
+        model.addAttribute("chartData", chartData);
+        model.addAttribute("time", Utility.getTime(crashData.get(0).getTime()));
+        model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
+        model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
+        model.addAttribute("bootLoader", crashData.get(0).getBuild().get("BOOTLOADER"));
+        model.addAttribute("buildBrand", crashData.get(0).getBuild().get("BRAND"));
+        model.addAttribute("CPU_ABI", crashData.get(0).getBuild().get("CPU_ABI"));
+        model.addAttribute("CPU_ABI2", crashData.get(0).getBuild().get("CPU_ABI2"));
+        model.addAttribute("buildDisplay", crashData.get(0).getBuild().get("DISPLAY"));
+        model.addAttribute("TWRP", crashData.get(0).getBuild().get("DEVICE"));
+        model.addAttribute("model", crashData.get(0).getBuild().get("MODEL"));
+        model.addAttribute("board", crashData.get(0).getBuild().get("BOARD"));
+        model.addAttribute("deviceFeatures", deviceFeatures);
+
         return "crash";
     }
 
@@ -44,8 +75,8 @@ public class CrashController {
                 data.getLogcat(),
                 data.getDeviceID(),
                 data.getDisplay(),
-                map,
                 data.getEnvironment(),
+                map,
                 data.getBuild()));
 
         HttpHeaders responseHeaders = new HttpHeaders();

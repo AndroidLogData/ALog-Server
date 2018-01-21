@@ -6,19 +6,19 @@ import java.util.Map;
 
 public class CrashData {
     @Id
-    public String id;
-    public long time;
-    public String androidVersion;
-    public String appVersionCode;
-    public String appVersionName;
-    public long availableMemorySize;
-    public String brand;
-    public String logcat;
-    public String deviceID;
-    public Map<String, Object> display;
-    public Map<String, Object> environment;
-    public Map<String, Object> deviceFeatures;
-    public Map<String, Object> build;
+    private String id;
+    private long time;
+    private String androidVersion;
+    private String appVersionCode;
+    private String appVersionName;
+    private long availableMemorySize;
+    private String brand;
+    private String logcat;
+    private String deviceID;
+    private Map<String, Object> display;
+    private Map<String, Object> environment;
+    private Map<String, Object> deviceFeatures;
+    private Map<String, Object> build;
 
     public CrashData() {}
 
