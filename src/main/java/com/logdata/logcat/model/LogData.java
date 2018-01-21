@@ -19,6 +19,7 @@ public class LogData {
     private int nativePss;
     private int otherPss;
     private int totalPss;
+    private String stringTime;
 
     public LogData() {
     }
@@ -188,5 +189,13 @@ public class LogData {
 
     public void setTotalPss(int totalPss) {
         this.totalPss = totalPss;
+    }
+
+    public String getStringTime() {
+        return stringTime;
+    }
+
+    public void setStringTime(String stringTime) {
+        this.stringTime = stringTime;
     }
 }

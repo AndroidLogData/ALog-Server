@@ -10,92 +10,88 @@
 </div>
 <div th:fragment="logdataview">
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <!--<div class="panel panel-default">-->
-        <!--<div class="panel-heading">-->
-        <!--<h3 class="panel-title">Filter</h3>-->
-        <!--</div>-->
-        <!--<div class="panel-body">-->
-        <!--<div class="btn-group">-->
-        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"-->
-        <!--aria-expanded="false">-->
-        <!--Level <span class="caret"></span>-->
-        <!--</button>-->
-        <!--<ul class="dropdown-menu" role="menu">-->
-        <!--<li><a href="{{ url_for('.logDataLevelFilter', level='v') }}">v</a></li>-->
-        <!--<li><a href="{{ url_for('.logDataLevelFilter', level='i') }}">i</a></li>-->
-        <!--<li><a href="{{ url_for('.logDataLevelFilter', level='d') }}">d</a></li>-->
-        <!--<li><a href="{{ url_for('.logDataLevelFilter', level='w') }}">w</a></li>-->
-        <!--<li><a href="{{ url_for('.logDataLevelFilter', level='e') }}">e</a></li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--<div class="btn-group">-->
-        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"-->
-        <!--aria-expanded="false">-->
-        <!--Tag <span class="caret"></span>-->
-        <!--</button>-->
-        <!--<ul class="dropdown-menu" role="menu">-->
-        <!--{% for tag in tagFilter %}-->
-        <!--<li><a href="{{ url_for('.logDataTagFilter', tag=tag) }}">{{ tag }}</a></li>-->
-        <!--{% endfor %}-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--<div class="btn-group">-->
-        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"-->
-        <!--aria-expanded="false">-->
-        <!--Package Name <span class="caret"></span>-->
-        <!--</button>-->
-        <!--<ul class="dropdown-menu" role="menu">-->
-        <!--{% for item in packageNameFilter %}-->
-        <!--<li><a href="{{ url_for('.logDataPackageName', packageName=item) }}">{{ item }}</a></li>-->
-        <!--{% endfor %}-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Filter</h3>
+            </div>
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        Level <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a th:href="@{/logdatalevelfilter/query(level='v')}">v</a></li>
+                        <li><a th:href="@{/logdatalevelfilter/query(level='i')}">i</a></li>
+                        <li><a th:href="@{/logdatalevelfilter/query(level='d')}">d</a></li>
+                        <li><a th:href="@{/logdatalevelfilter/query(level='w')}">w</a></li>
+                        <li><a th:href="@{/logdatalevelfilter/query(level='e')}">e</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        Tag <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li th:each="item : ${tagItems}"><a th:href="@{/logdatatagfilter/query(tag=${item})}" th:text="${item}"></a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        Package Name <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li th:each="item : ${packageNameItems}"><a th:href="@{/logdatapackagenamefilter/query(packageName=${item})}" th:text="${item}"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div th:each="item : ${items}">
             <div th:if="${item.level} == 'v'" class="panel panel-success">
                 <div class="panel-heading">Verb</div>
                 <div class="panel-body">
-                    <p th:text="${item.time}"></p>
-                    <p th:text="${item.tag}"></p>
-                    <p th:text="${item.message}"></p>
-                    <p th:text="${item.level}"></p>
+                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Tag : ' + ${item.getTag()}"></p>
+                    <p th:text="'Message : ' + ${item.getMessage()}"></p>
+                    <p th:text="'Level : ' + ${item.getLevel()}"></p>
                 </div>
             </div>
             <div th:if="${item.level} == 'i'" class="panel panel-info">
                 <div class="panel-heading">Info</div>
                 <div class="panel-body">
-                    <p th:text="${item.time}"></p>
-                    <p th:text="${item.tag}"></p>
-                    <p th:text="${item.message}"></p>
-                    <p th:text="${item.level}"></p>
+                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Tag : ' + ${item.getTag()}"></p>
+                    <p th:text="'Message : ' + ${item.getMessage()}"></p>
+                    <p th:text="'Level : ' + ${item.getLevel()}"></p>
                 </div>
             </div>
             <div th:if="${item.level} == 'd'" class="panel panel-primary">
                 <div class="panel-heading">Debug</div>
                 <div class="panel-body">
-                    <p th:text="${item.time}"></p>
-                    <p th:text="${item.tag}"></p>
-                    <p th:text="${item.message}"></p>
-                    <p th:text="${item.level}"></p>
+                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Tag : ' + ${item.getTag()}"></p>
+                    <p th:text="'Message : ' + ${item.getMessage()}"></p>
+                    <p th:text="'Level : ' + ${item.getLevel()}"></p>
                 </div>
             </div>
             <div th:if="${item.level} == 'e'" class="panel panel-danger">
                 <div class="panel-heading">Error</div>
                 <div class="panel-body">
-                    <p th:text="${item.time}"></p>
-                    <p th:text="${item.tag}"></p>
-                    <p th:text="${item.message}"></p>
-                    <p th:text="${item.level}"></p>
+                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Tag : ' + ${item.getTag()}"></p>
+                    <p th:text="'Message : ' + ${item.getMessage()}"></p>
+                    <p th:text="'Level : ' + ${item.getLevel()}"></p>
                 </div>
             </div>
             <div th:if="${item.level} == 'w'" class="panel panel-warning">
                 <div class="panel-heading">Warning</div>
                 <div class="panel-body">
-                    <p th:text="${item.time}"></p>
-                    <p th:text="${item.tag}"></p>
-                    <p th:text="${item.message}"></p>
-                    <p th:text="${item.level}"></p>
+                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Tag : ' + ${item.getTag()}"></p>
+                    <p th:text="'Message : ' + ${item.getMessage()}"></p>
+                    <p th:text="'Level : ' + ${item.getLevel()}"></p>
                 </div>
             </div>
         </div>

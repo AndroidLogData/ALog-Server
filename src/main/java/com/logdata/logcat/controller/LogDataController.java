@@ -2,18 +2,17 @@ package com.logdata.logcat.controller;
 
 import com.logdata.logcat.model.LogData;
 import com.logdata.logcat.repository.LogDataRepository;
+import com.logdata.logcat.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class LogDataController {
@@ -22,9 +21,74 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdata", method = RequestMethod.GET)
     public String logDataView(Model model) {
-        model.addAttribute("items", this.repository.findAll());
+        List<LogData> logData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+
+        for (LogData data : logData) {
+            data.setStringTime(Utility.getTime(data.getTime()));
+        }
+
+        model.addAttribute("items", logData);
+        model.addAttribute("tagItems", getTag());
+        model.addAttribute("packageNameItems", getPackageName());
 
         return "logdata";
+    }
+
+    @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
+    public String logDataLevelView(@RequestParam(value = "level") String level, Model model) {
+        List<LogData> logData = this.repository.findByLevel(level);
+
+        model.addAttribute("items", logData);
+        model.addAttribute("tagItems", getTag());
+        model.addAttribute("packageNameItems", getPackageName());
+
+        return "logdata";
+    }
+
+    @RequestMapping(value = "/logdatatagfilter/{tag}", method = RequestMethod.GET)
+    public String logDataTagView(@RequestParam(value = "tag") String tag, Model model) {
+        List<LogData> logData = this.repository.findByTag(tag);
+
+        model.addAttribute("items", logData);
+        model.addAttribute("tagItems", getTag());
+        model.addAttribute("packageNameItems", getPackageName());
+
+        return "logdata";
+    }
+
+    @RequestMapping(value = "/logdatapackagenamefilter/{packageName}", method = RequestMethod.GET)
+    public String logDataPackageNameView(@RequestParam(value = "packageName") String packageName, Model model) {
+        List<LogData> logData = this.repository.findByPackageName(packageName);
+
+        model.addAttribute("items", logData);
+        model.addAttribute("tagItems", getTag());
+        model.addAttribute("packageNameItems", getPackageName());
+
+        return "logdata";
+    }
+
+    public Set<String> getTag() {
+        List<LogData> logData = this.repository.findAll();
+
+        Set<String> tagSet = new HashSet<String>();
+
+        for (LogData aLogData : logData) {
+            tagSet.add(aLogData.getTag());
+        }
+
+        return tagSet;
+    }
+
+    public Set<String> getPackageName() {
+        List<LogData> logData = this.repository.findAll();
+
+        Set<String> packageNameSet = new HashSet<String>();
+
+        for (LogData aLogData : logData) {
+            packageNameSet.add(aLogData.getPackageName());
+        }
+
+        return packageNameSet;
     }
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
