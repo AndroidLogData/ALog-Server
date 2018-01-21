@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 public class MongoDBConfig extends AbstractMongoConfiguration {
     @Override
     protected String getDatabaseName() {
-        return "Spring";
+        return "Logdata";
     }
 
     @Override
