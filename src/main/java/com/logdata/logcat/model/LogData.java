@@ -1,5 +1,6 @@
 package com.logdata.logcat.model;
 
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 
 public class LogData {
@@ -9,7 +10,7 @@ public class LogData {
     private String level;
     private String tag;
     private String message;
-    private long time;
+    private DateTime time;
     private long totalMemory;
     private long availMemory;
     private double memoryPercentage;
@@ -19,12 +20,11 @@ public class LogData {
     private int nativePss;
     private int otherPss;
     private int totalPss;
-    private String stringTime;
 
     public LogData() {
     }
 
-    public LogData(String packageName, String level, String tag, String message, long time, long totalMemory,
+    public LogData(String packageName, String level, String tag, String message, DateTime time, long totalMemory,
                    long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
                    int nativePss, int otherPss, int totalPss) {
         this.packageName = packageName;
@@ -43,7 +43,7 @@ public class LogData {
         this.totalPss = totalPss;
     }
 
-    public LogData(String packageName, String level, String tag, String message, long time) {
+    public LogData(String packageName, String level, String tag, String message, DateTime time) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
@@ -51,7 +51,7 @@ public class LogData {
         this.time = time;
     }
 
-    public LogData(String id, String packageName, String level, String tag, String message, long time, long totalMemory,
+    public LogData(String id, String packageName, String level, String tag, String message, DateTime time, long totalMemory,
                    long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
                    int nativePss, int otherPss, int totalPss) {
         this.id = id;
@@ -111,11 +111,11 @@ public class LogData {
         this.message = message;
     }
 
-    public long getTime() {
+    public DateTime getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(DateTime time) {
         this.time = time;
     }
 
@@ -189,13 +189,5 @@ public class LogData {
 
     public void setTotalPss(int totalPss) {
         this.totalPss = totalPss;
-    }
-
-    public String getStringTime() {
-        return stringTime;
-    }
-
-    public void setStringTime(String stringTime) {
-        this.stringTime = stringTime;
     }
 }

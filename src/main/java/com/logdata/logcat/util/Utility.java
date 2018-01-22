@@ -1,6 +1,5 @@
 package com.logdata.logcat.util;
 
-import com.logdata.logcat.model.LogData;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -8,23 +7,23 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Utility {
-    public static String getTime(long time) {
+    public static String getTime(DateTime time) {
         DateTime date = new DateTime(time);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
         return date.toString(fmt);
     }
 
-    public static String getX(long time) {
+    public static String getX(DateTime time) {
         DateTime date = new DateTime(time);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
 
         return date.toString(fmt);
     }
 
-    public static String getY(long time) {
+    public static String getY(DateTime time) {
         DateTime date = new DateTime(time);
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss");
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss.SSS");
 
         return date.toString(fmt);
     }
@@ -34,11 +33,5 @@ public class Utility {
             return true;
         }
         return false;
-    }
-
-    public static void setStringTime(List<LogData> logData) {
-        for (LogData data : logData) {
-            data.setStringTime(Utility.getTime(data.getTime()));
-        }
     }
 }

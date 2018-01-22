@@ -1,5 +1,6 @@
 package com.logdata.logcat.model;
 
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 public class CrashData {
     @Id
     private String id;
-    private long time;
+    private DateTime time;
     private String androidVersion;
     private String appVersionCode;
     private String appVersionName;
@@ -22,7 +23,7 @@ public class CrashData {
 
     public CrashData() {}
 
-    public CrashData(long time, String androidVersion, String appVersionCode, String appVersionName,
+    public CrashData(DateTime time, String androidVersion, String appVersionCode, String appVersionName,
                      long availableMemorySize, String brand, String logcat, String deviceID,
                      Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
                      Map<String, Object> build) {
@@ -40,7 +41,7 @@ public class CrashData {
         this.build = build;
     }
 
-    public CrashData(long time, String androidVersion, String appVersionCode, String appVersionName,
+    public CrashData(DateTime time, String androidVersion, String appVersionCode, String appVersionName,
                      long availableMemorySize, String brand, String logcat, String deviceID, Map<String, Object> display,
                      Map<String, Object> environment, Map<String, Object> build) {
         this.time = time;
@@ -64,11 +65,11 @@ public class CrashData {
         this.id = id;
     }
 
-    public long getTime() {
+    public DateTime getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(DateTime time) {
         this.time = time;
     }
 

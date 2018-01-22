@@ -52,7 +52,7 @@
             <div th:if="${item.level} == 'v'" class="panel panel-success">
                 <div class="panel-heading">Verb</div>
                 <div class="panel-body">
-                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Time : ' + ${item.getTime()}"></p>
                     <p th:text="'Tag : ' + ${item.getTag()}"></p>
                     <p th:text="'Message : ' + ${item.getMessage()}"></p>
                     <p th:text="'Level : ' + ${item.getLevel()}"></p>
@@ -61,7 +61,7 @@
             <div th:if="${item.level} == 'i'" class="panel panel-info">
                 <div class="panel-heading">Info</div>
                 <div class="panel-body">
-                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Time : ' + ${item.getTime()}"></p>
                     <p th:text="'Tag : ' + ${item.getTag()}"></p>
                     <p th:text="'Message : ' + ${item.getMessage()}"></p>
                     <p th:text="'Level : ' + ${item.getLevel()}"></p>
@@ -70,7 +70,7 @@
             <div th:if="${item.level} == 'd'" class="panel panel-primary">
                 <div class="panel-heading">Debug</div>
                 <div class="panel-body">
-                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Time : ' + ${item.getTime()}"></p>
                     <p th:text="'Tag : ' + ${item.getTag()}"></p>
                     <p th:text="'Message : ' + ${item.getMessage()}"></p>
                     <p th:text="'Level : ' + ${item.getLevel()}"></p>
@@ -79,7 +79,7 @@
             <div th:if="${item.level} == 'e'" class="panel panel-danger">
                 <div class="panel-heading">Error</div>
                 <div class="panel-body">
-                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Time : ' + ${item.getTime()}"></p>
                     <p th:text="'Tag : ' + ${item.getTag()}"></p>
                     <p th:text="'Message : ' + ${item.getMessage()}"></p>
                     <p th:text="'Level : ' + ${item.getLevel()}"></p>
@@ -88,7 +88,7 @@
             <div th:if="${item.level} == 'w'" class="panel panel-warning">
                 <div class="panel-heading">Warning</div>
                 <div class="panel-body">
-                    <p th:text="'Time : ' + ${item.getStringTime()}"></p>
+                    <p th:text="'Time : ' + ${item.getTime()}"></p>
                     <p th:text="'Tag : ' + ${item.getTag()}"></p>
                     <p th:text="'Message : ' + ${item.getMessage()}"></p>
                     <p th:text="'Level : ' + ${item.getLevel()}"></p>

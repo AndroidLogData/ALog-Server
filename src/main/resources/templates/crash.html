@@ -14,6 +14,7 @@
         <canvas id="canvas"></canvas>
     </div>
     <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
         var timeFormat = 'YYYY-MM-DD HH:mm:ss';
         var color = Chart.helpers.color;
         var config = {
@@ -48,8 +49,8 @@
                     yAxes: [{
                         type: "time",
                         time: {
-                            format: 'HH:mm:ss',
-                            tooltipFormat: 'HH:mm:ss'
+                            format: 'HH:mm:ss.SSS',
+                            tooltipFormat: 'HH:mm:ss.SSS'
                         },
                         scaleLabel: {
                             display: true,
@@ -63,6 +64,16 @@
             var ctx = document.getElementById("canvas").getContext("2d");
             window.myLine = new Chart(ctx, config);
         };
+        canvas.onclick = function(evt) {
+            var activePoints = window.myLine.getElementsAtEvent(evt);
+            if (activePoints[0]) {
+                var chartData = activePoints[0]['_chart'].config.data;
+                var idx = activePoints[0]['_index'];
+
+                window.location.href = "http://192.168.0.7:8080/crashtimefilter/query?time=" + chartData.datasets[0].data[idx].x + " " + chartData.datasets[0].data[idx].y;
+            }
+        };
+        /*]]>*/
     </script>
 
     <h2 class="sub-header">Crash Data</h2>
@@ -81,23 +92,23 @@
             </tr>
             <tr>
                 <td>Android Version</td>
-                <td th:text="${crash[0].getAndroidVersion()}"></td>
+                <td th:text="${crash.getAndroidVersion()}"></td>
             </tr>
             <tr>
                 <td>APP Version Code</td>
-                <td th:text="${crash[0].getAppVersionCode()}"></td>
+                <td th:text="${crash.getAppVersionCode()}"></td>
             </tr>
             <tr>
                 <td>APP Version Name</td>
-                <td th:text="${crash[0].getAppVersionName()}"></td>
+                <td th:text="${crash.getAppVersionName()}"></td>
             </tr>
             <tr>
                 <td>Available Memory Size</td>
-                <td th:text="${crash[0].getAvailableMemorySize()}"></td>
+                <td th:text="${crash.getAvailableMemorySize()}"></td>
             </tr>
             <tr>
                 <td>Brand</td>
-                <td th:text="${crash[0].getBrand()}"></td>
+                <td th:text="${crash.getBrand()}"></td>
             </tr>
             <tr>
                 <td>Display Size</td>
@@ -148,7 +159,7 @@
             <tr>
                 <td>Logcat</td>
                 <td>
-                    <pre th:text="${crash[0].getLogcat()}"></pre>
+                    <pre th:text="${crash.getLogcat()}"></pre>
                 </td>
             </tr>
             </tbody>

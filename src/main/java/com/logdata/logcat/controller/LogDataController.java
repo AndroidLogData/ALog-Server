@@ -27,8 +27,6 @@ public class LogDataController {
             return "nodata";
         }
 
-        Utility.setStringTime(logData);
-
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
         model.addAttribute("packageNameItems", getPackageName());
@@ -39,8 +37,6 @@ public class LogDataController {
     @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
     public String logDataLevelView(@RequestParam(value = "level") String level, Model model) {
         List<LogData> logData = this.repository.findByLevel(level, new Sort(Sort.Direction.DESC, "time"));
-
-        Utility.setStringTime(logData);
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -53,8 +49,6 @@ public class LogDataController {
     public String logDataTagView(@RequestParam(value = "tag") String tag, Model model) {
         List<LogData> logData = this.repository.findByTag(tag, new Sort(Sort.Direction.DESC, "time"));
 
-        Utility.setStringTime(logData);
-
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
         model.addAttribute("packageNameItems", getPackageName());
@@ -65,8 +59,6 @@ public class LogDataController {
     @RequestMapping(value = "/logdatapackagenamefilter/{packageName}", method = RequestMethod.GET)
     public String logDataPackageNameView(@RequestParam(value = "packageName") String packageName, Model model) {
         List<LogData> logData = this.repository.findByPackageName(packageName, new Sort(Sort.Direction.DESC, "time"));
-
-        Utility.setStringTime(logData);
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
