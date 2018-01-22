@@ -14,14 +14,14 @@ public class Utility {
         return date.toString(fmt);
     }
 
-    public static String getX(DateTime time) {
+    public static String getChartDataDate(DateTime time) {
         DateTime date = new DateTime(time);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
 
         return date.toString(fmt);
     }
 
-    public static String getY(DateTime time) {
+    public static String getChartDataTime(DateTime time) {
         DateTime date = new DateTime(time);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss.SSS");
 

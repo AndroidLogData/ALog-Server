@@ -2,7 +2,6 @@ package com.logdata.logcat.controller;
 
 import com.logdata.logcat.model.ChartData;
 import com.logdata.logcat.model.CrashData;
-import com.logdata.logcat.model.LogData;
 import com.logdata.logcat.repository.CrashDataRepository;
 import com.logdata.logcat.util.Utility;
 import org.joda.time.DateTime;
@@ -47,7 +46,7 @@ public class CrashController {
 
         LinkedHashSet<ChartData> chartData = new LinkedHashSet<ChartData>();
         for (CrashData data : chartTimeData) {
-            chartData.add(new ChartData(Utility.getX(data.getTime()), Utility.getY(data.getTime())));
+            chartData.add(new ChartData(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
         }
 
         model.addAttribute("crash", crashData);
@@ -91,7 +90,7 @@ public class CrashController {
 
         LinkedHashSet<ChartData> chartData = new LinkedHashSet<ChartData>();
         for (CrashData data : chartTimeData) {
-            chartData.add(new ChartData(Utility.getX(data.getTime()), Utility.getY(data.getTime())));
+            chartData.add(new ChartData(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
         }
 
         model.addAttribute("crash", crashData);
@@ -137,7 +136,7 @@ public class CrashController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
         Map<String, String> result = new HashMap<String, String>();
-        result.put("result", "success");
+        result.put("result", "Crash Data Transfer Success");
 
         return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
     }

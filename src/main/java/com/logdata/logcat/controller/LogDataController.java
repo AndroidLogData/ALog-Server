@@ -111,7 +111,7 @@ public class LogDataController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
         Map<String, String> result = new HashMap<String, String>();
-        result.put("result", "success");
+        result.put("result", "Log Data Transfer Success");
 
         return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
     }
