@@ -23,9 +23,11 @@ public class LogDataController {
     public String logDataView(Model model) {
         List<LogData> logData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
 
-        for (LogData data : logData) {
-            data.setStringTime(Utility.getTime(data.getTime()));
+        if (Utility.isNoData(logData)) {
+            return "nodata";
         }
+
+        Utility.setStringTime(logData);
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -36,7 +38,9 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
     public String logDataLevelView(@RequestParam(value = "level") String level, Model model) {
-        List<LogData> logData = this.repository.findByLevel(level);
+        List<LogData> logData = this.repository.findByLevel(level, new Sort(Sort.Direction.DESC, "time"));
+
+        Utility.setStringTime(logData);
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -47,7 +51,9 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdatatagfilter/{tag}", method = RequestMethod.GET)
     public String logDataTagView(@RequestParam(value = "tag") String tag, Model model) {
-        List<LogData> logData = this.repository.findByTag(tag);
+        List<LogData> logData = this.repository.findByTag(tag, new Sort(Sort.Direction.DESC, "time"));
+
+        Utility.setStringTime(logData);
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -58,7 +64,9 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdatapackagenamefilter/{packageName}", method = RequestMethod.GET)
     public String logDataPackageNameView(@RequestParam(value = "packageName") String packageName, Model model) {
-        List<LogData> logData = this.repository.findByPackageName(packageName);
+        List<LogData> logData = this.repository.findByPackageName(packageName, new Sort(Sort.Direction.DESC, "time"));
+
+        Utility.setStringTime(logData);
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());

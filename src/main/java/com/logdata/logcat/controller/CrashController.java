@@ -24,7 +24,13 @@ public class CrashController {
 
     @RequestMapping(value = "/crash", method = RequestMethod.GET)
     public String crashPage(Model model) {
-        List<CrashData> crashData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+//        List<CrashData> crashData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+        List<CrashData> crashData = this.repository.findAll(new Sort(Sort.Direction.ASC, "time"));
+
+        if (Utility.isNoData(crashData)) {
+            return "nodata";
+        }
+
         Object display = crashData.get(0).getDisplay().get("0");
 
         Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
@@ -36,7 +42,7 @@ public class CrashController {
 
         HashSet<ChartData> chartData = new HashSet<ChartData>();
         for (CrashData data : crashData) {
-            chartData.add(new ChartData(data.getTime()));
+            chartData.add(new ChartData(Utility.getX(data.getTime()), Utility.getY(data.getTime())));
         }
 
         model.addAttribute("crash", this.repository.findAll());

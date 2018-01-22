@@ -13,7 +13,7 @@
     <div style="width:75%;">
         <canvas id="canvas"></canvas>
     </div>
-    <script th:inline="javascript" th:each="data : ${chartData}">
+    <script type="text/javascript" th:inline="javascript">
         var timeFormat = 'YYYY-MM-DD HH:mm:ss';
         var color = Chart.helpers.color;
         var config = {
@@ -26,12 +26,7 @@
                     backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.green,
                     fill: false,
-                    data: [
-                        {
-                            x: /*[[${data.getTime()}]]*/,
-                            y: /*[[${data.getCount()}]]*/
-                        },
-                    ]
+                    data: /*[[${chartData}]]*/
                 }]
             },
             options: {
@@ -42,8 +37,8 @@
                     xAxes: [{
                         type: "time",
                         time: {
-                            format: timeFormat,
-                            tooltipFormat: 'YYYY-MM-DD HH:mm:ss'
+                            format: 'YYYY-MM-DD',
+                            tooltipFormat: 'YYYY-MM-DD'
                         },
                         scaleLabel: {
                             display: true,
@@ -51,9 +46,14 @@
                         }
                     }],
                     yAxes: [{
+                        type: "time",
+                        time: {
+                            format: 'HH:mm:ss',
+                            tooltipFormat: 'HH:mm:ss'
+                        },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Crash'
+                            labelString: 'Time'
                         }
                     }]
                 }

@@ -1,31 +1,27 @@
 package com.logdata.logcat.model;
 
 public class ChartData {
-    private Long time;
-    private int count;
+    private String x;
+    private String y;
 
-    public ChartData(Long time) {
-        this.time = time;
+    public ChartData(String x, String y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public ChartData(Long time, int count) {
-        this.time = time;
-        this.count = count;
+    public String getX() {
+        return x;
     }
 
-    public Long getTime() {
-        return time;
+    public void setX(String x) {
+        this.x = x;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
+    public String getY() {
+        return y;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+    public void setY(String y) {
+        this.y = y;
     }
 }

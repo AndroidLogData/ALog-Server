@@ -1,0 +1,17 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="head :: headfile">
+</head>
+<body>
+<nav th:include="navigation :: navigation"></nav>
+<div class="col s12 m10 l10">
+    <div th:include="side_menu :: sidemenu">
+
+    </div>
+</div>
+<div th:fragment="nodata">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1>데이터가 없습니다!</h1>
+    </div>
+</div>
+</body>
+</html>
