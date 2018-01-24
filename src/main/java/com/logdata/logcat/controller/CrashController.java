@@ -120,7 +120,9 @@ public class CrashController {
             map.put(s.replace(".", "-"), data.getDeviceFeatures().get(s));
         }
 
-        this.repository.save(new CrashData(data.getTime(),
+        this.repository.save(new CrashData(
+                data.getPackageName(),
+                data.getTime(),
                 data.getAndroidVersion(),
                 data.getAppVersionCode(),
                 data.getAppVersionName(),

@@ -8,4 +8,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface CrashDataRepository extends MongoRepository<CrashData, String> {
     CrashData findCrashDataBy(Sort sort);
     CrashData findCrashDataByTime(DateTime time);
+    CrashData findCrashDataByOrderByTimeDescPackageName(String packageName);
 }

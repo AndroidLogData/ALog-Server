@@ -10,4 +10,5 @@ public interface LogDataRepository extends MongoRepository<LogData, String> {
     List<LogData> findByLevel(String level, Sort sort);
     List<LogData> findByTag(String tag, Sort sort);
     List<LogData> findByPackageName(String packageName, Sort sort);
+    List<LogData> findByPackageName(String packageName);
 }

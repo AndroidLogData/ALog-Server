@@ -8,6 +8,7 @@ import java.util.Map;
 public class CrashData {
     @Id
     private String id;
+    private String packageName;
     private DateTime time;
     private String androidVersion;
     private String appVersionCode;
@@ -23,10 +24,11 @@ public class CrashData {
 
     public CrashData() {}
 
-    public CrashData(DateTime time, String androidVersion, String appVersionCode, String appVersionName,
+    public CrashData(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
                      long availableMemorySize, String brand, String logcat, String deviceID,
                      Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
                      Map<String, Object> build) {
+        this.packageName = packageName;
         this.time = time;
         this.androidVersion = androidVersion;
         this.appVersionCode = appVersionCode;
@@ -41,9 +43,10 @@ public class CrashData {
         this.build = build;
     }
 
-    public CrashData(DateTime time, String androidVersion, String appVersionCode, String appVersionName,
+    public CrashData(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
                      long availableMemorySize, String brand, String logcat, String deviceID, Map<String, Object> display,
                      Map<String, Object> environment, Map<String, Object> build) {
+        this.packageName = packageName;
         this.time = time;
         this.androidVersion = androidVersion;
         this.appVersionCode = appVersionCode;
@@ -63,6 +66,14 @@ public class CrashData {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public DateTime getTime() {

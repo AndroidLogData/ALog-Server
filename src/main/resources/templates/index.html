@@ -11,8 +11,25 @@
     </div>
 </div>
 <div class="col s12 m10 l10">
-    <div th:include="main :: mainpage">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="jumbotron">
+            <h1>Android Log Data Viewer</h1>
+            <p>안드로이드 로그 데이터와 메모리 관리를 위한 페이지</p>
+        </div>
 
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail" th:each="item : ${packageName}">
+                    <div class="caption">
+                        <h3 th:text="${item}"></h3>
+                        <p th:text="'로그 데이터 갯수 : ' + ${summaryData.get(item).getLogDataCount()}"></p>
+                        <p th:text="'최근 크래쉬 데이터 : ' + ${summaryData.get(item).getRecentCrashTime()}"></p>
+                        <p><a th:href="@{/logdatapackagenamefilter/query(packageName=${item})}" class="btn btn-primary"
+                              role="button">Show</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
