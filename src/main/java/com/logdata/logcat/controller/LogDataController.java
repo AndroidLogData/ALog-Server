@@ -121,6 +121,11 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse list() {
-        return new LogDataListResponse(this.repository.findAll());
+        List<LogData> logDataList = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+
+        for (LogData data : logDataList) {
+            data.setStringTime(Utility.getTime(data.getTime()));
+        }
+        return new LogDataListResponse(logDataList);
     }
 }

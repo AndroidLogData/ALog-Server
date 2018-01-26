@@ -72,7 +72,7 @@
                 <div className="panel panel-success">
                     <div className="panel-heading">Verb</div>
                     <div className="panel-body">
-                        {/*<p>Time : {this.props.logData.time}</p>*/}
+                        <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
                         <p>Level : {this.props.logData.level}</p>

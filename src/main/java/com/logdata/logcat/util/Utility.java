@@ -9,7 +9,7 @@ import java.util.List;
 public class Utility {
     public static String getTime(DateTime time) {
         DateTime date = new DateTime(time);
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
         return date.toString(fmt);
     }
