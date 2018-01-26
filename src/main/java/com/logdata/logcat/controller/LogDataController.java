@@ -1,6 +1,7 @@
 package com.logdata.logcat.controller;
 
 import com.logdata.logcat.model.LogData;
+import com.logdata.logcat.model.LogDataListResponse;
 import com.logdata.logcat.repository.LogDataRepository;
 import com.logdata.logcat.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,5 +115,12 @@ public class LogDataController {
         result.put("result", "Log Data Transfer Success");
 
         return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/logdatalist", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public LogDataListResponse list() {
+        return new LogDataListResponse(this.repository.findAll());
     }
 }
