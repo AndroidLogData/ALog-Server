@@ -2,12 +2,12 @@ package com.logdata.logcat.model;
 
 import org.joda.time.DateTime;
 
-public class MainPageData {
+public class MainPageVO {
     private String packageName;
     private int logDataCount;
     private DateTime recentCrashTime;
 
-    public MainPageData(String packageName, int logDataCount, DateTime recentCrashTime) {
+    public MainPageVO(String packageName, int logDataCount, DateTime recentCrashTime) {
         this.packageName = packageName;
         this.logDataCount = logDataCount;
         this.recentCrashTime = recentCrashTime;

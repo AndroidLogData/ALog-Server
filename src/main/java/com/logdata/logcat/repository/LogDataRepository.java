@@ -1,14 +1,14 @@
 package com.logdata.logcat.repository;
 
-import com.logdata.logcat.model.LogData;
+import com.logdata.logcat.model.LogVO;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface LogDataRepository extends MongoRepository<LogData, String> {
-    List<LogData> findByLevel(String level, Sort sort);
-    List<LogData> findByTag(String tag, Sort sort);
-    List<LogData> findByPackageName(String packageName, Sort sort);
-    List<LogData> findByPackageName(String packageName);
+public interface LogDataRepository extends MongoRepository<LogVO, String> {
+    List<LogVO> findByLevel(String level, Sort sort);
+    List<LogVO> findByTag(String tag, Sort sort);
+    List<LogVO> findByPackageName(String packageName, Sort sort);
+    List<LogVO> findByPackageName(String packageName);
 }

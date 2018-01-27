@@ -2,8 +2,10 @@ package com.logdata.logcat.model;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class LogData {
+@Document(collection = "logData")
+public class LogVO {
     @Id
     private String id;
     private String packageName;
@@ -22,12 +24,12 @@ public class LogData {
     private int totalPss;
     private String stringTime;
 
-    public LogData() {
+    public LogVO() {
     }
 
-    public LogData(String packageName, String level, String tag, String message, DateTime time, long totalMemory,
-                   long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
-                   int nativePss, int otherPss, int totalPss) {
+    public LogVO(String packageName, String level, String tag, String message, DateTime time, long totalMemory,
+                 long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
+                 int nativePss, int otherPss, int totalPss) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
@@ -44,7 +46,7 @@ public class LogData {
         this.totalPss = totalPss;
     }
 
-    public LogData(String packageName, String level, String tag, String message, DateTime time) {
+    public LogVO(String packageName, String level, String tag, String message, DateTime time) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
@@ -52,9 +54,9 @@ public class LogData {
         this.time = time;
     }
 
-    public LogData(String id, String packageName, String level, String tag, String message, DateTime time, long totalMemory,
-                   long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
-                   int nativePss, int otherPss, int totalPss) {
+    public LogVO(String id, String packageName, String level, String tag, String message, DateTime time, long totalMemory,
+                 long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
+                 int nativePss, int otherPss, int totalPss) {
         this.id = id;
         this.packageName = packageName;
         this.level = level;

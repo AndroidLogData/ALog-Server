@@ -1,0 +1,38 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="head :: headfile">
+</head>
+<body>
+<nav th:include="navigation :: navigation"></nav>
+<div class="col s12 m10 l10">
+    <div th:include="side_menu :: sidemenu">
+
+    </div>
+</div>
+<div th:fragment="registration">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <form class="signup-form" enctype='application/json' action="/registration" method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="user_name" name="username" type="text" class="validate"/>
+                    <label for="user_name">Username</label>
+                </div>
+            </div>
+            <!--<div class="row">-->
+                <!--<div class="input-field col s12">-->
+                    <!--<input id="email" name="uemail" type="email" class="validate"/>-->
+                    <!--<label for="email">Email</label>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" name="password" type="password" class="validate"/>
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <input class="signup-btn waves-effect waves-light btn" type="submit" value="가입하기"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

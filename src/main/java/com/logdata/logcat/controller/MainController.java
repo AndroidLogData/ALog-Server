@@ -1,8 +1,8 @@
 package com.logdata.logcat.controller;
 
-import com.logdata.logcat.model.CrashData;
-import com.logdata.logcat.model.LogData;
-import com.logdata.logcat.model.MainPageData;
+import com.logdata.logcat.model.CrashVO;
+import com.logdata.logcat.model.LogVO;
+import com.logdata.logcat.model.MainPageVO;
 import com.logdata.logcat.repository.CrashDataRepository;
 import com.logdata.logcat.repository.LogDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,12 @@ public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         Set<String> logData = getPackageName();
-        HashMap<String, MainPageData> map = new HashMap<String, MainPageData>();
+        HashMap<String, MainPageVO> map = new HashMap<String, MainPageVO>();
 
         for (String packageName : logData) {
             int logDataCount = this.logDataRepository.findByPackageName(packageName).size();
-            CrashData crashTime = this.crashDataRepository.findCrashDataByOrderByTimeDescPackageName(packageName);
-            map.put(packageName, new MainPageData(packageName, logDataCount, crashTime.getTime()));
+            CrashVO crashTime = this.crashDataRepository.findCrashDataByOrderByTimeDescPackageName(packageName);
+            map.put(packageName, new MainPageVO(packageName, logDataCount, crashTime.getTime()));
         }
 
         model.addAttribute("packageName", logData);
@@ -41,12 +41,12 @@ public class MainController {
     }
 
     private Set<String> getPackageName() {
-        List<LogData> logData = this.logDataRepository.findAll();
+        List<LogVO> logData = this.logDataRepository.findAll();
 
         Set<String> packageNameSet = new HashSet<String>();
 
-        for (LogData aLogData : logData) {
-            packageNameSet.add(aLogData.getPackageName());
+        for (LogVO data : logData) {
+            packageNameSet.add(data.getPackageName());
         }
 
         return packageNameSet;

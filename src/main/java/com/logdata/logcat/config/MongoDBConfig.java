@@ -1,4 +1,4 @@
-package com.logdata.logcat.database;
+package com.logdata.logcat.config;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
