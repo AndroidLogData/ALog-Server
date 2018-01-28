@@ -4,18 +4,14 @@ import com.logdata.logcat.model.UserRoles;
 import com.logdata.logcat.model.UserVO;
 import com.logdata.logcat.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -34,16 +30,27 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String UserRegistration(@RequestParam Map<String, String> body) {
+    public String UserRegistration(@RequestParam Map<String, String> body, Model model) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserVO newUser = new UserVO(body.get("username"), passwordEncoder.encode(body.get("password")));
         UserRoles userRoles = new UserRoles();
         userRoles.setRoleName("USER");
         newUser.setRoles(Collections.singletonList(userRoles));
 
-        this.userDataRepository.save(newUser);
+        newUser.setApiKey(generatedApiKey());
+
+        if (this.userDataRepository.findByUserID(body.get("username")) == null) {
+            this.userDataRepository.save(newUser);
+        } else {
+            model.addAttribute("sameID", true);
+            return "registration";
+        }
 
         return "redirect:/login";
+    }
+
+    private String generatedApiKey() {
+        return "1234asdf!@#$";
     }
 
 //    @RequestMapping(value = "/registration", method = RequestMethod.POST)
