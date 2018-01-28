@@ -1,10 +1,10 @@
 package com.logdata.logcat.model;
 
-public class ChartData {
+public class ChartVO {
     private String x;
     private String y;
 
-    public ChartData(String x, String y) {
+    public ChartVO(String x, String y) {
         this.x = x;
         this.y = y;
     }

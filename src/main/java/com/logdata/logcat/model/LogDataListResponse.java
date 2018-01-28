@@ -3,13 +3,13 @@ package com.logdata.logcat.model;
 import java.util.List;
 
 public class LogDataListResponse {
-    private List<LogData> logData;
+    private List<LogVO> logData;
 
-    public LogDataListResponse(List<LogData> logData) {
+    public LogDataListResponse(List<LogVO> logData) {
         this.logData = logData;
     }
 
-    public List<LogData> getLogData() {
+    public List<LogVO> getLogData() {
         return logData;
     }
 }

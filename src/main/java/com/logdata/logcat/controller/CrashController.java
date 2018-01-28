@@ -1,7 +1,7 @@
 package com.logdata.logcat.controller;
 
-import com.logdata.logcat.model.ChartData;
-import com.logdata.logcat.model.CrashData;
+import com.logdata.logcat.model.ChartVO;
+import com.logdata.logcat.model.CrashVO;
 import com.logdata.logcat.repository.CrashDataRepository;
 import com.logdata.logcat.util.Utility;
 import org.joda.time.DateTime;
@@ -28,40 +28,40 @@ public class CrashController {
 
     @RequestMapping(value = "/crash", method = RequestMethod.GET)
     public String crashPage(Model model) {
-        CrashData crashData = this.repository.findCrashDataBy(new Sort(Sort.Direction.DESC, "time"));
-        List<CrashData> chartTimeData = this.repository.findAll(new Sort(Sort.Direction.ASC, "time"));
+        CrashVO crashVO = this.repository.findCrashDataBy(new Sort(Sort.Direction.DESC, "time"));
+        List<CrashVO> chartTimeData = this.repository.findAll(new Sort(Sort.Direction.ASC, "time"));
 
-        if (crashData == null) {
+        if (crashVO == null) {
             return "nodata";
         }
 
-        Object display = crashData.getDisplay().get("0");
+        Object display = crashVO.getDisplay().get("0");
 
         Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
-        Set<String> deviceFeaturesKey = crashData.getDeviceFeatures().keySet();
+        Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
 
         for (String s : deviceFeaturesKey) {
-            deviceFeatures.put(s.replace("-", "."), crashData.getDeviceFeatures().get(s));
+            deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
         }
 
-        LinkedHashSet<ChartData> chartData = new LinkedHashSet<ChartData>();
-        for (CrashData data : chartTimeData) {
-            chartData.add(new ChartData(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
+        LinkedHashSet<ChartVO> chartData = new LinkedHashSet<ChartVO>();
+        for (CrashVO data : chartTimeData) {
+            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
         }
 
-        model.addAttribute("crash", crashData);
+        model.addAttribute("crash", crashVO);
         model.addAttribute("chartData", chartData);
-        model.addAttribute("time", crashData.getTime());
+        model.addAttribute("time", crashVO.getTime());
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
-        model.addAttribute("bootLoader", crashData.getBuild().get("BOOTLOADER"));
-        model.addAttribute("buildBrand", crashData.getBuild().get("BRAND"));
-        model.addAttribute("CPU_ABI", crashData.getBuild().get("CPU_ABI"));
-        model.addAttribute("CPU_ABI2", crashData.getBuild().get("CPU_ABI2"));
-        model.addAttribute("buildDisplay", crashData.getBuild().get("DISPLAY"));
-        model.addAttribute("TWRP", crashData.getBuild().get("DEVICE"));
-        model.addAttribute("model", crashData.getBuild().get("MODEL"));
-        model.addAttribute("board", crashData.getBuild().get("BOARD"));
+        model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
+        model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
+        model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
+        model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
+        model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
+        model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
+        model.addAttribute("model", crashVO.getBuild().get("MODEL"));
+        model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
 
         return "crash";
@@ -72,47 +72,47 @@ public class CrashController {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dddd HH:mm:ss.SSS");
         DateTime dt = formatter.parseDateTime(time);
 
-        CrashData crashData = this.repository.findCrashDataByTime(dt);
-        List<CrashData> chartTimeData = this.repository.findAll(new Sort(Sort.Direction.ASC, "time"));
+        CrashVO crashVO = this.repository.findCrashDataByTime(dt);
+        List<CrashVO> chartTimeData = this.repository.findAll(new Sort(Sort.Direction.ASC, "time"));
 
-        if (crashData == null) {
+        if (crashVO == null) {
             return "nodata";
         }
 
-        Object display = crashData.getDisplay().get("0");
+        Object display = crashVO.getDisplay().get("0");
 
         Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
-        Set<String> deviceFeaturesKey = crashData.getDeviceFeatures().keySet();
+        Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
 
         for (String s : deviceFeaturesKey) {
-            deviceFeatures.put(s.replace("-", "."), crashData.getDeviceFeatures().get(s));
+            deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
         }
 
-        LinkedHashSet<ChartData> chartData = new LinkedHashSet<ChartData>();
-        for (CrashData data : chartTimeData) {
-            chartData.add(new ChartData(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
+        LinkedHashSet<ChartVO> chartData = new LinkedHashSet<ChartVO>();
+        for (CrashVO data : chartTimeData) {
+            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
         }
 
-        model.addAttribute("crash", crashData);
+        model.addAttribute("crash", crashVO);
         model.addAttribute("chartData", chartData);
-        model.addAttribute("time", crashData.getTime());
+        model.addAttribute("time", crashVO.getTime());
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
-        model.addAttribute("bootLoader", crashData.getBuild().get("BOOTLOADER"));
-        model.addAttribute("buildBrand", crashData.getBuild().get("BRAND"));
-        model.addAttribute("CPU_ABI", crashData.getBuild().get("CPU_ABI"));
-        model.addAttribute("CPU_ABI2", crashData.getBuild().get("CPU_ABI2"));
-        model.addAttribute("buildDisplay", crashData.getBuild().get("DISPLAY"));
-        model.addAttribute("TWRP", crashData.getBuild().get("DEVICE"));
-        model.addAttribute("model", crashData.getBuild().get("MODEL"));
-        model.addAttribute("board", crashData.getBuild().get("BOARD"));
+        model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
+        model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
+        model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
+        model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
+        model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
+        model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
+        model.addAttribute("model", crashVO.getBuild().get("MODEL"));
+        model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
 
         return "crash";
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> crashDataSave(@RequestBody CrashData data) {
+    public ResponseEntity<Map<String, String>> crashDataSave(@RequestBody CrashVO data) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         Set<String> set = data.getDeviceFeatures().keySet();
 
@@ -120,7 +120,7 @@ public class CrashController {
             map.put(s.replace(".", "-"), data.getDeviceFeatures().get(s));
         }
 
-        this.repository.save(new CrashData(
+        this.repository.save(new CrashVO(
                 data.getPackageName(),
                 data.getTime(),
                 data.getAndroidVersion(),

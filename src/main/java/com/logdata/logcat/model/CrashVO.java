@@ -2,10 +2,12 @@ package com.logdata.logcat.model;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
-public class CrashData {
+@Document(collection = "crashData")
+public class CrashVO {
     @Id
     private String id;
     private String packageName;
@@ -22,12 +24,12 @@ public class CrashData {
     private Map<String, Object> deviceFeatures;
     private Map<String, Object> build;
 
-    public CrashData() {}
+    public CrashVO() {}
 
-    public CrashData(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
-                     long availableMemorySize, String brand, String logcat, String deviceID,
-                     Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
-                     Map<String, Object> build) {
+    public CrashVO(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
+                   long availableMemorySize, String brand, String logcat, String deviceID,
+                   Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
+                   Map<String, Object> build) {
         this.packageName = packageName;
         this.time = time;
         this.androidVersion = androidVersion;
@@ -43,9 +45,9 @@ public class CrashData {
         this.build = build;
     }
 
-    public CrashData(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
-                     long availableMemorySize, String brand, String logcat, String deviceID, Map<String, Object> display,
-                     Map<String, Object> environment, Map<String, Object> build) {
+    public CrashVO(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
+                   long availableMemorySize, String brand, String logcat, String deviceID, Map<String, Object> display,
+                   Map<String, Object> environment, Map<String, Object> build) {
         this.packageName = packageName;
         this.time = time;
         this.androidVersion = androidVersion;

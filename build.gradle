@@ -27,6 +27,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("org.springframework.boot:spring-boot-starter-security")
 	compile('com.google.code.gson:gson:2.8.2')
 	compile('joda-time:joda-time:2.9.9')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

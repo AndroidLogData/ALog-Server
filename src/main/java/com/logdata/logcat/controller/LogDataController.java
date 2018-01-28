@@ -1,6 +1,6 @@
 package com.logdata.logcat.controller;
 
-import com.logdata.logcat.model.LogData;
+import com.logdata.logcat.model.LogVO;
 import com.logdata.logcat.model.LogDataListResponse;
 import com.logdata.logcat.repository.LogDataRepository;
 import com.logdata.logcat.util.Utility;
@@ -22,7 +22,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdata", method = RequestMethod.GET)
     public String logDataView(Model model) {
-        List<LogData> logData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+        List<LogVO> logData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
 
         if (Utility.isNoData(logData)) {
             return "nodata";
@@ -37,7 +37,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
     public String logDataLevelView(@RequestParam(value = "level") String level, Model model) {
-        List<LogData> logData = this.repository.findByLevel(level, new Sort(Sort.Direction.DESC, "time"));
+        List<LogVO> logData = this.repository.findByLevel(level, new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -48,7 +48,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdatatagfilter/{tag}", method = RequestMethod.GET)
     public String logDataTagView(@RequestParam(value = "tag") String tag, Model model) {
-        List<LogData> logData = this.repository.findByTag(tag, new Sort(Sort.Direction.DESC, "time"));
+        List<LogVO> logData = this.repository.findByTag(tag, new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -59,7 +59,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdatapackagenamefilter/{packageName}", method = RequestMethod.GET)
     public String logDataPackageNameView(@RequestParam(value = "packageName") String packageName, Model model) {
-        List<LogData> logData = this.repository.findByPackageName(packageName, new Sort(Sort.Direction.DESC, "time"));
+        List<LogVO> logData = this.repository.findByPackageName(packageName, new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -69,32 +69,32 @@ public class LogDataController {
     }
 
     private Set<String> getTag() {
-        List<LogData> logData = this.repository.findAll();
+        List<LogVO> logData = this.repository.findAll();
 
         Set<String> tagSet = new HashSet<String>();
 
-        for (LogData aLogData : logData) {
-            tagSet.add(aLogData.getTag());
+        for (LogVO data : logData) {
+            tagSet.add(data.getTag());
         }
 
         return tagSet;
     }
 
     private Set<String> getPackageName() {
-        List<LogData> logData = this.repository.findAll();
+        List<LogVO> logData = this.repository.findAll();
 
         Set<String> packageNameSet = new HashSet<String>();
 
-        for (LogData aLogData : logData) {
-            packageNameSet.add(aLogData.getPackageName());
+        for (LogVO data : logData) {
+            packageNameSet.add(data.getPackageName());
         }
 
         return packageNameSet;
     }
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> logDataSave(@RequestBody LogData data) {
-        this.repository.save(new LogData(data.getPackageName(),
+    public ResponseEntity<Map<String, String>> logDataSave(@RequestBody LogVO data) {
+        this.repository.save(new LogVO(data.getPackageName(),
                 data.getLevel(),
                 data.getTag(),
                 data.getMessage(),
@@ -121,11 +121,11 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse list() {
-        List<LogData> logDataList = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+        List<LogVO> logVOList = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
 
-        for (LogData data : logDataList) {
+        for (LogVO data : logVOList) {
             data.setStringTime(Utility.getTime(data.getTime()));
         }
-        return new LogDataListResponse(logDataList);
+        return new LogDataListResponse(logVOList);
     }
 }

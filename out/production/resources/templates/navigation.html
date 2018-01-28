@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="head :: headfile">
 </head>
 <body>
@@ -21,6 +22,9 @@
                     <li><a href="/">Dash Board</a></li>
                     <li><a href="/logdata">Log Data</a></li>
                     <li><a href="/help">Help</a></li>
+                    <li sec:authorize="!isAuthenticated()"><a href="/login">Login</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
+                    <li><a href="/registration">Registration</a></li>
                 </ul>
                 <form class="navbar-form navbar-right">
                     <input type="text" class="form-control" placeholder="Search..."/>
