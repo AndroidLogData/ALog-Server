@@ -23,13 +23,14 @@ public class LogVO {
     private int otherPss;
     private int totalPss;
     private String stringTime;
+    private String apiKey;
 
     public LogVO() {
     }
 
     public LogVO(String packageName, String level, String tag, String message, DateTime time, long totalMemory,
                  long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
-                 int nativePss, int otherPss, int totalPss) {
+                 int nativePss, int otherPss, int totalPss, String apiKey) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
@@ -44,19 +45,21 @@ public class LogVO {
         this.nativePss = nativePss;
         this.otherPss = otherPss;
         this.totalPss = totalPss;
+        this.apiKey = apiKey;
     }
 
-    public LogVO(String packageName, String level, String tag, String message, DateTime time) {
+    public LogVO(String packageName, String level, String tag, String message, DateTime time, String apiKey) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
         this.message = message;
         this.time = time;
+        this.apiKey = apiKey;
     }
 
     public LogVO(String id, String packageName, String level, String tag, String message, DateTime time, long totalMemory,
                  long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
-                 int nativePss, int otherPss, int totalPss) {
+                 int nativePss, int otherPss, int totalPss, String apiKey) {
         this.id = id;
         this.packageName = packageName;
         this.level = level;
@@ -72,6 +75,7 @@ public class LogVO {
         this.nativePss = nativePss;
         this.otherPss = otherPss;
         this.totalPss = totalPss;
+        this.apiKey = apiKey;
     }
 
     public String getId() {
@@ -200,5 +204,13 @@ public class LogVO {
 
     public void setStringTime(String stringTime) {
         this.stringTime = stringTime;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 }

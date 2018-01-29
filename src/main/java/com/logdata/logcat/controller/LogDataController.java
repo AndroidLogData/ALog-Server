@@ -2,27 +2,42 @@ package com.logdata.logcat.controller;
 
 import com.logdata.logcat.model.LogVO;
 import com.logdata.logcat.model.LogDataListResponse;
+import com.logdata.logcat.model.UserVO;
 import com.logdata.logcat.repository.LogDataRepository;
+import com.logdata.logcat.repository.UserDataRepository;
 import com.logdata.logcat.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.*;
 
 @Controller
 public class LogDataController {
     @Autowired
     private LogDataRepository repository;
+    @Autowired
+    private UserDataRepository userDataRepository;
 
     @RequestMapping(value = "/logdata", method = RequestMethod.GET)
-    public String logDataView(Model model) {
-        List<LogVO> logData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+    public String logDataView(Principal user, Model model) {
+        if (user == null) {
+            return "nodata";
+        }
+        UserVO u = this.userDataRepository.findByUserID(user.getName());
+        List<LogVO> logData = this.repository.findByApiKey(u.getApiKey(), new Sort(Sort.Direction.DESC, "time"));
+        System.out.println(user.getName());
+//        List<LogVO> logData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
 
         if (Utility.isNoData(logData)) {
             return "nodata";
@@ -93,7 +108,7 @@ public class LogDataController {
     }
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> logDataSave(@RequestBody LogVO data) {
+    public ResponseEntity<Map<String, String>> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
         this.repository.save(new LogVO(data.getPackageName(),
                 data.getLevel(),
                 data.getTag(),
@@ -107,7 +122,10 @@ public class LogDataController {
                 data.getDalvikPss(),
                 data.getNativePss(),
                 data.getOtherPss(),
-                data.getTotalPss()));
+                data.getTotalPss(),
+                secretKey));
+
+        System.out.println(secretKey);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");

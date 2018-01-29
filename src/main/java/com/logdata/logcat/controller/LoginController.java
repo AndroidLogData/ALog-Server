@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class LoginController {
@@ -50,7 +51,9 @@ public class LoginController {
     }
 
     private String generatedApiKey() {
-        return "1234asdf!@#$";
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        return uuid;
+//        return "1234asdf!@#$";
     }
 
 //    @RequestMapping(value = "/registration", method = RequestMethod.POST)
