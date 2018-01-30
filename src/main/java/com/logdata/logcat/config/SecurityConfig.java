@@ -1,5 +1,6 @@
 package com.logdata.logcat.config;
 
+import com.logdata.logcat.service.CustomRequestMatcher;
 import com.logdata.logcat.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().
+        http.requestMatcher(new CustomRequestMatcher()).
                 authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/").permitAll()

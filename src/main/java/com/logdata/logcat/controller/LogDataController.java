@@ -109,6 +109,15 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
+        if (secretKey.equals("")) {
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("result", "Need API Key");
+
+            return new ResponseEntity<>(result, responseHeaders, HttpStatus.BAD_REQUEST);
+        }
+
         this.repository.save(new LogVO(data.getPackageName(),
                 data.getLevel(),
                 data.getTag(),
