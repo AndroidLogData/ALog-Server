@@ -34,4 +34,11 @@ public class Utility {
         }
         return false;
     }
+
+    public static boolean CheckedSecretKey(String secretKey) {
+        if (secretKey.equals("")) {
+            return true;
+        }
+        return false;
+    }
 }

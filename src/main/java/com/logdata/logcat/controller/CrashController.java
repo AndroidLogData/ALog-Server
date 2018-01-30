@@ -14,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -112,7 +109,16 @@ public class CrashController {
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> crashDataSave(@RequestBody CrashVO data) {
+    public ResponseEntity<Map<String, String>> crashDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody CrashVO data) {
+        if (Utility.CheckedSecretKey(secretKey)) {
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("result", "Need API Key");
+
+            return new ResponseEntity<>(result, responseHeaders, HttpStatus.BAD_REQUEST);
+        }
+
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         Set<String> set = data.getDeviceFeatures().keySet();
 
@@ -133,7 +139,8 @@ public class CrashController {
                 data.getDisplay(),
                 data.getEnvironment(),
                 map,
-                data.getBuild()));
+                data.getBuild(),
+                secretKey));
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");

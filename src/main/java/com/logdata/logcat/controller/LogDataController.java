@@ -11,14 +11,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.*;
 
@@ -109,6 +105,15 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
+        if (Utility.CheckedSecretKey(secretKey)) {
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("result", "Need API Key");
+
+            return new ResponseEntity<>(result, responseHeaders, HttpStatus.BAD_REQUEST);
+        }
+
         this.repository.save(new LogVO(data.getPackageName(),
                 data.getLevel(),
                 data.getTag(),
