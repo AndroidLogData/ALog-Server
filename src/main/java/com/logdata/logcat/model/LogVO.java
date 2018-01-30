@@ -4,6 +4,8 @@ import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Map;
+
 @Document(collection = "logData")
 public class LogVO {
     @Id
@@ -13,39 +15,11 @@ public class LogVO {
     private String tag;
     private String message;
     private DateTime time;
-    private long totalMemory;
-    private long availMemory;
-    private double memoryPercentage;
-    private boolean lowMemory;
-    private long threshold;
-    private int dalvikPss;
-    private int nativePss;
-    private int otherPss;
-    private int totalPss;
     private String stringTime;
+    private Map<String, Object> memoryInfo;
     private String apiKey;
 
     public LogVO() {
-    }
-
-    public LogVO(String packageName, String level, String tag, String message, DateTime time, long totalMemory,
-                 long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
-                 int nativePss, int otherPss, int totalPss, String apiKey) {
-        this.packageName = packageName;
-        this.level = level;
-        this.tag = tag;
-        this.message = message;
-        this.time = time;
-        this.totalMemory = totalMemory;
-        this.availMemory = availMemory;
-        this.memoryPercentage = memoryPercentage;
-        this.lowMemory = lowMemory;
-        this.threshold = threshold;
-        this.dalvikPss = dalvikPss;
-        this.nativePss = nativePss;
-        this.otherPss = otherPss;
-        this.totalPss = totalPss;
-        this.apiKey = apiKey;
     }
 
     public LogVO(String packageName, String level, String tag, String message, DateTime time, String apiKey) {
@@ -57,24 +31,24 @@ public class LogVO {
         this.apiKey = apiKey;
     }
 
-    public LogVO(String id, String packageName, String level, String tag, String message, DateTime time, long totalMemory,
-                 long availMemory, double memoryPercentage, boolean lowMemory, long threshold, int dalvikPss,
-                 int nativePss, int otherPss, int totalPss, String apiKey) {
+    public LogVO(String packageName, String level, String tag, String message, DateTime time, Map<String, Object> memoryInfo, String apiKey) {
+        this.packageName = packageName;
+        this.level = level;
+        this.tag = tag;
+        this.message = message;
+        this.time = time;
+        this.memoryInfo = memoryInfo;
+        this.apiKey = apiKey;
+    }
+
+    public LogVO(String id, String packageName, String level, String tag, String message, DateTime time, Map<String, Object> memoryInfo, String apiKey) {
         this.id = id;
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
         this.message = message;
         this.time = time;
-        this.totalMemory = totalMemory;
-        this.availMemory = availMemory;
-        this.memoryPercentage = memoryPercentage;
-        this.lowMemory = lowMemory;
-        this.threshold = threshold;
-        this.dalvikPss = dalvikPss;
-        this.nativePss = nativePss;
-        this.otherPss = otherPss;
-        this.totalPss = totalPss;
+        this.memoryInfo = memoryInfo;
         this.apiKey = apiKey;
     }
 
@@ -126,76 +100,12 @@ public class LogVO {
         this.time = time;
     }
 
-    public long getTotalMemory() {
-        return totalMemory;
+    public Map<String, Object> getMemoryInfo() {
+        return memoryInfo;
     }
 
-    public void setTotalMemory(long totalMemory) {
-        this.totalMemory = totalMemory;
-    }
-
-    public long getAvailMemory() {
-        return availMemory;
-    }
-
-    public void setAvailMemory(long availMemory) {
-        this.availMemory = availMemory;
-    }
-
-    public double getMemoryPercentage() {
-        return memoryPercentage;
-    }
-
-    public void setMemoryPercentage(double memoryPercentage) {
-        this.memoryPercentage = memoryPercentage;
-    }
-
-    public boolean isLowMemory() {
-        return lowMemory;
-    }
-
-    public void setLowMemory(boolean lowMemory) {
-        this.lowMemory = lowMemory;
-    }
-
-    public long getThreshold() {
-        return threshold;
-    }
-
-    public void setThreshold(long threshold) {
-        this.threshold = threshold;
-    }
-
-    public int getDalvikPss() {
-        return dalvikPss;
-    }
-
-    public void setDalvikPss(int dalvikPss) {
-        this.dalvikPss = dalvikPss;
-    }
-
-    public int getNativePss() {
-        return nativePss;
-    }
-
-    public void setNativePss(int nativePss) {
-        this.nativePss = nativePss;
-    }
-
-    public int getOtherPss() {
-        return otherPss;
-    }
-
-    public void setOtherPss(int otherPss) {
-        this.otherPss = otherPss;
-    }
-
-    public int getTotalPss() {
-        return totalPss;
-    }
-
-    public void setTotalPss(int totalPss) {
-        this.totalPss = totalPss;
+    public void setMemoryInfo(Map<String, Object> memoryInfo) {
+        this.memoryInfo = memoryInfo;
     }
 
     public String getStringTime() {

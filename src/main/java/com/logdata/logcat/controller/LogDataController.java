@@ -119,18 +119,8 @@ public class LogDataController {
                 data.getTag(),
                 data.getMessage(),
                 data.getTime(),
-                data.getTotalMemory(),
-                data.getAvailMemory(),
-                data.getMemoryPercentage(),
-                data.isLowMemory(),
-                data.getThreshold(),
-                data.getDalvikPss(),
-                data.getNativePss(),
-                data.getOtherPss(),
-                data.getTotalPss(),
+                data.getMemoryInfo(),
                 secretKey));
-
-        System.out.println(secretKey);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
