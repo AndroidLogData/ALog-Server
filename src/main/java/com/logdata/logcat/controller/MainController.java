@@ -40,8 +40,8 @@ public class MainController {
         HashMap<String, MainPageVO> map = new HashMap<String, MainPageVO>();
 
         for (String packageName : logData) {
-            int logDataCount = this.logDataRepository.findByPackageName(packageName).size();
-            CrashVO crashTime = this.crashDataRepository.findCrashDataByOrderByTimeDescPackageName(packageName);
+            int logDataCount = this.logDataRepository.findByPackageNameAndApiKey(packageName, u.getApiKey()).size();
+            CrashVO crashTime = this.crashDataRepository.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, u.getApiKey());
             if (crashTime == null) {
                 map.put(packageName, new MainPageVO(packageName, logDataCount, null));
             } else {

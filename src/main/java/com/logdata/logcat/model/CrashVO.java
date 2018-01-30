@@ -23,13 +23,14 @@ public class CrashVO {
     private Map<String, Object> environment;
     private Map<String, Object> deviceFeatures;
     private Map<String, Object> build;
+    private String apiKey;
 
     public CrashVO() {}
 
     public CrashVO(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
                    long availableMemorySize, String brand, String logcat, String deviceID,
                    Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
-                   Map<String, Object> build) {
+                   Map<String, Object> build, String apiKey) {
         this.packageName = packageName;
         this.time = time;
         this.androidVersion = androidVersion;
@@ -43,11 +44,12 @@ public class CrashVO {
         this.environment = environment;
         this.deviceFeatures = deviceFeatures;
         this.build = build;
+        this.apiKey = apiKey;
     }
 
     public CrashVO(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
                    long availableMemorySize, String brand, String logcat, String deviceID, Map<String, Object> display,
-                   Map<String, Object> environment, Map<String, Object> build) {
+                   Map<String, Object> environment, Map<String, Object> build, String apiKey) {
         this.packageName = packageName;
         this.time = time;
         this.androidVersion = androidVersion;
@@ -60,6 +62,7 @@ public class CrashVO {
         this.display = display;
         this.environment = environment;
         this.build = build;
+        this.apiKey = apiKey;
     }
 
     public String getId() {
