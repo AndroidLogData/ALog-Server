@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="head :: headfile">
 </head>
 <body>
@@ -16,9 +15,6 @@
         <div class="jumbotron">
             <h1>Android Log Data Viewer</h1>
             <p>안드로이드 로그 데이터와 메모리 관리를 위한 페이지</p>
-        </div>
-        <div sec:authorize="isAuthenticated()">
-            <h1 th:text="'Hello, World!'"/>
         </div>
         <div class="row">
             <div class="col-sm-6 col-md-4">

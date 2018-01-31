@@ -28,13 +28,15 @@ public class LogDataController {
     @RequestMapping(value = "/logdata", method = RequestMethod.GET)
     public String logDataView(Principal user, Model model) {
         if (user == null) {
-            return "nodata";
+            model.addAttribute("noData", true);
+            return "logdata";
         }
         UserVO u = this.userDataRepository.findByUserID(user.getName());
         List<LogVO> logData = this.repository.findByApiKey(u.getApiKey(), new Sort(Sort.Direction.DESC, "time"));
 
         if (Utility.isNoData(logData)) {
-            return "nodata";
+            model.addAttribute("noData", true);
+            return "logdata";
         }
 
         model.addAttribute("items", logData);

@@ -6,7 +6,7 @@ var LogDataBox = React.createClass({
             logData: []
         };
     },
-    fetchCompanies: function () {
+    fetchLogData: function () {
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -20,7 +20,14 @@ var LogDataBox = React.createClass({
         });
     },
     componentDidMount: function () {
-        this.fetchCompanies();
+        this.fetchLogData();
+    },
+    shouldComponentUpdate: function () {
+        this.fetchLogData();
+        return true;
+    },
+    componentWillReceiveProps: function() {
+        this.fetchLogData();
     },
     render() {
         return (

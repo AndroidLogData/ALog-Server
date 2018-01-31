@@ -72,19 +72,25 @@
             var i;
             var logDataNodes = [];
 
-            console.log(this.props);
-            console.log(this.state);
             for (i = 0; i < this.props.logData.length; i++) {
                 logDataNodes.push(
                     <LogDataListRow logData={this.props.logData[i]} />
                 );
             }
 
-            return (
-                <div className="logDataList">
-                    {logDataNodes}
-                </div>
-            );
+            if (logDataNodes.length == 0) {
+                return (
+                    <div className="logDataList">
+                        <h1>데이터가 없습니다!</h1>
+                    </div>
+                );
+            } else {
+                return (
+                    <div className="logDataList">
+                        {logDataNodes}
+                    </div>
+                );
+            }
         }
     });
 })();
