@@ -32,8 +32,6 @@ public class LogDataController {
         }
         UserVO u = this.userDataRepository.findByUserID(user.getName());
         List<LogVO> logData = this.repository.findByApiKey(u.getApiKey(), new Sort(Sort.Direction.DESC, "time"));
-        System.out.println(user.getName());
-//        List<LogVO> logData = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
 
         if (Utility.isNoData(logData)) {
             return "nodata";

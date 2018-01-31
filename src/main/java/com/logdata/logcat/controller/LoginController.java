@@ -47,30 +47,11 @@ public class LoginController {
             return "registration";
         }
 
-        return "redirect:/login";
+        return "login";
     }
 
     private String generatedApiKey() {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         return uuid;
-//        return "1234asdf!@#$";
     }
-
-//    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-//    public ResponseEntity<Map<String, String>> UserRegistration(@RequestParam Map<String, String> body) {
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        UserVO newUser = new UserVO(body.get("username"), passwordEncoder.encode(body.get("password")));
-//        UserRoles userRoles = new UserRoles();
-//        userRoles.setRoleName("USER");
-//        newUser.setRoles(Collections.singletonList(userRoles));
-//
-//        this.userDataRepository.save(newUser);
-//
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
-//        Map<String, String> result = new HashMap<String, String>();
-//        result.put("result", "User Registration Success");
-//
-//        return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
-//    }
 }
