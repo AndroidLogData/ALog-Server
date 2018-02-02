@@ -32,7 +32,7 @@ public class CrashController {
     public String crashPage(Principal user, Model model) {
         if (user == null) {
             model.addAttribute("noData", true);
-            return "crash";
+            return "nodata";
         }
         UserVO u = this.userDataRepository.findByUserID(user.getName());
 
@@ -77,14 +77,20 @@ public class CrashController {
     }
 
     @RequestMapping(value = "/crashtimefilter/{time}", method = RequestMethod.GET)
-    public String crashDataTagView(@RequestParam(value = "time") String time, Model model) {
+    public String crashDataTagView(Principal user, @RequestParam(value = "time") String time, Model model) {
+        if (user == null) {
+            model.addAttribute("noData", true);
+            return "crash";
+        }
+        UserVO u = this.userDataRepository.findByUserID(user.getName());
+
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dddd HH:mm:ss.SSS");
         DateTime dt = formatter.parseDateTime(time);
 
         CrashVO crashVO = this.crashDataRepository.findCrashDataByTime(dt);
-        List<CrashVO> chartTimeData = this.crashDataRepository.findAll(new Sort(Sort.Direction.ASC, "time"));
+        List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(u.getApiKey(), new Sort(Sort.Direction.ASC, "time"));
 
-        if (crashVO == null) {
+        if (crashVO == null || u.getApiKey().equals(crashVO.getApiKey())) {
             return "nodata";
         }
 
