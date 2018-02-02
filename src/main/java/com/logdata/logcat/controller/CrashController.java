@@ -2,7 +2,9 @@ package com.logdata.logcat.controller;
 
 import com.logdata.logcat.model.ChartVO;
 import com.logdata.logcat.model.CrashVO;
+import com.logdata.logcat.model.UserVO;
 import com.logdata.logcat.repository.CrashDataRepository;
+import com.logdata.logcat.repository.UserDataRepository;
 import com.logdata.logcat.util.Utility;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -16,19 +18,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.*;
 
 @Controller
 public class CrashController {
     @Autowired
-    private CrashDataRepository repository;
+    private CrashDataRepository crashDataRepository;
+    @Autowired
+    private UserDataRepository userDataRepository;
 
     @RequestMapping(value = "/crash", method = RequestMethod.GET)
-    public String crashPage(Model model) {
-        CrashVO crashVO = this.repository.findCrashDataBy(new Sort(Sort.Direction.DESC, "time"));
-        List<CrashVO> chartTimeData = this.repository.findAll(new Sort(Sort.Direction.ASC, "time"));
+    public String crashPage(Principal user, Model model) {
+        if (user == null) {
+            model.addAttribute("noData", true);
+            return "crash";
+        }
+        UserVO u = this.userDataRepository.findByUserID(user.getName());
 
-        if (crashVO == null) {
+        CrashVO crashVO = this.crashDataRepository.findCrashDataBy(new Sort(Sort.Direction.DESC, "time"));
+        List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(u.getApiKey(), new Sort(Sort.Direction.ASC, "time"));
+
+        if (crashVO == null || chartTimeData.size() == 0) {
+            model.addAttribute("noData", true);
             return "nodata";
         }
 
@@ -69,8 +81,8 @@ public class CrashController {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dddd HH:mm:ss.SSS");
         DateTime dt = formatter.parseDateTime(time);
 
-        CrashVO crashVO = this.repository.findCrashDataByTime(dt);
-        List<CrashVO> chartTimeData = this.repository.findAll(new Sort(Sort.Direction.ASC, "time"));
+        CrashVO crashVO = this.crashDataRepository.findCrashDataByTime(dt);
+        List<CrashVO> chartTimeData = this.crashDataRepository.findAll(new Sort(Sort.Direction.ASC, "time"));
 
         if (crashVO == null) {
             return "nodata";
@@ -126,7 +138,7 @@ public class CrashController {
             map.put(s.replace(".", "-"), data.getDeviceFeatures().get(s));
         }
 
-        this.repository.save(new CrashVO(
+        this.crashDataRepository.save(new CrashVO(
                 data.getPackageName(),
                 data.getTime(),
                 data.getAndroidVersion(),

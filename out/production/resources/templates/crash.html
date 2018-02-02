@@ -10,6 +10,7 @@
     </div>
 </div>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 th:if="${noData} == true" th:text="'데이터가 없습니다!'"/>
     <div style="width:75%;">
         <canvas id="canvas"></canvas>
     </div>

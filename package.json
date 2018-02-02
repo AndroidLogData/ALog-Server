@@ -1,0 +1,20 @@
+{
+  "name": "logdata-server-spring",
+  "version": "0.1.0",
+  "description": "안드로이드 로그 데이터를 관리하기 위한 서버",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndroidLogData/Logdata-Server-Spring.git"
+  },
+  "author": "BoWoon Kim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AndroidLogData/Logdata-Server-Spring/issues"
+  },
+  "homepage": "https://github.com/AndroidLogData/Logdata-Server-Spring#readme",
+  "dependencies": {}
+}
