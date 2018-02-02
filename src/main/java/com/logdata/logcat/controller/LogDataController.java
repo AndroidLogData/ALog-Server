@@ -27,17 +27,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdata", method = RequestMethod.GET)
     public String logDataView(Principal user, Model model) {
-        if (user == null) {
-            model.addAttribute("noData", true);
-            return "logdata";
-        }
-        UserVO u = this.userDataRepository.findByUserID(user.getName());
-        List<LogVO> logData = this.repository.findByApiKey(u.getApiKey(), new Sort(Sort.Direction.DESC, "time"));
-
-        if (Utility.isNoData(logData)) {
-            model.addAttribute("noData", true);
-            return "logdata";
-        }
+        List<LogVO> logData = this.repository.findByApiKey(getUserApiKey(user), new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -47,8 +37,8 @@ public class LogDataController {
     }
 
     @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
-    public String logDataLevelView(@RequestParam(value = "level") String level, Model model) {
-        List<LogVO> logData = this.repository.findByLevel(level, new Sort(Sort.Direction.DESC, "time"));
+    public String logDataLevelView(Principal user, @RequestParam(value = "level") String level, Model model) {
+        List<LogVO> logData = this.repository.findByLevel(getUserApiKey(user), level, new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -58,8 +48,8 @@ public class LogDataController {
     }
 
     @RequestMapping(value = "/logdatatagfilter/{tag}", method = RequestMethod.GET)
-    public String logDataTagView(@RequestParam(value = "tag") String tag, Model model) {
-        List<LogVO> logData = this.repository.findByTag(tag, new Sort(Sort.Direction.DESC, "time"));
+    public String logDataTagView(Principal user, @RequestParam(value = "tag") String tag, Model model) {
+        List<LogVO> logData = this.repository.findByTag(getUserApiKey(user), tag, new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -69,8 +59,8 @@ public class LogDataController {
     }
 
     @RequestMapping(value = "/logdatapackagenamefilter/{packageName}", method = RequestMethod.GET)
-    public String logDataPackageNameView(@RequestParam(value = "packageName") String packageName, Model model) {
-        List<LogVO> logData = this.repository.findByPackageName(packageName, new Sort(Sort.Direction.DESC, "time"));
+    public String logDataPackageNameView(Principal user, @RequestParam(value = "packageName") String packageName, Model model) {
+        List<LogVO> logData = this.repository.findByPackageName(getUserApiKey(user), packageName, new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -140,5 +130,10 @@ public class LogDataController {
             data.setStringTime(Utility.getTime(data.getTime()));
         }
         return new LogDataListResponse(logVOList);
+    }
+
+    public String getUserApiKey(Principal user) {
+        UserVO u = this.userDataRepository.findByUserID(user.getName());
+        return u.getApiKey();
     }
 }

@@ -176,4 +176,12 @@ public class CrashVO {
     public void setBuild(Map<String, Object> build) {
         this.build = build;
     }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
 }

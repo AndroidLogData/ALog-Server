@@ -28,13 +28,6 @@ public class Utility {
         return date.toString(fmt);
     }
 
-    public static boolean isNoData(List<?> list) {
-        if (list.size() == 0) {
-            return true;
-        }
-        return false;
-    }
-
     public static boolean CheckedSecretKey(String secretKey) {
         if (secretKey.equals("")) {
             return true;
