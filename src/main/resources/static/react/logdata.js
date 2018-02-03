@@ -1,42 +1,4 @@
-import React from 'react';
-
-// var LogDataList = App.Components.LogDataList;
-
-// var LogDataBox = React.createClass({
-//     getInitialState: function () {
-//         return {
-//             logData: []
-//         };
-//     },
-//     fetchLogData: function () {
-//         $.ajax({
-//             url: this.props.url,
-//             dataType: 'json',
-//             cache: false,
-//             success: function (data) {
-//                 this.setState({logData: data.logData});
-//             }.bind(this),
-//             error: function (xhr, status, err) {
-//                 console.error(this.props.url, status, err.toString());
-//             }.bind(this)
-//         });
-//     },
-//     componentDidMount: function () {
-//         this.fetchLogData();
-//     },
-//     shouldComponentUpdate: function () {
-//         this.fetchLogData();
-//         return true;
-//     },
-//     componentWillReceiveProps: function () {
-//         this.fetchLogData();
-//     },
-//     render() {
-//         return (
-//             <LogDataList logData={this.state.logData}/>
-//         );
-//     }
-// });
+import React from "react";
 
 class LogDataListRow extends React.Component {
     render() {
@@ -106,12 +68,12 @@ class LogDataListRow extends React.Component {
 
 class LogDataList extends React.Component {
     render() {
-        var i;
-        var logDataNodes = [];
+        let i;
+        let logDataNodes = [];
 
         for (i = 0; i < this.props.logData.length; i++) {
             logDataNodes.push(
-                <LogDataListRow logData={this.props.logData[i]} />
+                <LogDataListRow logData={this.props.logData[i]}/>
             );
         }
 
@@ -132,6 +94,16 @@ class LogDataList extends React.Component {
 }
 
 class LogDataBox extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            logData: []
+        };
+
+        this.fetchLogData();
+    }
+
     fetchLogData() {
         $.ajax({
             url: this.props.url,
@@ -162,26 +134,10 @@ class LogDataBox extends React.Component {
     render() {
         return (
             <div>
-                <LogDataList/>
+                <LogDataList logData={this.state.logData}/>
             </div>
         );
     }
 }
 
-class App extends React.Component {
-    render() {
-        return (
-            <div>
-                <LogDataBox url="/logdatalist"/>
-            </div>
-        );
-    }
-}
-
-export default App;
-
-// ReactDOM.render(<LogDataBox url="/logdatalist"/>, document.getElementById('root'));
-
-// ReactDOM.render(<Router history={browserHistory}>
-//     <LogDataBox path='/logdata' component={LogDataBox} url="/logdatalist"/>
-// </Router>, document.getElementById('root'));
+export default LogDataBox;
