@@ -36,20 +36,20 @@ public class LogDataController {
         return "logdata";
     }
 
-    @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
-    public String logDataLevelView(Principal user, @RequestParam(value = "level") String level, Model model) {
-        List<LogVO> logData = this.repository.findByLevel(getUserApiKey(user), level, new Sort(Sort.Direction.DESC, "time"));
-
-        model.addAttribute("items", logData);
-        model.addAttribute("tagItems", getTag());
-        model.addAttribute("packageNameItems", getPackageName());
-
-        return "logdata";
-    }
+//    @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
+//    public String logDataLevelView(Principal user, @RequestParam(value = "level") String level, Model model) {
+//        List<LogVO> logData = this.repository.findByLevel(getUserApiKey(user), level, new Sort(Sort.Direction.DESC, "time"));
+//
+//        model.addAttribute("items", logData);
+//        model.addAttribute("tagItems", getTag());
+//        model.addAttribute("packageNameItems", getPackageName());
+//
+//        return "logdata";
+//    }
 
     @RequestMapping(value = "/logdatatagfilter/{tag}", method = RequestMethod.GET)
     public String logDataTagView(Principal user, @RequestParam(value = "tag") String tag, Model model) {
-        List<LogVO> logData = this.repository.findByTag(getUserApiKey(user), tag, new Sort(Sort.Direction.DESC, "time"));
+        List<LogVO> logData = this.repository.findByApiKeyAndTag(getUserApiKey(user), tag, new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -60,7 +60,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdatapackagenamefilter/{packageName}", method = RequestMethod.GET)
     public String logDataPackageNameView(Principal user, @RequestParam(value = "packageName") String packageName, Model model) {
-        List<LogVO> logData = this.repository.findByPackageName(getUserApiKey(user), packageName, new Sort(Sort.Direction.DESC, "time"));
+        List<LogVO> logData = this.repository.findByApiKeyAndPackageName(getUserApiKey(user), packageName, new Sort(Sort.Direction.DESC, "time"));
 
         model.addAttribute("items", logData);
         model.addAttribute("tagItems", getTag());
@@ -123,14 +123,37 @@ public class LogDataController {
     @RequestMapping(value = "/logdatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public LogDataListResponse list() {
-        List<LogVO> logVOList = this.repository.findAll(new Sort(Sort.Direction.DESC, "time"));
+    public LogDataListResponse list(Principal user) {
+        List<LogVO> logVOList = this.repository.findByApiKey(getUserApiKey(user), new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
             data.setStringTime(Utility.getTime(data.getTime()));
         }
         return new LogDataListResponse(logVOList);
     }
+
+    @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public LogDataListResponse logDataLevelList(Principal user, @RequestParam(value = "level") String level) {
+        List<LogVO> logVOList = this.repository.findByApiKeyAndLevel(getUserApiKey(user), level, new Sort(Sort.Direction.DESC, "time"));
+
+        for (LogVO data : logVOList) {
+            data.setStringTime(Utility.getTime(data.getTime()));
+        }
+        return new LogDataListResponse(logVOList);
+    }
+
+    //    @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
+//    public String logDataLevelView(Principal user, @RequestParam(value = "level") String level, Model model) {
+//        List<LogVO> logData = this.repository.findByLevel(getUserApiKey(user), level, new Sort(Sort.Direction.DESC, "time"));
+//
+//        model.addAttribute("items", logData);
+//        model.addAttribute("tagItems", getTag());
+//        model.addAttribute("packageNameItems", getPackageName());
+//
+//        return "logdata";
+//    }
 
     public String getUserApiKey(Principal user) {
         UserVO u = this.userDataRepository.findByUserID(user.getName());

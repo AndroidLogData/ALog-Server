@@ -21,11 +21,11 @@
                         Level <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a th:href="@{/logdatalevelfilter/query(level='v')}">v</a></li>
-                        <li><a th:href="@{/logdatalevelfilter/query(level='i')}">i</a></li>
-                        <li><a th:href="@{/logdatalevelfilter/query(level='d')}">d</a></li>
-                        <li><a th:href="@{/logdatalevelfilter/query(level='w')}">w</a></li>
-                        <li><a th:href="@{/logdatalevelfilter/query(level='e')}">e</a></li>
+                        <li><a th:href="@{/levelfilter/v}">v</a></li>
+                        <li><a th:href="@{/levelfilter/i}">i</a></li>
+                        <li><a th:href="@{/levelfilter/d}">d</a></li>
+                        <li><a th:href="@{/levelfilter/w}">w</a></li>
+                        <li><a th:href="@{/levelfilter/e}">e</a></li>
                     </ul>
                 </div>
                 <div class="btn-group">
@@ -48,8 +48,6 @@
                 </div>
             </div>
         </div>
-        <!--<script type="text/babel" th:src="@{/react/logdatalist.js}"></script>-->
-        <!--<script type="text/babel" th:src="@{/react/app.js}"></script>-->
         <script type="text/babel" th:src="@{../assets/bundle.js}"></script>
         <div id="root"></div>
     </div>

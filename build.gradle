@@ -37,13 +37,10 @@ task helloWorld(type: NodeTask, dependsOn: 'npmInstall') {
 }
 
 task installReact(type: NpmTask) {
-    args = ['install', '--save', 'react', 'react-dom', 'create-react-class', 'react-router', 'webpack', 'webpack-dev-server',
+    args = ['install', '--save', 'react', 'react-dom', 'webpack', 'webpack-dev-server', 'react-bootstrap',
             'babel-core', 'babel-loader', 'babel-preset-es2015', 'babel-preset-react', 'css-loader', 'file-loader', 'react-hot-loader',
-            'babel-polyfill']
+            'babel-polyfill', 'react-router-dom', 'query-string']
 }
-
-//task build(dependsOn: 'helloWorld') {
-//}
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
