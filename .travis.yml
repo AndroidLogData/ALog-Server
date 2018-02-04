@@ -6,12 +6,6 @@ branches:
   only:
     - develop
 
-# Travis CI 서버의 Home
-cache:
-  directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.gradle'
-
 before_script:
   - sudo add-apt-repository ppa:cwchien/gradle -y
   - sudo apt-get update -y
@@ -19,7 +13,7 @@ before_script:
   - sudo gradle -version
 
 script:
-  - sudo ./gradlew clean build
+  - sudo gradle npmInstall clean build
 
 # CI 실행 완료시 메일로 알람
 notifications:
