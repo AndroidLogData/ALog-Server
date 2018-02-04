@@ -1,5 +1,8 @@
 # Android Log Data Server
 
+| distribute | Current Status |
+|--------|--------|
+| JitPack | [![Build Status](https://travis-ci.org/AndroidLogData/Logdata-Server-Spring.svg?branch=develop)](https://travis-ci.org/AndroidLogData/Logdata-Server-Spring) |
 안드로이드 로그 데이터를 관리하기 위한 서버
 
 ## Installation
