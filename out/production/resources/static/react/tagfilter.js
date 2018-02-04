@@ -4,8 +4,6 @@ import LogDataBox from './logdata';
 const TagFilter = ({ match }) => {
     let tagFilterUrl = '/logdatatagfilter/query?tag=' + match.params.tag;
 
-    console.log(tagFilterUrl);
-
     return (
         <div>
             <LogDataBox url={tagFilterUrl}/>

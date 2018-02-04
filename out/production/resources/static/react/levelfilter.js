@@ -15,7 +15,6 @@ const LevelFilter = ({ match }) => {
     } else if (match.params.level === 'e') {
         levelFilterUrl = '/logdatalevelfilter/query?level=e';
     }
-    console.log(levelFilterUrl);
 
     return (
         <div>

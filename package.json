@@ -4,7 +4,8 @@
   "description": "안드로이드 로그 데이터를 관리하기 위한 서버",
   "main": "app.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --host 0.0.0.0",
+    "start": "webpack --config webpack.config.prod.js",
+    "develop": "webpack-dev-server --config webpack.config.dev.js --hot --host 0.0.0.0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
