@@ -110,7 +110,6 @@ class LogDataBox extends React.Component {
             dataType: 'json',
             cache: false,
             success: function (data) {
-                console.log(this.props.url);
                 this.setState({logData: data.logData});
             }.bind(this),
             error: function (xhr, status, err) {

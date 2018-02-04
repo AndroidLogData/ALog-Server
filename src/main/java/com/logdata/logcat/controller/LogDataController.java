@@ -2,6 +2,7 @@ package com.logdata.logcat.controller;
 
 import com.logdata.logcat.model.LogVO;
 import com.logdata.logcat.model.LogDataListResponse;
+import com.logdata.logcat.model.SetDataListResponse;
 import com.logdata.logcat.model.UserVO;
 import com.logdata.logcat.repository.LogDataRepository;
 import com.logdata.logcat.repository.UserDataRepository;
@@ -26,71 +27,8 @@ public class LogDataController {
     private UserDataRepository userDataRepository;
 
     @RequestMapping(value = "/logdata", method = RequestMethod.GET)
-    public String logDataView(Principal user, Model model) {
-        List<LogVO> logData = this.repository.findByApiKey(getUserApiKey(user), new Sort(Sort.Direction.DESC, "time"));
-
-        model.addAttribute("items", logData);
-        model.addAttribute("tagItems", getTag());
-        model.addAttribute("packageNameItems", getPackageName());
-
+    public String logDataView() {
         return "logdata";
-    }
-
-//    @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
-//    public String logDataLevelView(Principal user, @RequestParam(value = "level") String level, Model model) {
-//        List<LogVO> logData = this.repository.findByLevel(getUserApiKey(user), level, new Sort(Sort.Direction.DESC, "time"));
-//
-//        model.addAttribute("items", logData);
-//        model.addAttribute("tagItems", getTag());
-//        model.addAttribute("packageNameItems", getPackageName());
-//
-//        return "logdata";
-//    }
-
-    @RequestMapping(value = "/logdatatagfilter/{tag}", method = RequestMethod.GET)
-    public String logDataTagView(Principal user, @RequestParam(value = "tag") String tag, Model model) {
-        List<LogVO> logData = this.repository.findByApiKeyAndTag(getUserApiKey(user), tag, new Sort(Sort.Direction.DESC, "time"));
-
-        model.addAttribute("items", logData);
-        model.addAttribute("tagItems", getTag());
-        model.addAttribute("packageNameItems", getPackageName());
-
-        return "logdata";
-    }
-
-    @RequestMapping(value = "/logdatapackagenamefilter/{packageName}", method = RequestMethod.GET)
-    public String logDataPackageNameView(Principal user, @RequestParam(value = "packageName") String packageName, Model model) {
-        List<LogVO> logData = this.repository.findByApiKeyAndPackageName(getUserApiKey(user), packageName, new Sort(Sort.Direction.DESC, "time"));
-
-        model.addAttribute("items", logData);
-        model.addAttribute("tagItems", getTag());
-        model.addAttribute("packageNameItems", getPackageName());
-
-        return "logdata";
-    }
-
-    private Set<String> getTag() {
-        List<LogVO> logData = this.repository.findAll();
-
-        Set<String> tagSet = new HashSet<String>();
-
-        for (LogVO data : logData) {
-            tagSet.add(data.getTag());
-        }
-
-        return tagSet;
-    }
-
-    private Set<String> getPackageName() {
-        List<LogVO> logData = this.repository.findAll();
-
-        Set<String> packageNameSet = new HashSet<String>();
-
-        for (LogVO data : logData) {
-            packageNameSet.add(data.getPackageName());
-        }
-
-        return packageNameSet;
     }
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
@@ -144,16 +82,59 @@ public class LogDataController {
         return new LogDataListResponse(logVOList);
     }
 
-    //    @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET)
-//    public String logDataLevelView(Principal user, @RequestParam(value = "level") String level, Model model) {
-//        List<LogVO> logData = this.repository.findByLevel(getUserApiKey(user), level, new Sort(Sort.Direction.DESC, "time"));
-//
-//        model.addAttribute("items", logData);
-//        model.addAttribute("tagItems", getTag());
-//        model.addAttribute("packageNameItems", getPackageName());
-//
-//        return "logdata";
-//    }
+    @RequestMapping(value = "/logdatatagfilter/{tag}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public LogDataListResponse logDataTagList(Principal user, @RequestParam(value = "tag") String tag) {
+        List<LogVO> logVOList = this.repository.findByApiKeyAndTag(getUserApiKey(user), tag, new Sort(Sort.Direction.DESC, "time"));
+
+        for (LogVO data : logVOList) {
+            data.setStringTime(Utility.getTime(data.getTime()));
+        }
+        return new LogDataListResponse(logVOList);
+    }
+
+    @RequestMapping(value = "/logdatapackagenamefilter/{packagename}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public LogDataListResponse logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {
+        List<LogVO> logVOList = this.repository.findByApiKeyAndPackageName(getUserApiKey(user), packageName, new Sort(Sort.Direction.DESC, "time"));
+
+        for (LogVO data : logVOList) {
+            data.setStringTime(Utility.getTime(data.getTime()));
+        }
+        return new LogDataListResponse(logVOList);
+    }
+
+    @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    private SetDataListResponse getTag2(Principal user) {
+        List<LogVO> setData = this.repository.findByApiKey(getUserApiKey(user));
+
+        Set<String> tagSet = new HashSet<String>();
+
+        for (LogVO data : setData) {
+            tagSet.add(data.getTag());
+        }
+
+        return new SetDataListResponse(tagSet);
+    }
+
+    @RequestMapping(value = "/packagenamedatalist", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    private SetDataListResponse getPackageName2(Principal user) {
+        List<LogVO> setData = this.repository.findByApiKey(getUserApiKey(user));
+
+        Set<String> packageNameSet = new HashSet<String>();
+
+        for (LogVO data : setData) {
+            packageNameSet.add(data.getPackageName());
+        }
+
+        return new SetDataListResponse(packageNameSet);
+    }
 
     public String getUserApiKey(Principal user) {
         UserVO u = this.userDataRepository.findByUserID(user.getName());
