@@ -8,6 +8,9 @@ branches:
   only:
     - develop
 
+before_install:
+ - chmod +x gradlew
+
 cache:
   directories:
     - $HOME/.gradle/caches/
@@ -15,7 +18,7 @@ cache:
     - $HOME/.m2
 
 script:
-  - sudo gradle npmInstall clean build
+  - gradle npmInstall clean build
 
 # CI 실행 완료시 메일로 알람
 notifications:
