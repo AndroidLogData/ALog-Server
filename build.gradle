@@ -47,6 +47,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.springframework.boot:spring-boot-starter-security")
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '2.1.2.RELEASE'
     compile('com.google.code.gson:gson:2.8.2')
     compile('joda-time:joda-time:2.9.9')
     testCompile('org.springframework.boot:spring-boot-starter-test')

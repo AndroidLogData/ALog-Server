@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9ab1d3b35bb7a1987128"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0a82375681f45827a176"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1612,15 +1612,15 @@ class LogDataListRow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
         if (this.props.logData.level === 'v') {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "panel panel-success" },
+                { className: "card" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-heading" },
+                    { className: "card-header card-success" },
                     "Verb"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-body" },
+                    { className: "card-block" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "p",
                         null,
@@ -1650,15 +1650,15 @@ class LogDataListRow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
         } else if (this.props.logData.level === 'w') {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "panel panel-warning" },
+                { className: "card" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-heading" },
+                    { className: "card-header card-warning" },
                     "Warning"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-body" },
+                    { className: "card-block" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "p",
                         null,
@@ -1688,15 +1688,15 @@ class LogDataListRow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
         } else if (this.props.logData.level === 'i') {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "panel panel-info" },
+                { className: "card" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-heading" },
+                    { className: "card-header card-info" },
                     "Info"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-body" },
+                    { className: "card-block" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "p",
                         null,
@@ -1726,15 +1726,15 @@ class LogDataListRow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
         } else if (this.props.logData.level === 'd') {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "panel panel-primary" },
+                { className: "card" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-heading" },
+                    { className: "card-header card-primary" },
                     "Debug"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-body" },
+                    { className: "card-block" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "p",
                         null,
@@ -1764,15 +1764,15 @@ class LogDataListRow extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compo
         } else if (this.props.logData.level === 'e') {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "panel panel-danger" },
+                { className: "card" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-heading" },
+                    { className: "card-header card-danger" },
                     "Error"
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "panel-body" },
+                    { className: "card-block" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "p",
                         null,
@@ -1809,13 +1809,18 @@ class LogDataList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
         let logDataNodes = [];
 
         for (i = 0; i < this.props.logData.length; i++) {
-            logDataNodes.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LogDataListRow, { logData: this.props.logData[i] }));
+            logDataNodes.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(LogDataListRow, { logData: this.props.logData[i] }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("br", null)
+            ));
         }
 
         if (logDataNodes.length === 0) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "logDataList" },
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "h1",
                     null,
@@ -1825,7 +1830,7 @@ class LogDataList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Componen
         } else {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "logDataList" },
+                null,
                 logDataNodes
             );
         }
@@ -24426,82 +24431,62 @@ class FilterBar extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
     render() {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
-            { className: 'panel panel-default' },
+            null,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'panel-heading' },
+                { className: 'card' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'h3',
-                    { className: 'panel-title' },
+                    { className: 'card-header' },
                     'Filter'
-                )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'panel-body' },
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'btn-group' },
+                    { className: 'card-block' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { type: 'button', className: 'btn btn-default dropdown-toggle', 'data-toggle': 'dropdown',
-                            'aria-expanded': 'false' },
-                        'Level ',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'caret' })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'ul',
-                        { className: 'dropdown-menu', role: 'menu' },
+                        'div',
+                        { className: 'btn-group' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'li',
-                            null,
+                            'button',
+                            { type: 'button', className: 'btn btn-secondary dropdown-toggle', 'data-toggle': 'dropdown',
+                                'aria-haspopup': 'true', 'aria-expanded': 'false' },
+                            'Level'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'dropdown-menu', 'aria-labelledby': 'dropdownMenuButton' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                { to: '/levelfilter/i' },
+                                { className: 'dropdown-item', to: '/levelfilter/i' },
                                 'i'
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'li',
-                            null,
+                            ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                { to: '/levelfilter/d' },
+                                { className: 'dropdown-item', to: '/levelfilter/d' },
                                 'd'
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'li',
-                            null,
+                            ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                { to: '/levelfilter/w' },
+                                { className: 'dropdown-item', to: '/levelfilter/w' },
                                 'w'
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'li',
-                            null,
+                            ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                { to: '/levelfilter/v' },
+                                { className: 'dropdown-item', to: '/levelfilter/v' },
                                 'v'
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'li',
-                            null,
+                            ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                { to: '/levelfilter/e' },
+                                { className: 'dropdown-item', to: '/levelfilter/e' },
                                 'e'
                             )
                         )
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(TagList, null),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PackageNameList, null)
-            )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(TagList, null),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PackageNameList, null)
+                )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null)
         );
     }
 }
@@ -24550,13 +24535,10 @@ class TagList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
         for (i = 0; i < this.state.logData.length; i++) {
             tagNodes.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'li',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                    { to: { pathname: '/tagfilter/' + this.state.logData[i] } },
-                    this.state.logData[i]
-                )
+                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                { className: 'dropdown-item',
+                    to: { pathname: '/tagfilter/' + this.state.logData[i] } },
+                this.state.logData[i]
             ));
         }
 
@@ -24565,14 +24547,13 @@ class TagList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             { className: 'btn-group' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
-                { type: 'button', className: 'btn btn-default dropdown-toggle', 'data-toggle': 'dropdown',
-                    'aria-expanded': 'false' },
-                'Tag ',
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'caret' })
+                { type: 'button', className: 'btn btn-secondary dropdown-toggle', 'data-toggle': 'dropdown',
+                    'aria-haspopup': 'true', 'aria-expanded': 'false' },
+                'Tag'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'ul',
-                { className: 'dropdown-menu', role: 'menu' },
+                'div',
+                { className: 'dropdown-menu', 'aria-labelledby': 'dropdownMenuButton' },
                 tagNodes
             )
         );
@@ -24623,13 +24604,10 @@ class PackageNameList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Comp
 
         for (i = 0; i < this.state.logData.length; i++) {
             packageNameNodes.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'li',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                    { to: { pathname: '/packagenamefilter/' + this.state.logData[i] } },
-                    this.state.logData[i]
-                )
+                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                { className: 'dropdown-item',
+                    to: { pathname: '/packagenamefilter/' + this.state.logData[i] } },
+                this.state.logData[i]
             ));
         }
 
@@ -24638,14 +24616,13 @@ class PackageNameList extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Comp
             { className: 'btn-group' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'button',
-                { type: 'button', className: 'btn btn-default dropdown-toggle', 'data-toggle': 'dropdown',
-                    'aria-expanded': 'false' },
-                'Package Name ',
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', { className: 'caret' })
+                { type: 'button', className: 'btn btn-secondary dropdown-toggle', 'data-toggle': 'dropdown',
+                    'aria-haspopup': 'true', 'aria-expanded': 'false' },
+                'PackageName'
             ),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'ul',
-                { className: 'dropdown-menu', role: 'menu' },
+                'div',
+                { className: 'dropdown-menu', 'aria-labelledby': 'dropdownMenuButton' },
                 packageNameNodes
             )
         );
