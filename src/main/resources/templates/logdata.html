@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="head :: headfile">
 </head>
 <body>
-<nav th:include="navigation :: navigation"></nav>
+<nav th:include="navigation :: navigation"/>
+
 <div class="col s12 m10 l10">
     <div th:include="side_menu :: sidemenu">
 
@@ -10,7 +12,6 @@
 </div>
 <div th:fragment="logdataview">
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <!--<script type="text/babel" th:src="@{../assets/bundle.js}"></script>-->
         <script type="text/babel" th:src="@{/react/bundle.js}"></script>
         <div id="root"></div>
     </div>

@@ -15,6 +15,18 @@ class FilterBar extends React.Component {
                     <h3 className="panel-title">Filter</h3>
                 </div>
                 <div className="panel-body">
+                    <div className="dropup">
+                        <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+                            Dropdown
+                            <span className="caret"/>
+                        </button>
+                        <ul className="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                            <li role="presentation"><a role="menuitem" href="#">Action</a></li>
+                            <li role="presentation"><a role="menuitem" href="#">Another action</a></li>
+                            <li role="presentation"><a role="menuitem" href="#">Something else here</a></li>
+                            <li role="presentation"><a role="menuitem" href="#">Separated link</a></li>
+                        </ul>
+                    </div>
                     <div className="btn-group">
                         <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                 aria-expanded="false">
