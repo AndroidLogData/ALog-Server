@@ -10,39 +10,28 @@ class FilterBar extends React.Component {
 
     render() {
         return (
-            <div className="panel panel-default">
-                <div className="panel-heading">
-                    <h3 className="panel-title">Filter</h3>
-                </div>
-                <div className="panel-body">
-                    <div className="dropup">
-                        <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
-                            Dropdown
-                            <span className="caret"/>
-                        </button>
-                        <ul className="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                            <li role="presentation"><a role="menuitem" href="#">Action</a></li>
-                            <li role="presentation"><a role="menuitem" href="#">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" href="#">Something else here</a></li>
-                            <li role="presentation"><a role="menuitem" href="#">Separated link</a></li>
-                        </ul>
+            <div>
+                <div className="card">
+                    <h3 className="card-header">Filter</h3>
+                    <div className="card-block">
+                        <div className="btn-group">
+                            <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                Level
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <Link className="dropdown-item" to="/levelfilter/i">i</Link>
+                                <Link className="dropdown-item" to="/levelfilter/d">d</Link>
+                                <Link className="dropdown-item" to="/levelfilter/w">w</Link>
+                                <Link className="dropdown-item" to="/levelfilter/v">v</Link>
+                                <Link className="dropdown-item" to="/levelfilter/e">e</Link>
+                            </div>
+                        </div>
+                        <TagList/>
+                        <PackageNameList/>
                     </div>
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-expanded="false">
-                            Level <span className="caret"/>
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                            <li><Link to="/levelfilter/i">i</Link></li>
-                            <li><Link to="/levelfilter/d">d</Link></li>
-                            <li><Link to="/levelfilter/w">w</Link></li>
-                            <li><Link to="/levelfilter/v">v</Link></li>
-                            <li><Link to="/levelfilter/e">e</Link></li>
-                        </ul>
-                    </div>
-                    <TagList/>
-                    <PackageNameList/>
                 </div>
+                <br/>
             </div>
         );
     }
@@ -92,19 +81,20 @@ class TagList extends React.Component {
 
         for (i = 0; i < this.state.logData.length; i++) {
             tagNodes.push(
-                <li><Link to={{pathname: '/tagfilter/' + this.state.logData[i]}}>{this.state.logData[i]}</Link></li>
+                <Link className="dropdown-item"
+                      to={{pathname: '/tagfilter/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
             );
         }
 
         return (
             <div className="btn-group">
-                <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false">
-                    Tag <span className="caret"/>
+                <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    Tag
                 </button>
-                <ul className="dropdown-menu" role="menu">
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {tagNodes}
-                </ul>
+                </div>
             </div>
         );
     }
@@ -154,19 +144,20 @@ class PackageNameList extends React.Component {
 
         for (i = 0; i < this.state.logData.length; i++) {
             packageNameNodes.push(
-                <li><Link to={{pathname: '/packagenamefilter/' + this.state.logData[i]}}>{this.state.logData[i]}</Link></li>
+                <Link className="dropdown-item"
+                      to={{pathname: '/packagenamefilter/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
             );
         }
 
         return (
             <div className="btn-group">
-                <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false">
-                    Package Name <span className="caret"/>
+                <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    PackageName
                 </button>
-                <ul className="dropdown-menu" role="menu">
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {packageNameNodes}
-                </ul>
+                </div>
             </div>
         );
     }

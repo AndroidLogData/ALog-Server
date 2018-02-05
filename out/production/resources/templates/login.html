@@ -3,9 +3,9 @@
 <head th:include="head :: headfile">
 </head>
 <body>
-<nav th:include="navigation :: navigation"/>
+<div th:replace="navigation :: navigation"></div>
 <div class="col s12 m10 l10">
-    <div th:include="side_menu :: sidemenu">
+    <div th:replace="side_menu :: sidemenu">
 
     </div>
 </div>
@@ -13,39 +13,37 @@
     <div class="container-fluid">
         <div class="row">
             <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-                <section class="row text-center placeholders">
-                    <div>
-                        <div th:if="${param.error}">
-                            Invalid username and password.
-                        </div>
-                        <div th:if="${param.logout}">
-                            You have been logged out.
-                        </div>
-                        <form th:action="@{/login}" method="post">
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                            <div class="panel panel-default" style="width: 50%">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Login</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">UserID</span>
-                                        <input type="text" id="username" name="username" class="form-control"
-                                               placeholder="Username" aria-describedby="basic-addon1"/>
-                                    </div>
-                                    <br/>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">Password</span>
-                                        <input type="password" id="password" name="password" class="form-control"
-                                               placeholder="Password" aria-describedby="basic-addon1"/>
-                                    </div>
-                                    <br/>
-                                    <button type="submit" class="btn btn-primary">Sign In</button>
-                                </div>
-                            </div>
-                        </form>
+                <div>
+                    <div th:if="${param.error}">
+                        Invalid username and password.
                     </div>
-                </section>
+                    <div th:if="${param.logout}">
+                        You have been logged out.
+                    </div>
+                    <form th:action="@{/login}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <div class="card" style="width: 50%">
+                            <div class="card-header">
+                                <h3>Login</h3>
+                            </div>
+                            <div class="card-block">
+                                <div class="input-group">
+                                    <span class="input-group-addon">UserID</span>
+                                    <input type="text" id="username" name="username" class="form-control"
+                                           placeholder="Username" aria-describedby="basic-addon1"/>
+                                </div>
+                                <br/>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Password</span>
+                                    <input type="password" id="password" name="password" class="form-control"
+                                           placeholder="Password" aria-describedby="basic-addon1"/>
+                                </div>
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Sign In</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </main>
         </div>
     </div>
