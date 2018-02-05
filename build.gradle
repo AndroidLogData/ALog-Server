@@ -37,7 +37,7 @@ task helloWorld(type: NodeTask, dependsOn: 'npmInstall') {
 }
 
 task installReact(type: NpmTask) {
-    args = ['install', '--save', 'react', 'react-dom', 'webpack', 'webpack-dev-server', 'react-bootstrap',
+    args = ['install', '--save', 'react', 'react-dom', 'webpack', 'webpack-dev-server',
             'babel-core', 'babel-loader', 'babel-preset-es2015', 'babel-preset-react', 'css-loader', 'file-loader', 'react-hot-loader',
             'babel-polyfill', 'react-router-dom', 'query-string']
 }
