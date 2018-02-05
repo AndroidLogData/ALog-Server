@@ -2,9 +2,9 @@
 <head th:include="head :: headfile">
 </head>
 <body>
-<nav th:include="navigation :: navigation"></nav>
+<div th:replace="navigation :: navigation"></div>
 <div class="col s12 m10 l10">
-    <div th:include="side_menu :: sidemenu">
+    <div th:replace="side_menu :: sidemenu">
 
     </div>
 </div>

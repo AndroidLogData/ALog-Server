@@ -4,9 +4,11 @@ class LogDataListRow extends React.Component {
     render() {
         if (this.props.logData.level === 'v') {
             return (
-                <div className="panel panel-success">
-                    <div className="panel-heading">Verb</div>
-                    <div className="panel-body">
+                <div className="card">
+                    <div className="card-header card-success">
+                        Verb
+                    </div>
+                    <div className="card-block">
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
@@ -16,9 +18,11 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'w') {
             return (
-                <div className="panel panel-warning">
-                    <div className="panel-heading">Warning</div>
-                    <div className="panel-body">
+                <div className="card">
+                    <div className="card-header card-warning">
+                        Warning
+                    </div>
+                    <div className="card-block">
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
@@ -28,9 +32,11 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'i') {
             return (
-                <div className="panel panel-info">
-                    <div className="panel-heading">Info</div>
-                    <div className="panel-body">
+                <div className="card">
+                    <div className="card-header card-info">
+                        Info
+                    </div>
+                    <div className="card-block">
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
@@ -40,9 +46,11 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'd') {
             return (
-                <div className="panel panel-primary">
-                    <div className="panel-heading">Debug</div>
-                    <div className="panel-body">
+                <div className="card">
+                    <div className="card-header card-primary">
+                        Debug
+                    </div>
+                    <div className="card-block">
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
@@ -52,9 +60,11 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'e') {
             return (
-                <div className="panel panel-danger">
-                    <div className="panel-heading">Error</div>
-                    <div className="panel-body">
+                <div className="card">
+                    <div className="card-header card-danger">
+                        Error
+                    </div>
+                    <div className="card-block">
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
@@ -73,19 +83,22 @@ class LogDataList extends React.Component {
 
         for (i = 0; i < this.props.logData.length; i++) {
             logDataNodes.push(
-                <LogDataListRow logData={this.props.logData[i]}/>
+                <div>
+                    <LogDataListRow logData={this.props.logData[i]}/>
+                    <br/>
+                </div>
             );
         }
 
         if (logDataNodes.length === 0) {
             return (
-                <div className="logDataList">
+                <div>
                     <h1>데이터가 없습니다!</h1>
                 </div>
             );
         } else {
             return (
-                <div className="logDataList">
+                <div>
                     {logDataNodes}
                 </div>
             );

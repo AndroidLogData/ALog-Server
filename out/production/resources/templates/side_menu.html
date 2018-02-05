@@ -2,17 +2,17 @@
 <head th:include="head :: headfile">
 </head>
 <body>
-<nav th:include="navigation :: navigation"></nav>
+<div th:replace="navigation :: navigation"></div>
 <div th:fragment="sidemenu">
-    <div th:fragment="sidemenu" class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
-                    <li><a href="/">Dash Board</a></li>
-                    <li><a href="/logdata">Log Data</a></li>
-                    <li><a href="/crash">Crash Data</a></li>
+            <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item"><a class="nav-link" href="/">Dash Board</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logdata">Log Data</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/crash">Crash Data</a></li>
                 </ul>
-            </div>
+            </nav>
         </div>
     </div>
 </div>
