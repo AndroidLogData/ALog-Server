@@ -10,4 +10,9 @@ public class HelpController {
     public String help() {
         return "help";
     }
+
+    @RequestMapping(value = "/mypage", method = RequestMethod.GET)
+    public String myPage() {
+        return "mypage";
+    }
 }

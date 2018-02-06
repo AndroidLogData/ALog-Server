@@ -24,12 +24,10 @@
                 <div class="row">
                     <div class="card" th:each="item : ${packageName}">
                         <div class="card-block">
-                            <h3 th:text="${item}"/>
-                            <p th:text="'로그 데이터 갯수 : ' + ${summaryData.get(item).getLogDataCount()}"/>
-                            <p th:text="'최근 크래쉬 데이터 : ' + ${summaryData.get(item).getRecentCrashTime()}"/>
-                            <p><a th:href="@{/logdatapackagenamefilter/query(packageName=${item})}"
-                                  class="btn btn-primary"
-                                  role="button">Show</a></p>
+                            <h3 class="card-title" th:text="${item}"/>
+                            <p class="card-text" th:text="'로그 데이터 갯수 : ' + ${summaryData.get(item).getLogDataCount()}"/>
+                            <p class="card-text" th:text="'최근 크래쉬 데이터 : ' + ${summaryData.get(item).getRecentCrashTime()}"/>
+                            <a th:href="@{/logdata.html}" class="btn btn-primary" role="button">Show</a>
                         </div>
                     </div>
                 </div>
