@@ -12,9 +12,32 @@
                     <li class="nav-item"><a class="nav-link" href="/logdata">Log Data</a></li>
                     <li class="nav-item"><a class="nav-link" href="/crash">Crash Data</a></li>
                 </ul>
+
+                <div>
+                    <ul class="nav nav-pills flex-column" id="packageNameList"></ul>
+                </div>
             </nav>
         </div>
     </div>
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: '/packagenamedatalist',
+                dataType: "json",
+                cache: false,
+                success: function (data) {
+                    $.each(data.logData, function (index, value) {
+                        const text = '<li class="nav-item"><a class="nav-link" href="/logdatapackagenamefilter/query?packageName=' + value + '">' + value + '</a></li>';
+                        encodeURI(text);
+                        $("#packageNameList").append(text);
+                    });
+                },
+                error: function (data) {
+                    console.log("error");
+                }
+            });
+        });
+    </script>
 </div>
 </body>
 </html>
