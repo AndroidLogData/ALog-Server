@@ -12,7 +12,6 @@ class LogDataListRow extends React.Component {
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
-                        <p>Level : {this.props.logData.level}</p>
                     </div>
                 </div>
             );
@@ -26,7 +25,6 @@ class LogDataListRow extends React.Component {
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
-                        <p>Level : {this.props.logData.level}</p>
                     </div>
                 </div>
             );
@@ -40,7 +38,6 @@ class LogDataListRow extends React.Component {
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
-                        <p>Level : {this.props.logData.level}</p>
                     </div>
                 </div>
             );
@@ -54,7 +51,6 @@ class LogDataListRow extends React.Component {
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
-                        <p>Level : {this.props.logData.level}</p>
                     </div>
                 </div>
             );
@@ -68,7 +64,6 @@ class LogDataListRow extends React.Component {
                         <p>Time : {this.props.logData.stringTime}</p>
                         <p>Tag : {this.props.logData.tag}</p>
                         <p>Message : {this.props.logData.message}</p>
-                        <p>Level : {this.props.logData.level}</p>
                     </div>
                 </div>
             );
@@ -85,7 +80,6 @@ class LogDataList extends React.Component {
             logDataNodes.push(
                 <div>
                     <LogDataListRow logData={this.props.logData[i]}/>
-                    <br/>
                 </div>
             );
         }

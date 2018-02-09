@@ -20,6 +20,9 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+    maven {
+        url 'https://repo.spring.io/libs-snapshot'
+    }
 }
 
 
@@ -27,7 +30,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
-    compile("org.springframework.boot:spring-boot-starter-security")
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile('org.springframework.session:spring-session')
 	compile('joda-time:joda-time:2.9.9')
 	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '2.1.2.RELEASE'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
