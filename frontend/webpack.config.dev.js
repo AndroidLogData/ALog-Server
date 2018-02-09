@@ -4,7 +4,7 @@ const webpack = require('webpack');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const PATHS = {
-    build: path.resolve(__dirname, 'backend', 'src', 'main', 'resources', 'static', 'react')
+    build: path.resolve(__dirname, '..', 'backend', 'src', 'main', 'resources', 'static', 'react')
 };
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
         inline: true,
         port: 3000,
         publicPath: "/react/",
-        contentBase: '../backend/src/main/resources/templates',
+        contentBase: './src/main/resources/templates',
         proxy: {
             "**": "http://localhost:8080"
         }

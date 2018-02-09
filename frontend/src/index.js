@@ -1,8 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import {
+    BrowserRouter as Router,
+    Route
+} from 'react-router-dom'
+import App from './app';
+import LevelFilter from './levelfilter'
+import TagFilter from './tagfilter';
+import PackageFilter from './packagefilter';
+import FilterBar from './filterbar';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+const rootElement = document.getElementById('root');
+// ReactDOM.render(<App />, rootElement);
+
+ReactDOM.render(<Router>
+    <div>
+        <FilterBar/>
+        <Route path="/logdata" component={App}/>
+        <Route path="/levelfilter/:level" component={LevelFilter}/>
+        <Route path="/tagfilter/:tag" component={TagFilter}/>
+        <Route path="/packagenamefilter/:packagename" component={PackageFilter}/>
+    </div>
+</Router>, rootElement);

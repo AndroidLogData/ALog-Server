@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="head :: headfile">
+</head>
+<body>
+<div th:replace="navigation :: navigation"></div>
+<div th:replace="side_menu :: sidemenu"></div>
+<div th:fragment="logdataview">
+    <div class="container-fluid">
+        <div class="row">
+            <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+                <div id="root"></div>
+
+                <div th:each="item : ${items}">
+                    <div th:if="${item.level} == 'v'" class="panel panel-success">
+                        <div class="panel-heading">Verb</div>
+                        <div class="panel-body">
+                            <p th:text="'Time : ' + ${item.getStringTime()}"/>
+                            <p th:text="'Tag : ' + ${item.getTag()}"/>
+                            <p th:text="'Message : ' + ${item.getMessage()}"/>
+                            <p th:text="'Level : ' + ${item.getLevel()}"/>
+                        </div>
+                    </div>
+                    <div th:if="${item.level} == 'i'" class="panel panel-info">
+                        <div class="panel-heading">Info</div>
+                        <div class="panel-body">
+                            <p th:text="'Time : ' + ${item.getStringTime()}"/>
+                            <p th:text="'Tag : ' + ${item.getTag()}"/>
+                            <p th:text="'Message : ' + ${item.getMessage()}"/>
+                            <p th:text="'Level : ' + ${item.getLevel()}"/>
+                        </div>
+                    </div>
+                    <div th:if="${item.level} == 'd'" class="panel panel-primary">
+                        <div class="panel-heading">Debug</div>
+                        <div class="panel-body">
+                            <p th:text="'Time : ' + ${item.getStringTime()}"/>
+                            <p th:text="'Tag : ' + ${item.getTag()}"/>
+                            <p th:text="'Message : ' + ${item.getMessage()}"/>
+                            <p th:text="'Level : ' + ${item.getLevel()}"/>
+                        </div>
+                    </div>
+                    <div th:if="${item.level} == 'e'" class="panel panel-danger">
+                        <div class="panel-heading">Error</div>
+                        <div class="panel-body">
+                            <p th:text="'Time : ' + ${item.getStringTime()}"/>
+                            <p th:text="'Tag : ' + ${item.getTag()}"/>
+                            <p th:text="'Message : ' + ${item.getMessage()}"/>
+                            <p th:text="'Level : ' + ${item.getLevel()}"/>
+                        </div>
+                    </div>
+                    <div th:if="${item.level} == 'w'" class="panel panel-warning">
+                        <div class="panel-heading">Warning</div>
+                        <div class="panel-body">
+                            <p th:text="'Time : ' + ${item.getStringTime()}"/>
+                            <p th:text="'Tag : ' + ${item.getTag()}"/>
+                            <p th:text="'Message : ' + ${item.getMessage()}"/>
+                            <p th:text="'Level : ' + ${item.getLevel()}"/>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/react/bundle.js}"></script>
+</body>
+</html>

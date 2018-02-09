@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="head :: headfile">
+</head>
+<body>
+<div th:replace="navigation :: navigation"></div>
+<div th:replace="side_menu :: sidemenu"></div>
+<div th:fragment="login">
+    <div class="container-fluid">
+        <div class="row">
+            <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+                <div>
+                    <div th:if="${param.error}">
+                        Invalid username and password.
+                    </div>
+                    <div th:if="${param.logout}">
+                        You have been logged out.
+                    </div>
+                    <form th:action="@{/login}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <div class="card" style="width: 50%">
+                            <div class="card-header">
+                                <h3>Login</h3>
+                            </div>
+                            <div class="card-block">
+                                <div class="input-group">
+                                    <span class="input-group-addon">UserID</span>
+                                    <input type="text" id="username" name="username" class="form-control"
+                                           placeholder="Username" aria-describedby="basic-addon1"/>
+                                </div>
+                                <br/>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Password</span>
+                                    <input type="password" id="password" name="password" class="form-control"
+                                           placeholder="Password" aria-describedby="basic-addon1"/>
+                                </div>
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Sign In</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+</body>
+</html>
