@@ -41,5 +41,7 @@ jobs:
       # run tests!
       # - run: gradle test
       - run:
-        - cd backend
-        - gradle clean build
+        name: gradle build
+        command:
+          cd backend
+          gradle clean build
