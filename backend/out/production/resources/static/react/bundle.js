@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "07316ca5a460dd7ac385"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a7fae286408439173c79"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1984,7 +1984,7 @@ var LogData = function (_React$Component4) {
                         'main',
                         { className: 'col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3' },
                         _react2.default.createElement(_filterbar2.default, null),
-                        _react2.default.createElement(LogDataBox, { url: '/logdatalist' })
+                        _react2.default.createElement(LogDataBox, { url: this.props.url })
                     )
                 )
             );

@@ -43,7 +43,7 @@ class MainPage extends React.Component {
                         <p className="card-text">로그 데이터 갯수 : {this.state.logData[i].logDataCount}</p>
                         <p className="card-text">최근 크래쉬 데이터
                             : {this.state.logData[i].recentCrashTime == null ? 'null' : this.state.logData[i].recentCrashTime}</p>
-                        <Link to={{pathname: '/packagenamefilter/' + this.state.logData[i]}}
+                        <Link to={{pathname: '/packagenamefilter/' + this.state.logData[i].packageName}}
                               className="btn btn-primary" role="button">Show</Link>
                     </div>
                 </div>
