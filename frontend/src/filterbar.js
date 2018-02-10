@@ -62,17 +62,9 @@ class TagList extends React.Component {
         });
     }
 
-    componentDidMount() {
+    shouldComponentUpdate(nextProps, nextState) {
         this.fetchTagData();
-    }
-
-    shouldComponentUpdate() {
-        this.fetchTagData();
-        return true;
-    }
-
-    componentWillReceiveProps() {
-        this.fetchTagData();
+        return nextState.length !== this.state.logData.length;
     }
 
     render() {
@@ -125,17 +117,9 @@ class PackageNameList extends React.Component {
         });
     }
 
-    componentDidMount() {
+    shouldComponentUpdate(nextProps, nextState) {
         this.fetchPackageNameData();
-    }
-
-    shouldComponentUpdate() {
-        this.fetchPackageNameData();
-        return true;
-    }
-
-    componentWillReceiveProps() {
-        this.fetchPackageNameData();
+        return nextState.length !== this.state.logData.length;
     }
 
     render() {

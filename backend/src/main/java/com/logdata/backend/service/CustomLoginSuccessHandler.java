@@ -19,6 +19,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
                                         Authentication authentication) throws ServletException, IOException {
         HttpSession session = request.getSession();
         System.out.println("Login : " + session.getId());
+        session.setAttribute("ID", session.getId());
         if (session != null) {
             String redirectUrl = (String) session.getAttribute("prevPage");
             if (redirectUrl != null) {

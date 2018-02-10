@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import FilterBar from './filterbar';
 
 class LogDataListRow extends React.Component {
     render() {
@@ -125,17 +126,9 @@ class LogDataBox extends React.Component {
         });
     }
 
-    componentDidMount() {
+    shouldComponentUpdate(nextProps, nextState) {
         this.fetchLogData();
-    }
-
-    shouldComponentUpdate() {
-        this.fetchLogData();
-        return true;
-    }
-
-    componentWillReceiveProps() {
-        this.fetchLogData();
+        return nextState.length !== this.state.logData.length;
     }
 
     render() {
@@ -147,4 +140,19 @@ class LogDataBox extends React.Component {
     }
 }
 
-export default LogDataBox;
+class LogData extends React.Component {
+    render() {
+        return (
+            <div className="container-fluid">
+                <div className="row">
+                    <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+                        <FilterBar/>
+                        <LogDataBox url={this.props.url}/>
+                    </main>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default LogData;

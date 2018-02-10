@@ -27,11 +27,4 @@ public class HelpController {
 
         return "index";
     }
-
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
-        System.out.println("Logout : " + session.getId());
-        session.invalidate();
-        return "index";
-    }
 }

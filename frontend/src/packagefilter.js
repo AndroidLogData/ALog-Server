@@ -1,12 +1,12 @@
 import React from 'react';
-import LogDataBox from './logdata';
+import LogData from './logdata';
 
 const PackageFilter = ({ match }) => {
     let packageFilterUrl = '/logdatapackagenamefilter/query?packagename=' + match.params.packagename;
 
     return (
         <div>
-            <LogDataBox url={packageFilterUrl}/>
+            <LogData url={packageFilterUrl}/>
         </div>
     );
 };
