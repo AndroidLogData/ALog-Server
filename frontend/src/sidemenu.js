@@ -1,11 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from 'react-router-dom';
-import PackageFilter from './packagefilter';
+import {Link} from 'react-router-dom';
+import $ from 'jquery';
 
 class SideMenu extends React.Component {
     constructor(props) {

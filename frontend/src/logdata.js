@@ -1,5 +1,6 @@
 import React from 'react';
 import FilterBar from './filterbar';
+import $ from 'jquery';
 
 class LogDataListRow extends React.Component {
     render() {

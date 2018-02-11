@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     Link
-} from 'react-router-dom'
+} from 'react-router-dom';
+import $ from 'jquery';
 
 class FilterBar extends React.Component {
     constructor(props) {

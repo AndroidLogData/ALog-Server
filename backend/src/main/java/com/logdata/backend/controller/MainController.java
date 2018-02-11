@@ -27,32 +27,6 @@ public class MainController {
     @Autowired
     private UserDataRepository userDataRepository;
 
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    public String index(Principal user, Model model) {
-//        if (user == null) {
-//            return "index";
-//        }
-//        UserVO u = this.userDataRepository.findByUserID(user.getName());
-//
-//        Set<String> logData = getPackageName(u.getApiKey());
-//        HashMap<String, MainPageVO> map = new HashMap<String, MainPageVO>();
-//
-//        for (String packageName : logData) {
-//            int logDataCount = this.logDataRepository.findByPackageNameAndApiKey(packageName, u.getApiKey()).size();
-//            CrashVO crashTime = this.crashDataRepository.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, u.getApiKey());
-//            if (crashTime == null) {
-//                map.put(packageName, new MainPageVO(packageName, logDataCount, null));
-//            } else {
-//                map.put(packageName, new MainPageVO(packageName, logDataCount, crashTime.getTime()));
-//            }
-//        }
-//
-//        model.addAttribute("packageName", logData);
-//        model.addAttribute("summaryData", map);
-//
-//        return "index";
-//    }
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "index";
@@ -94,13 +68,6 @@ public class MainController {
         }
 
         return new MainPageDataListResponse(list);
-
-//        List<LogVO> logVOList = this.logDataRepository.findByApiKey(getUserApiKey(user), new Sort(Sort.Direction.DESC, "time"));
-//
-//        for (LogVO data : logVOList) {
-//            data.setStringTime(Utility.getTime(data.getTime()));
-//        }
-//        return new LogDataListResponse(logVOList);
     }
 
     public String getUserApiKey(Principal user) {
