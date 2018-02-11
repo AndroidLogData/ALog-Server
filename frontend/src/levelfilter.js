@@ -1,5 +1,5 @@
 import React from 'react';
-import LogDataBox from './logdata';
+import LogData from './logdata';
 
 const LevelFilter = ({ match }) => {
     let levelFilterUrl = "";
@@ -18,7 +18,7 @@ const LevelFilter = ({ match }) => {
 
     return (
         <div>
-            <LogDataBox url={levelFilterUrl}/>
+            <LogData url={levelFilterUrl}/>
         </div>
     );
 };

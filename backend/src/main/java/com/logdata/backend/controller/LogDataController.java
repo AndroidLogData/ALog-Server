@@ -141,12 +141,11 @@ public class LogDataController {
         return u.getApiKey();
     }
 
-    @RequestMapping(value = "/logdatapackagenamefilter/{packageName}", method = RequestMethod.GET)
-    public String logDataPackageNameView(Principal user, @RequestParam(value = "packageName") String packageName, Model model) {
-        List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndPackageName(getUserApiKey(user), packageName, new Sort(Sort.Direction.DESC, "time"));
-
-        model.addAttribute("items", logVOList);
-
-        return "logdata";
+    @RequestMapping(value = "/packagenamefilter/{packageName}", method = RequestMethod.GET)
+    public String logDataPackageNameView(Principal user) {
+        if (user == null) {
+            return "login";
+        }
+        return "index";
     }
 }

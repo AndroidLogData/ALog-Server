@@ -1,5 +1,6 @@
 package com.logdata.backend.config;
 
+import com.logdata.backend.service.CustomLoginSuccessHandler;
 import com.logdata.backend.service.CustomRequestMatcher;
 import com.logdata.backend.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/crash").authenticated()
                 .and().formLogin()
                 .loginPage("/login")
+                .successHandler(new CustomLoginSuccessHandler("/"))
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/")
                 .failureUrl("/login")
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .and()
+                .sessionManagement()
+                .maximumSessions(1);
     }
 
     @Bean
