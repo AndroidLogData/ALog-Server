@@ -4,9 +4,9 @@ jdk:
 
 sudo: true
 
-branches:
-  only:
-    - develop
+#branches:
+#  only:
+#    - develop
 
 before_install:
  - cd backend

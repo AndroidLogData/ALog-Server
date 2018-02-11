@@ -40,7 +40,8 @@ jobs:
 
       # run tests!
       - run:
+          name: change directory
+          command: cd backend
+      - run:
           name: gradle build
-          command:
-            cd backend
-            gradle clean build
+          command: gradle clean build

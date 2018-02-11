@@ -20,11 +20,4 @@ public class HelpController {
     public String myPage() {
         return "mypage";
     }
-
-    @RequestMapping(value="/session", method = RequestMethod.GET)
-    String uid(HttpSession session, Model model, @RequestParam HashMap param) {
-        System.out.println(session.getId());
-
-        return "index";
-    }
 }
