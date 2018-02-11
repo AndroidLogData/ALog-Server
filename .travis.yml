@@ -9,7 +9,7 @@ sudo: true
 #    - develop
 
 before_install:
- - cd backend
+# - cd backend
  - chmod +x gradlew
 
 cache:
