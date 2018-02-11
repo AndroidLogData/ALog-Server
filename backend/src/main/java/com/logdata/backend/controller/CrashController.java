@@ -55,7 +55,8 @@ public class CrashController {
 
         LinkedHashSet<ChartVO> chartData = new LinkedHashSet<ChartVO>();
         for (CrashVO data : chartTimeData) {
-            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()) + " " + Utility.getChartDataTime(data.getTime())));
+//            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()) + " " + Utility.getChartDataTime(data.getTime())));
+            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
         }
 
         model.addAttribute("crash", crashVO);

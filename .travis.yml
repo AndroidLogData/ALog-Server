@@ -9,6 +9,7 @@ branches:
     - develop
 
 before_install:
+ - cd backend
  - chmod +x gradlew
 
 cache:
