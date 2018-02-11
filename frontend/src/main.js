@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import $ from 'jquery';
+import SideMenu from './sidemenu';
 
 class MainPage extends React.Component {
     constructor(props) {
@@ -54,7 +55,21 @@ class MainPage extends React.Component {
         }
 
         if (mainData.length === 0) {
-            return null;
+            return (
+                <div className="container-fluid">
+                    <div className="row">
+                        <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+                            <h1>Dashboard</h1>
+
+                            <div className="jumbotron">
+                                <h1>Android Log Data Viewer</h1>
+                                <hr className="my-4"/>
+                                <p>안드로이드 로그 데이터와 메모리 관리를 위한 페이지</p>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
         } else {
             return (
                 <div className="container-fluid">

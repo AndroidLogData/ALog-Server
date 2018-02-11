@@ -46,7 +46,16 @@ class SideMenu extends React.Component {
         }
 
         if (packageNameNode.length === 0) {
-            return null;
+            return (
+                <div className="container-fluid">
+                    <div className="row">
+                        <nav className="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+                            <ul className="nav nav-pills flex-column">
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            );
         } else {
             return (
                 <div className="container-fluid">
