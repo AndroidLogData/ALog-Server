@@ -73,6 +73,7 @@ public class CrashController {
         model.addAttribute("model", crashVO.getBuild().get("MODEL"));
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
+        model.addAttribute("timeData", getCrashTime(user));
 
         return "crash";
     }
@@ -91,7 +92,7 @@ public class CrashController {
         CrashVO crashVO = this.crashDataRepository.findCrashDataByTime(dt);
         List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(u.getApiKey(), new Sort(Sort.Direction.ASC, "time"));
 
-        if (crashVO == null || u.getApiKey().equals(crashVO.getApiKey())) {
+        if (crashVO == null || !(u.getApiKey().equals(crashVO.getApiKey()))) {
             return "nodata";
         }
 
@@ -123,8 +124,22 @@ public class CrashController {
         model.addAttribute("model", crashVO.getBuild().get("MODEL"));
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
+        model.addAttribute("timeData", getCrashTime(user));
 
         return "crash";
+    }
+
+    public ArrayList<DateTime> getCrashTime(Principal user) {
+        UserVO u = this.userDataRepository.findByUserID(user.getName());
+
+        ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyOrderByTimeAsc(u.getApiKey());
+        ArrayList<DateTime> times = new ArrayList<DateTime>();
+
+        for (CrashVO data : list) {
+            times.add(data.getTime());
+        }
+
+        return times;
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)

@@ -70,7 +70,8 @@
                             var chartData = activePoints[0]['_chart'].config.data;
                             var idx = activePoints[0]['_index'];
 
-                            window.location.href = "http://52.231.37.113:8080/crashtimefilter/query?time=" + chartData.datasets[0].data[idx].x + " " + chartData.datasets[0].data[idx].y;
+                            // window.location.href = "http://52.231.37.113:8080/crashtimefilter/query?time=" + chartData.datasets[0].data[idx].x + " " + chartData.datasets[0].data[idx].y;
+                            window.location.href = "http://localhost:8080/crashtimefilter/query?time=" + chartData.datasets[0].data[idx].x + " " + chartData.datasets[0].data[idx].y;
                         }
                     };
                     /*]]>*/
@@ -83,10 +84,25 @@
                                 <a class="nav-link active" data-toggle="tab" href="#crashdata">Crash Data</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#menu1">menu1</a>
+                                <a class="nav-link" data-toggle="tab" href="#deviceFeatures">Device Features</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#menu2">menu2</a>
+                                <a class="nav-link" data-toggle="tab" href="#logcat">Logcat</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        기록
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right justify-content-md-end"
+                                         style="height: auto; max-height: 200px; overflow-x: hidden;" aria-labelledby="dropdown03">
+                                        <div th:each="item : ${timeData}">
+                                            <a class="dropdown-item" th:href="@{http://localhost:8080/crashtimefilter/query(time=${item})}" th:text="${item}"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </h5>
@@ -166,12 +182,40 @@
                                             <td>MainBoard</td>
                                             <td th:text="${board}"></td>
                                         </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="deviceFeatures" class="tab-pane fade">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Value</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
                                         <tr>
                                             <td>Device Features</td>
                                             <td>
                                                 <p th:each="item : ${deviceFeatures}" th:text="${item}"></p>
                                             </td>
                                         </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="logcat" class="tab-pane fade">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Value</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
                                         <tr>
                                             <td>Logcat</td>
                                             <td>
@@ -181,14 +225,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                            <div id="menu1" class="tab-pane fade">
-                                <h3>Menu 1</h3>
-                                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            </div>
-                            <div id="menu2" class="tab-pane fade">
-                                <h3>Menu 2</h3>
-                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface CrashDataRepository extends MongoRepository<CrashVO, String> {
@@ -13,4 +14,5 @@ public interface CrashDataRepository extends MongoRepository<CrashVO, String> {
     CrashVO findCrashDataByOrderByTimeDescPackageName(String packageName);
     CrashVO findByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey);
     List<CrashVO> findByApiKeyOrderByTimeDesc(String apiKey, Sort sort);
+    ArrayList<CrashVO> findByApiKeyOrderByTimeAsc(String apiKey);
 }
