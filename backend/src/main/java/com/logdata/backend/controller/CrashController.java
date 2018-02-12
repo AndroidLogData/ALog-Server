@@ -89,7 +89,7 @@ public class CrashController {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dddd HH:mm:ss.SSS");
         DateTime dt = formatter.parseDateTime(time);
 
-        CrashVO crashVO = this.crashDataRepository.findCrashDataByTime(dt);
+        CrashVO crashVO = this.crashDataRepository.findCrashDataByTimeAndApiKey(dt, u.getApiKey());
         List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(u.getApiKey(), new Sort(Sort.Direction.ASC, "time"));
 
         if (crashVO == null || !(u.getApiKey().equals(crashVO.getApiKey()))) {
@@ -129,14 +129,14 @@ public class CrashController {
         return "crash";
     }
 
-    public ArrayList<DateTime> getCrashTime(Principal user) {
+    public ArrayList<String> getCrashTime(Principal user) {
         UserVO u = this.userDataRepository.findByUserID(user.getName());
 
         ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyOrderByTimeAsc(u.getApiKey());
-        ArrayList<DateTime> times = new ArrayList<DateTime>();
+        ArrayList<String> times = new ArrayList<String>();
 
         for (CrashVO data : list) {
-            times.add(data.getTime());
+            times.add(Utility.getTime(data.getTime()));
         }
 
         return times;
