@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6343ede8e6a0d48ed998"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a50a97e8e81602d32d90"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -6695,7 +6695,7 @@ var LogDataListRow = function (_React$Component) {
             if (this.props.logData.level === 'v') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'card text-center' },
+                    { className: 'card' },
                     _react2.default.createElement(
                         'div',
                         { className: 'card-header' },
@@ -6707,8 +6707,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link active', href: '#' },
-                                    'Active'
+                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#verb-logdata" + this.props.logDataIndex },
+                                    'Log Data'
                                 )
                             ),
                             _react2.default.createElement(
@@ -6716,17 +6716,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link', href: '#' },
-                                    'Link'
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                { className: 'nav-item' },
-                                _react2.default.createElement(
-                                    'a',
-                                    { className: 'nav-link disabled', href: '#' },
-                                    'Disabled'
+                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#verb-memory" + this.props.logDataIndex },
+                                    'Memory'
                                 )
                             )
                         )
@@ -6736,33 +6727,50 @@ var LogDataListRow = function (_React$Component) {
                         { className: 'card-body' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'panel panel-success' },
+                            { className: 'tab-content' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel-heading' },
-                                'Verb'
+                                { className: 'tab-pane active', id: "#verb-logdata" + this.props.logDataIndex },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel panel-success' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'panel-heading' },
+                                        'Verb'
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'panel-body' },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Time : ',
+                                            this.props.logData.stringTime
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Tag : ',
+                                            this.props.logData.tag
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Message : ',
+                                            this.props.logData.message
+                                        )
+                                    )
+                                )
                             ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel-body' },
-                                _react2.default.createElement(
-                                    'p',
+                                { className: 'tab-pane fade in', id: "#verb-memory" + this.props.logDataIndex },
+                                this.props.logData.memoryInfo == null ? _react2.default.createElement(
+                                    'h1',
                                     null,
-                                    'Time : ',
-                                    this.props.logData.stringTime
-                                ),
-                                _react2.default.createElement(
-                                    'p',
-                                    null,
-                                    'Tag : ',
-                                    this.props.logData.tag
-                                ),
-                                _react2.default.createElement(
-                                    'p',
-                                    null,
-                                    'Message : ',
-                                    this.props.logData.message
-                                )
+                                    'Debug Mode\uB97C true\uB85C \uD574\uC8FC\uC138\uC694'
+                                ) : _react2.default.createElement(LogDataMemoryChart, { memoryInfo: this.props.logData.memoryInfo })
                             )
                         )
                     )
@@ -6770,96 +6778,249 @@ var LogDataListRow = function (_React$Component) {
             } else if (this.props.logData.level === 'w') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'panel panel-warning' },
+                    { className: 'card' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-heading' },
-                        'Warning'
+                        { className: 'card-header' },
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'nav nav-tabs card-header-tabs' },
+                            _react2.default.createElement(
+                                'li',
+                                { className: 'nav-item' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#warning-logdata" + this.props.logDataIndex },
+                                    'Log Data'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: 'nav-item' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#warning-memory" + this.props.logDataIndex },
+                                    'Memory'
+                                )
+                            )
+                        )
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-body' },
+                        { className: 'card-body' },
                         _react2.default.createElement(
-                            'p',
-                            null,
-                            'Time : ',
-                            this.props.logData.stringTime
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Tag : ',
-                            this.props.logData.tag
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Message : ',
-                            this.props.logData.message
+                            'div',
+                            { className: 'tab-content' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tab-pane active', id: "warning-logdata" + this.props.logDataIndex },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel panel-warning' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'panel-heading' },
+                                        'Warning'
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'panel-body' },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Time : ',
+                                            this.props.logData.stringTime
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Tag : ',
+                                            this.props.logData.tag
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Message : ',
+                                            this.props.logData.message
+                                        )
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tab-pane fade in', id: "warning-memory" + this.props.logDataIndex },
+                                this.props.logData.memoryInfo == null ? _react2.default.createElement(
+                                    'h1',
+                                    null,
+                                    'Debug Mode\uB97C true\uB85C \uD574\uC8FC\uC138\uC694'
+                                ) : _react2.default.createElement(LogDataMemoryChart, { memoryInfo: this.props.logData.memoryInfo })
+                            )
                         )
                     )
                 );
             } else if (this.props.logData.level === 'i') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'panel panel-info' },
+                    { className: 'card' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-heading' },
-                        'Info'
+                        { className: 'card-header' },
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'nav nav-tabs card-header-tabs' },
+                            _react2.default.createElement(
+                                'li',
+                                { className: 'nav-item' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#info-logdata" + this.props.logDataIndex },
+                                    'Log Data'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: 'nav-item' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#info-memory" + this.props.logDataIndex },
+                                    'Memory'
+                                )
+                            )
+                        )
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-body' },
+                        { className: 'card-body' },
                         _react2.default.createElement(
-                            'p',
-                            null,
-                            'Time : ',
-                            this.props.logData.stringTime
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Tag : ',
-                            this.props.logData.tag
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Message : ',
-                            this.props.logData.message
+                            'div',
+                            { className: 'tab-content' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tab-pane active', id: "info-logdata" + this.props.logDataIndex },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel panel-info' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'panel-heading' },
+                                        'Info'
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'panel-body' },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Time : ',
+                                            this.props.logData.stringTime
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Tag : ',
+                                            this.props.logData.tag
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Message : ',
+                                            this.props.logData.message
+                                        )
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tab-pane fade in', id: "info-memory" + this.props.logDataIndex },
+                                this.props.logData.memoryInfo == null ? _react2.default.createElement(
+                                    'h1',
+                                    null,
+                                    'Debug Mode\uB97C true\uB85C \uD574\uC8FC\uC138\uC694'
+                                ) : _react2.default.createElement(LogDataMemoryChart, { memoryInfo: this.props.logData.memoryInfo })
+                            )
                         )
                     )
                 );
             } else if (this.props.logData.level === 'd') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'panel panel-primary' },
+                    { className: 'card' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-heading' },
-                        'Debug'
+                        { className: 'card-header' },
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'nav nav-tabs card-header-tabs' },
+                            _react2.default.createElement(
+                                'li',
+                                { className: 'nav-item' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#debug-logdata" + this.props.logDataIndex },
+                                    'Log Data'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: 'nav-item' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#debug-memory" + this.props.logDataIndex },
+                                    'Memory'
+                                )
+                            )
+                        )
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'panel-body' },
+                        { className: 'card-body' },
                         _react2.default.createElement(
-                            'p',
-                            null,
-                            'Time : ',
-                            this.props.logData.stringTime
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Tag : ',
-                            this.props.logData.tag
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Message : ',
-                            this.props.logData.message
+                            'div',
+                            { className: 'tab-content' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tab-pane active', id: "debug-logdata" + this.props.logDataIndex },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel panel-primary' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'panel-heading' },
+                                        'Debug'
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'panel-body' },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Time : ',
+                                            this.props.logData.stringTime
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Tag : ',
+                                            this.props.logData.tag
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Message : ',
+                                            this.props.logData.message
+                                        )
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tab-pane fade in', id: "debug-memory" + this.props.logDataIndex },
+                                this.props.logData.memoryInfo == null ? _react2.default.createElement(
+                                    'h1',
+                                    null,
+                                    'Debug Mode\uB97C true\uB85C \uD574\uC8FC\uC138\uC694'
+                                ) : _react2.default.createElement(LogDataMemoryChart, { memoryInfo: this.props.logData.memoryInfo })
+                            )
                         )
                     )
                 );
@@ -6878,7 +7039,7 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link active', 'data-toggle': 'tab', href: '#logdata' },
+                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#error-logdata" + this.props.logDataIndex },
                                     'Log Data'
                                 )
                             ),
@@ -6887,7 +7048,7 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link', 'data-toggle': 'tab', href: '#memory' },
+                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#error-memory" + this.props.logDataIndex },
                                     'Memory'
                                 )
                             )
@@ -6901,7 +7062,7 @@ var LogDataListRow = function (_React$Component) {
                             { className: 'tab-content' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'tab-pane fade in active', id: 'logdata' },
+                                { className: 'tab-pane active', id: "error-logdata" + this.props.logDataIndex },
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'panel panel-danger' },
@@ -6936,7 +7097,7 @@ var LogDataListRow = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'tab-pane fade in active', id: 'memory' },
+                                { className: 'tab-pane fade in', id: "error-memory" + this.props.logDataIndex },
                                 this.props.logData.memoryInfo == null ? _react2.default.createElement(
                                     'h1',
                                     null,
@@ -6967,20 +7128,42 @@ var LogDataMemoryChart = function (_React$Component2) {
         value: function render() {
             var memoryName = [];
             var memoryValue = [];
+            var pssMemoryName = [];
+            var pssMemoryValue = [];
+            var memoryPercentage = 0;
+            var threshold = 0;
+            var lowMemory = false;
+            var jsonString = JSON.stringify(this.props.memoryInfo);
 
-            console.log(this.props.memoryInfo);
+            JSON.parse(jsonString, function (key, value) {
+                if (key === 'availMemory' || key === 'totalMemory') {
+                    memoryName.push(key);
+                    memoryValue.push(value / 1024);
+                } else if (key === 'memoryPercentage') {
+                    memoryPercentage = value;
+                } else if (key === 'lowMemory') {
+                    lowMemory = value;
+                } else if (key === 'threshold') {
+                    threshold = value;
+                } else if (key === 'dalvikPss' || key === 'nativePss' || key === 'totalPss' || key === 'otherPss') {
+                    pssMemoryName.push(key);
+                    pssMemoryValue.push(value);
+                }
+            });
 
-            for (var i = 0; i < this.props.memoryInfo.length; i++) {
-                // availMemory: 1093652480,
-                //     threshold: 150994944,
-                //     totalMemory: 1585950720,
-                // memoryName.push()
-            }
-
-            var data = {
-                labels: ['Red', 'Green', 'Yellow'],
+            var memoryInfo = {
+                labels: memoryName,
                 datasets: [{
-                    data: [300, 50, 100],
+                    data: memoryValue,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                    hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                }]
+            };
+
+            var pssMemoryInfo = {
+                labels: pssMemoryName,
+                datasets: [{
+                    data: pssMemoryValue,
                     backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
                     hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
                 }]
@@ -6988,8 +7171,31 @@ var LogDataMemoryChart = function (_React$Component2) {
 
             return _react2.default.createElement(
                 'div',
-                null,
-                _react2.default.createElement(_reactChartjs.Pie, { data: data })
+                { className: 'col-sm-9 ml-sm-auto col-md-10 pt-2' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-6 col-sm-5 placeholder', style: { width: 40 + '%' } },
+                        _react2.default.createElement(
+                            'h5',
+                            { className: 'text-center' },
+                            'Memory Information(MB)'
+                        ),
+                        _react2.default.createElement(_reactChartjs.Pie, { data: memoryInfo })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-6 col-sm-5 placeholder', style: { width: 40 + '%' } },
+                        _react2.default.createElement(
+                            'h5',
+                            { className: 'text-center' },
+                            'Proportional Set Size Information(KB)'
+                        ),
+                        _react2.default.createElement(_reactChartjs.Pie, { data: pssMemoryInfo })
+                    )
+                )
             );
         }
     }]);
@@ -7016,7 +7222,7 @@ var LogDataList = function (_React$Component3) {
                 logDataNodes.push(_react2.default.createElement(
                     'div',
                     null,
-                    _react2.default.createElement(LogDataListRow, { logData: this.props.logData[i] })
+                    _react2.default.createElement(LogDataListRow, { logData: this.props.logData[i], logDataIndex: i })
                 ));
             }
 

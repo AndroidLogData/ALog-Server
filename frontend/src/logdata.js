@@ -11,16 +11,16 @@ class LogDataListRow extends React.Component {
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href="#verb-logdata">Log Data</a>
+                                <a className="nav-link active" data-toggle="tab" href={"#verb-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href="#verb-memory">Memory</a>
+                                <a className="nav-link" data-toggle="tab" href={"#verb-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
-                            <div className="tab-pane fade in active" id="verb-logdata">
+                            <div className="tab-pane active" id={"#verb-logdata" + this.props.logDataIndex}>
                                 <div className="panel panel-success">
                                     <div className="panel-heading">
                                         Verb
@@ -32,7 +32,7 @@ class LogDataListRow extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-pane fade in active" id="verb-memory">
+                            <div className="tab-pane fade in" id={"#verb-memory" + this.props.logDataIndex}>
                                 {(this.props.logData.memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
@@ -47,16 +47,16 @@ class LogDataListRow extends React.Component {
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href="#warning-logdata">Log Data</a>
+                                <a className="nav-link active" data-toggle="tab" href={"#warning-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href="#warning-memory">Memory</a>
+                                <a className="nav-link" data-toggle="tab" href={"#warning-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
-                            <div className="tab-pane fade in active" id="warning-logdata">
+                            <div className="tab-pane active" id={"warning-logdata" + this.props.logDataIndex}>
                                 <div className="panel panel-warning">
                                     <div className="panel-heading">
                                         Warning
@@ -68,7 +68,7 @@ class LogDataListRow extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-pane fade in active" id="warning-memory">
+                            <div className="tab-pane fade in" id={"warning-memory" + this.props.logDataIndex}>
                                 {(this.props.logData.memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
@@ -83,16 +83,16 @@ class LogDataListRow extends React.Component {
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href="#info-logdata">Log Data</a>
+                                <a className="nav-link active" data-toggle="tab" href={"#info-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href="#info-memory">Memory</a>
+                                <a className="nav-link" data-toggle="tab" href={"#info-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
-                            <div className="tab-pane fade in active" id="info-logdata">
+                            <div className="tab-pane active" id={"info-logdata" + this.props.logDataIndex}>
                                 <div className="panel panel-info">
                                     <div className="panel-heading">
                                         Info
@@ -104,7 +104,7 @@ class LogDataListRow extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-pane fade in active" id="info-memory">
+                            <div className="tab-pane fade in" id={"info-memory" + this.props.logDataIndex}>
                                 {(this.props.logData.memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
@@ -119,16 +119,16 @@ class LogDataListRow extends React.Component {
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href="#debug-logdata">Log Data</a>
+                                <a className="nav-link active" data-toggle="tab" href={"#debug-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href="#debug-memory">Memory</a>
+                                <a className="nav-link" data-toggle="tab" href={"#debug-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
-                            <div className="tab-pane fade in active" id="debug-logdata">
+                            <div className="tab-pane active" id={"debug-logdata" + this.props.logDataIndex}>
                                 <div className="panel panel-primary">
                                     <div className="panel-heading">
                                         Debug
@@ -140,7 +140,7 @@ class LogDataListRow extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-pane fade in active" id="debug-memory">
+                            <div className="tab-pane fade in" id={"debug-memory" + this.props.logDataIndex}>
                                 {(this.props.logData.memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
@@ -155,16 +155,16 @@ class LogDataListRow extends React.Component {
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href="#error-logdata">Log Data</a>
+                                <a className="nav-link active" data-toggle="tab" href={"#error-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href="#error-memory">Memory</a>
+                                <a className="nav-link" data-toggle="tab" href={"#error-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
-                            <div className="tab-pane fade in active" id="error-logdata">
+                            <div className="tab-pane active" id={"error-logdata" + this.props.logDataIndex}>
                                 <div className="panel panel-danger">
                                     <div className="panel-heading">
                                         Error
@@ -176,7 +176,7 @@ class LogDataListRow extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-pane fade in active" id="error-memory">
+                            <div className="tab-pane fade in" id={"error-memory" + this.props.logDataIndex}>
                                 {(this.props.logData.memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
@@ -279,7 +279,7 @@ class LogDataList extends React.Component {
         for (i = 0; i < this.props.logData.length; i++) {
             logDataNodes.push(
                 <div>
-                    <LogDataListRow logData={this.props.logData[i]}/>
+                    <LogDataListRow logData={this.props.logData[i]} logDataIndex={i}/>
                 </div>
             );
         }
