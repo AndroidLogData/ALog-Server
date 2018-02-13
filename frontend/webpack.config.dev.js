@@ -34,7 +34,7 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/,
             use: {
-                loader: 'babel-loader',
+                loader: require.resolve('babel-loader'),
                 options: {
                     cacheDirectory: true,
                     presets: [
@@ -44,6 +44,7 @@ module.exports = {
                         }],
                         "react"
                     ],
+                    plugins: ['react-hot-loader/babel']
                 }
             }
         },
