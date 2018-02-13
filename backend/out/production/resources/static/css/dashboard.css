@@ -70,6 +70,16 @@ h1 {
 }
 
 /*
+ * menu scroll
+ */
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+/*
  * bootstrap 3.3.2 panel
  */
 .panel {

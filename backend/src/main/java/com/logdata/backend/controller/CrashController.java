@@ -55,7 +55,8 @@ public class CrashController {
 
         LinkedHashSet<ChartVO> chartData = new LinkedHashSet<ChartVO>();
         for (CrashVO data : chartTimeData) {
-            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()) + " " + Utility.getChartDataTime(data.getTime())));
+//            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()) + " " + Utility.getChartDataTime(data.getTime())));
+            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
         }
 
         model.addAttribute("crash", crashVO);
@@ -72,6 +73,7 @@ public class CrashController {
         model.addAttribute("model", crashVO.getBuild().get("MODEL"));
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
+        model.addAttribute("timeData", getCrashTime(user));
 
         return "crash";
     }
@@ -87,10 +89,10 @@ public class CrashController {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dddd HH:mm:ss.SSS");
         DateTime dt = formatter.parseDateTime(time);
 
-        CrashVO crashVO = this.crashDataRepository.findCrashDataByTime(dt);
+        CrashVO crashVO = this.crashDataRepository.findCrashDataByTimeAndApiKey(dt, u.getApiKey());
         List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(u.getApiKey(), new Sort(Sort.Direction.ASC, "time"));
 
-        if (crashVO == null || u.getApiKey().equals(crashVO.getApiKey())) {
+        if (crashVO == null || !(u.getApiKey().equals(crashVO.getApiKey()))) {
             return "nodata";
         }
 
@@ -122,8 +124,22 @@ public class CrashController {
         model.addAttribute("model", crashVO.getBuild().get("MODEL"));
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
+        model.addAttribute("timeData", getCrashTime(user));
 
         return "crash";
+    }
+
+    public ArrayList<String> getCrashTime(Principal user) {
+        UserVO u = this.userDataRepository.findByUserID(user.getName());
+
+        ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyOrderByTimeAsc(u.getApiKey());
+        ArrayList<String> times = new ArrayList<String>();
+
+        for (CrashVO data : list) {
+            times.add(Utility.getTime(data.getTime()));
+        }
+
+        return times;
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)

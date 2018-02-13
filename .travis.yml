@@ -4,11 +4,12 @@ jdk:
 
 sudo: true
 
-branches:
-  only:
-    - develop
+#branches:
+#  only:
+#    - develop
 
 before_install:
+# - cd backend
  - chmod +x gradlew
 
 cache:
@@ -18,7 +19,7 @@ cache:
     - $HOME/.m2
 
 script:
-  - cd backend
+#  - cd backend
   - gradle clean build
 
 # CI 실행 완료시 메일로 알람
