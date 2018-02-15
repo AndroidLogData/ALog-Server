@@ -39,16 +39,14 @@ class MainPage extends React.Component {
 
         for (i = 0; i < this.state.logData.length; i++) {
             mainData.push(
-                <div className="col-6 col-sm-3 placeholder">
-                    <div className="card">
-                        <div className="card-block">
-                            <h3 className="card-title">{this.state.logData[i].packageName}</h3>
-                            <p className="card-text">로그 데이터 갯수 : {this.state.logData[i].logDataCount}</p>
-                            <p className="card-text">최근 크래쉬 데이터
-                                : {this.state.logData[i].recentCrashTime == null ? 'null' : this.state.logData[i].recentCrashTime}</p>
-                            <Link to={{pathname: '/packagenamefilter/' + this.state.logData[i].packageName}}
-                                  className="btn btn-primary" role="button">Show</Link>
-                        </div>
+                <div className="card" style={{margin: 0.5 + "%"}}>
+                    <div className="card-block">
+                        <h3 className="card-title">{this.state.logData[i].packageName}</h3>
+                        <p className="card-text">로그 데이터 갯수 : {this.state.logData[i].logDataCount}</p>
+                        <p className="card-text">최근 크래쉬 데이터
+                            : {this.state.logData[i].recentCrashTime == null ? 'null' : this.state.logData[i].recentCrashTime}</p>
+                        <Link to={{pathname: '/packagenamefilter/' + this.state.logData[i].packageName}}
+                              className="btn btn-primary" role="button">Show</Link>
                     </div>
                 </div>
             );
@@ -82,7 +80,7 @@ class MainPage extends React.Component {
                                 <hr className="my-4"/>
                                 <p>안드로이드 로그 데이터와 메모리 관리를 위한 페이지</p>
                             </div>
-                            <div className="row text-center placeholders">
+                            <div className="row col-md text-center placeholders">
                                 {mainData}
                             </div>
                         </main>

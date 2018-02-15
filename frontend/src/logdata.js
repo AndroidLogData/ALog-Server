@@ -1,27 +1,30 @@
 import React from 'react';
 import FilterBar from './filterbar';
 import $ from 'jquery';
-import {Pie} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 
 class LogDataListRow extends React.Component {
     render() {
         if (this.props.logData.level === 'v') {
             return (
-                <div className="card">
+                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href={"#verb-logdata" + this.props.logDataIndex}>Log Data</a>
+                                <a className="nav-link active" data-toggle="tab"
+                                   href={"#verb-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href={"#verb-memory" + this.props.logDataIndex}>Memory</a>
+                                <a className="nav-link" data-toggle="tab"
+                                   href={"#verb-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
                             <div className="tab-pane active" id={"#verb-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-success">
+                                <div className="panel panel-success"
+                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
                                     <div className="panel-heading">
                                         Verb
                                     </div>
@@ -43,21 +46,24 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'w') {
             return (
-                <div className="card">
+                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href={"#warning-logdata" + this.props.logDataIndex}>Log Data</a>
+                                <a className="nav-link active" data-toggle="tab"
+                                   href={"#warning-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href={"#warning-memory" + this.props.logDataIndex}>Memory</a>
+                                <a className="nav-link" data-toggle="tab"
+                                   href={"#warning-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
                             <div className="tab-pane active" id={"warning-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-warning">
+                                <div className="panel panel-warning"
+                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
                                     <div className="panel-heading">
                                         Warning
                                     </div>
@@ -79,21 +85,24 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'i') {
             return (
-                <div className="card">
+                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href={"#info-logdata" + this.props.logDataIndex}>Log Data</a>
+                                <a className="nav-link active" data-toggle="tab"
+                                   href={"#info-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href={"#info-memory" + this.props.logDataIndex}>Memory</a>
+                                <a className="nav-link" data-toggle="tab"
+                                   href={"#info-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
                             <div className="tab-pane active" id={"info-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-info">
+                                <div className="panel panel-info"
+                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
                                     <div className="panel-heading">
                                         Info
                                     </div>
@@ -115,21 +124,24 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'd') {
             return (
-                <div className="card">
+                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href={"#debug-logdata" + this.props.logDataIndex}>Log Data</a>
+                                <a className="nav-link active" data-toggle="tab"
+                                   href={"#debug-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href={"#debug-memory" + this.props.logDataIndex}>Memory</a>
+                                <a className="nav-link" data-toggle="tab"
+                                   href={"#debug-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
                             <div className="tab-pane active" id={"debug-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-primary">
+                                <div className="panel panel-primary"
+                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
                                     <div className="panel-heading">
                                         Debug
                                     </div>
@@ -151,21 +163,24 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'e') {
             return (
-                <div className="card">
+                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab" href={"#error-logdata" + this.props.logDataIndex}>Log Data</a>
+                                <a className="nav-link active" data-toggle="tab"
+                                   href={"#error-logdata" + this.props.logDataIndex}>Log Data</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab" href={"#error-memory" + this.props.logDataIndex}>Memory</a>
+                                <a className="nav-link" data-toggle="tab"
+                                   href={"#error-memory" + this.props.logDataIndex}>Memory</a>
                             </li>
                         </ul>
                     </div>
                     <div className="card-body">
                         <div className="tab-content">
                             <div className="tab-pane active" id={"error-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-danger">
+                                <div className="panel panel-danger"
+                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
                                     <div className="panel-heading">
                                         Error
                                     </div>
@@ -195,6 +210,7 @@ class LogDataMemoryChart extends React.Component {
     }
 
     render() {
+        let hexColor = ['#36A2EB', '#FFCE56', '#FF6384', '#3CF0FF'];
         let memoryName = [];
         let memoryValue = [];
         let pssMemoryName = [];
@@ -220,50 +236,77 @@ class LogDataMemoryChart extends React.Component {
             }
         });
 
+        let memoryDataSets = [];
+        let pssMemoryDataSets = [];
+
+        for (let i = 0; i < memoryName.length; i++) {
+            memoryDataSets.push(
+                {
+                    label: memoryName[i],
+                    backgroundColor: hexColor[i],
+                    borderColor: hexColor[i],
+                    borderWidth: 1,
+                    hoverBackgroundColor: hexColor[i],
+                    hoverBorderColor: hexColor[i],
+                    data: [memoryValue[i]]
+                }
+            );
+        }
+
+        for (let i = 0; i < pssMemoryName.length; i++) {
+            pssMemoryDataSets.push(
+                {
+                    label: pssMemoryName[i],
+                    backgroundColor: hexColor[i],
+                    borderColor: hexColor[i],
+                    borderWidth: 1,
+                    hoverBackgroundColor: hexColor[i],
+                    hoverBorderColor: hexColor[i],
+                    data: [pssMemoryValue[i]]
+                }
+            );
+        }
+
+
         const memoryInfo = {
             labels: memoryName,
-            datasets: [{
-                data: memoryValue,
-                backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                ],
-                hoverBackgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                ]
-            }]
+            datasets: memoryDataSets
         };
-
         const pssMemoryInfo = {
             labels: pssMemoryName,
-            datasets: [{
-                data: pssMemoryValue,
-                backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                ],
-                hoverBackgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                ]
-            }]
+            datasets: pssMemoryDataSets
         };
 
         return (
             <div className="col-sm-9 ml-sm-auto col-md-10 pt-2">
                 <div className="row">
-                    <div className="col-6 col-sm-5 placeholder" style={{width: 40 + '%'}}>
-                        <h5 className="text-center">Memory Information(MB)</h5>
-                        <Pie data={memoryInfo}/>
+                    <div style={{width: 40 + '%'}}>
+                        <Bar data={memoryInfo} options={{
+                            scales: {
+                                xAxes: [{
+                                    barPercentage: 0.3,
+                                    categoryPercentage: 1.0
+                                }]
+                            },
+                            title: {
+                                display: true,
+                                text: 'Memory Information(MB)'
+                            }
+                        }}/>
                     </div>
-                    <div className="col-6 col-sm-5 placeholder" style={{width: 40 + '%'}}>
-                        <h5 className="text-center">Proportional Set Size Information(KB)</h5>
-                        <Pie data={pssMemoryInfo}/>
+                    <div style={{width: 40 + '%'}}>
+                        <Bar data={pssMemoryInfo} options={{
+                            scales: {
+                                xAxes: [{
+                                    barPercentage: 0.3,
+                                    categoryPercentage: 1.0
+                                }]
+                            },
+                            title: {
+                                display: true,
+                                text: 'Proportional Set Size Information(KB)'
+                            }
+                        }}/>
                     </div>
                 </div>
             </div>

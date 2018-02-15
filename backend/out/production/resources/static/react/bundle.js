@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a50a97e8e81602d32d90"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3f7e3612135e33d0792b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -6695,7 +6695,7 @@ var LogDataListRow = function (_React$Component) {
             if (this.props.logData.level === 'v') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'card' },
+                    { className: 'card', style: { marginTop: 0.5 + "%", marginBottom: 0.5 + "%" } },
                     _react2.default.createElement(
                         'div',
                         { className: 'card-header' },
@@ -6707,7 +6707,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#verb-logdata" + this.props.logDataIndex },
+                                    { className: 'nav-link active', 'data-toggle': 'tab',
+                                        href: "#verb-logdata" + this.props.logDataIndex },
                                     'Log Data'
                                 )
                             ),
@@ -6716,7 +6717,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#verb-memory" + this.props.logDataIndex },
+                                    { className: 'nav-link', 'data-toggle': 'tab',
+                                        href: "#verb-memory" + this.props.logDataIndex },
                                     'Memory'
                                 )
                             )
@@ -6733,7 +6735,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'tab-pane active', id: "#verb-logdata" + this.props.logDataIndex },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'panel panel-success' },
+                                    { className: 'panel panel-success',
+                                        style: { marginTop: 0.2 + "%", marginBottom: 0.2 + "%" } },
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'panel-heading' },
@@ -6778,7 +6781,7 @@ var LogDataListRow = function (_React$Component) {
             } else if (this.props.logData.level === 'w') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'card' },
+                    { className: 'card', style: { marginTop: 0.5 + "%", marginBottom: 0.5 + "%" } },
                     _react2.default.createElement(
                         'div',
                         { className: 'card-header' },
@@ -6790,7 +6793,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#warning-logdata" + this.props.logDataIndex },
+                                    { className: 'nav-link active', 'data-toggle': 'tab',
+                                        href: "#warning-logdata" + this.props.logDataIndex },
                                     'Log Data'
                                 )
                             ),
@@ -6799,7 +6803,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#warning-memory" + this.props.logDataIndex },
+                                    { className: 'nav-link', 'data-toggle': 'tab',
+                                        href: "#warning-memory" + this.props.logDataIndex },
                                     'Memory'
                                 )
                             )
@@ -6816,7 +6821,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'tab-pane active', id: "warning-logdata" + this.props.logDataIndex },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'panel panel-warning' },
+                                    { className: 'panel panel-warning',
+                                        style: { marginTop: 0.2 + "%", marginBottom: 0.2 + "%" } },
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'panel-heading' },
@@ -6861,7 +6867,7 @@ var LogDataListRow = function (_React$Component) {
             } else if (this.props.logData.level === 'i') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'card' },
+                    { className: 'card', style: { marginTop: 0.5 + "%", marginBottom: 0.5 + "%" } },
                     _react2.default.createElement(
                         'div',
                         { className: 'card-header' },
@@ -6873,7 +6879,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#info-logdata" + this.props.logDataIndex },
+                                    { className: 'nav-link active', 'data-toggle': 'tab',
+                                        href: "#info-logdata" + this.props.logDataIndex },
                                     'Log Data'
                                 )
                             ),
@@ -6882,7 +6889,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#info-memory" + this.props.logDataIndex },
+                                    { className: 'nav-link', 'data-toggle': 'tab',
+                                        href: "#info-memory" + this.props.logDataIndex },
                                     'Memory'
                                 )
                             )
@@ -6899,7 +6907,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'tab-pane active', id: "info-logdata" + this.props.logDataIndex },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'panel panel-info' },
+                                    { className: 'panel panel-info',
+                                        style: { marginTop: 0.2 + "%", marginBottom: 0.2 + "%" } },
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'panel-heading' },
@@ -6944,7 +6953,7 @@ var LogDataListRow = function (_React$Component) {
             } else if (this.props.logData.level === 'd') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'card' },
+                    { className: 'card', style: { marginTop: 0.5 + "%", marginBottom: 0.5 + "%" } },
                     _react2.default.createElement(
                         'div',
                         { className: 'card-header' },
@@ -6956,7 +6965,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#debug-logdata" + this.props.logDataIndex },
+                                    { className: 'nav-link active', 'data-toggle': 'tab',
+                                        href: "#debug-logdata" + this.props.logDataIndex },
                                     'Log Data'
                                 )
                             ),
@@ -6965,7 +6975,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#debug-memory" + this.props.logDataIndex },
+                                    { className: 'nav-link', 'data-toggle': 'tab',
+                                        href: "#debug-memory" + this.props.logDataIndex },
                                     'Memory'
                                 )
                             )
@@ -6982,7 +6993,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'tab-pane active', id: "debug-logdata" + this.props.logDataIndex },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'panel panel-primary' },
+                                    { className: 'panel panel-primary',
+                                        style: { marginTop: 0.2 + "%", marginBottom: 0.2 + "%" } },
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'panel-heading' },
@@ -7027,7 +7039,7 @@ var LogDataListRow = function (_React$Component) {
             } else if (this.props.logData.level === 'e') {
                 return _react2.default.createElement(
                     'div',
-                    { className: 'card' },
+                    { className: 'card', style: { marginTop: 0.5 + "%", marginBottom: 0.5 + "%" } },
                     _react2.default.createElement(
                         'div',
                         { className: 'card-header' },
@@ -7039,7 +7051,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link active', 'data-toggle': 'tab', href: "#error-logdata" + this.props.logDataIndex },
+                                    { className: 'nav-link active', 'data-toggle': 'tab',
+                                        href: "#error-logdata" + this.props.logDataIndex },
                                     'Log Data'
                                 )
                             ),
@@ -7048,7 +7061,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
-                                    { className: 'nav-link', 'data-toggle': 'tab', href: "#error-memory" + this.props.logDataIndex },
+                                    { className: 'nav-link', 'data-toggle': 'tab',
+                                        href: "#error-memory" + this.props.logDataIndex },
                                     'Memory'
                                 )
                             )
@@ -7065,7 +7079,8 @@ var LogDataListRow = function (_React$Component) {
                                 { className: 'tab-pane active', id: "error-logdata" + this.props.logDataIndex },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'panel panel-danger' },
+                                    { className: 'panel panel-danger',
+                                        style: { marginTop: 0.2 + "%", marginBottom: 0.2 + "%" } },
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'panel-heading' },
@@ -7126,6 +7141,7 @@ var LogDataMemoryChart = function (_React$Component2) {
     _createClass(LogDataMemoryChart, [{
         key: 'render',
         value: function render() {
+            var hexColor = ['#36A2EB', '#FFCE56', '#FF6384', '#3CF0FF'];
             var memoryName = [];
             var memoryValue = [];
             var pssMemoryName = [];
@@ -7151,23 +7167,60 @@ var LogDataMemoryChart = function (_React$Component2) {
                 }
             });
 
+            var memoryDataSets = [];
+            var pssMemoryDataSets = [];
+
+            for (var i = 0; i < memoryName.length; i++) {
+                memoryDataSets.push({
+                    label: memoryName[i],
+                    backgroundColor: hexColor[i],
+                    borderColor: hexColor[i],
+                    borderWidth: 1,
+                    hoverBackgroundColor: hexColor[i],
+                    hoverBorderColor: hexColor[i],
+                    data: [memoryValue[i]]
+                });
+            }
+
+            for (var _i = 0; _i < pssMemoryName.length; _i++) {
+                pssMemoryDataSets.push({
+                    label: pssMemoryName[_i],
+                    backgroundColor: hexColor[_i],
+                    borderColor: hexColor[_i],
+                    borderWidth: 1,
+                    hoverBackgroundColor: hexColor[_i],
+                    hoverBorderColor: hexColor[_i],
+                    data: [pssMemoryValue[_i]]
+                });
+            }
+
             var memoryInfo = {
-                labels: memoryName,
-                datasets: [{
-                    data: memoryValue,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                    hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-                }]
+                datasets: memoryDataSets
+            };
+            var pssMemoryInfo = {
+                datasets: pssMemoryDataSets
             };
 
-            var pssMemoryInfo = {
-                labels: pssMemoryName,
-                datasets: [{
-                    data: pssMemoryValue,
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                    hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-                }]
-            };
+            // let datasets = [];
+            //
+            // for (let i = 0; i < 4; i++) {
+            //     datasets.push(
+            //         {
+            //             label: pssMemoryName[i],
+            //             backgroundColor: 'rgba(255,99,132,0.2)',
+            //             borderColor: 'rgba(255,99,132,1)',
+            //             borderWidth: 1,
+            //             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+            //             hoverBorderColor: 'rgba(255,99,132,1)',
+            //             data: [pssMemoryValue[i]]
+            //         }
+            //     );
+            // }
+            //
+            // const data = {
+            //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            //     datasets: datasets
+            // };
 
             return _react2.default.createElement(
                 'div',
@@ -7183,7 +7236,7 @@ var LogDataMemoryChart = function (_React$Component2) {
                             { className: 'text-center' },
                             'Memory Information(MB)'
                         ),
-                        _react2.default.createElement(_reactChartjs.Pie, { data: memoryInfo })
+                        _react2.default.createElement(_reactChartjs.Bar, { data: memoryInfo })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -7193,7 +7246,7 @@ var LogDataMemoryChart = function (_React$Component2) {
                             { className: 'text-center' },
                             'Proportional Set Size Information(KB)'
                         ),
-                        _react2.default.createElement(_reactChartjs.Pie, { data: pssMemoryInfo })
+                        _react2.default.createElement(_reactChartjs.Bar, { data: pssMemoryInfo })
                     )
                 )
             );
@@ -70878,36 +70931,32 @@ var MainPage = function (_React$Component) {
             for (i = 0; i < this.state.logData.length; i++) {
                 mainData.push(_react2.default.createElement(
                     'div',
-                    { className: 'col-6 col-sm-3 placeholder' },
+                    { className: 'card', style: { margin: 0.5 + "%" } },
                     _react2.default.createElement(
                         'div',
-                        { className: 'card' },
+                        { className: 'card-block' },
                         _react2.default.createElement(
-                            'div',
-                            { className: 'card-block' },
-                            _react2.default.createElement(
-                                'h3',
-                                { className: 'card-title' },
-                                this.state.logData[i].packageName
-                            ),
-                            _react2.default.createElement(
-                                'p',
-                                { className: 'card-text' },
-                                '\uB85C\uADF8 \uB370\uC774\uD130 \uAC2F\uC218 : ',
-                                this.state.logData[i].logDataCount
-                            ),
-                            _react2.default.createElement(
-                                'p',
-                                { className: 'card-text' },
-                                '\uCD5C\uADFC \uD06C\uB798\uC26C \uB370\uC774\uD130 : ',
-                                this.state.logData[i].recentCrashTime == null ? 'null' : this.state.logData[i].recentCrashTime
-                            ),
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: { pathname: '/packagenamefilter/' + this.state.logData[i].packageName },
-                                    className: 'btn btn-primary', role: 'button' },
-                                'Show'
-                            )
+                            'h3',
+                            { className: 'card-title' },
+                            this.state.logData[i].packageName
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'card-text' },
+                            '\uB85C\uADF8 \uB370\uC774\uD130 \uAC2F\uC218 : ',
+                            this.state.logData[i].logDataCount
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'card-text' },
+                            '\uCD5C\uADFC \uD06C\uB798\uC26C \uB370\uC774\uD130 : ',
+                            this.state.logData[i].recentCrashTime == null ? 'null' : this.state.logData[i].recentCrashTime
+                        ),
+                        _react2.default.createElement(
+                            _reactRouterDom.Link,
+                            { to: { pathname: '/packagenamefilter/' + this.state.logData[i].packageName },
+                                className: 'btn btn-primary', role: 'button' },
+                            'Show'
                         )
                     )
                 ));
@@ -70978,7 +71027,7 @@ var MainPage = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'row text-center placeholders' },
+                                { className: 'row col-md text-center placeholders' },
                                 mainData
                             )
                         )
