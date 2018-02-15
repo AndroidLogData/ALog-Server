@@ -2,12 +2,13 @@ import React from 'react';
 import FilterBar from './filterbar';
 import $ from 'jquery';
 import {Bar} from 'react-chartjs-2';
+import queryString from "query-string";
 
 class LogDataListRow extends React.Component {
     render() {
         if (this.props.logData.level === 'v') {
             return (
-                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
@@ -46,7 +47,7 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'w') {
             return (
-                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
@@ -85,7 +86,7 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'i') {
             return (
-                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
@@ -124,7 +125,7 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'd') {
             return (
-                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
@@ -163,7 +164,7 @@ class LogDataListRow extends React.Component {
             );
         } else if (this.props.logData.level === 'e') {
             return (
-                <div className="card" style={{marginTop: 0.5 + "%", marginBottom: 0.5 + "%"}}>
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
@@ -276,37 +277,39 @@ class LogDataMemoryChart extends React.Component {
             labels: pssMemoryName,
             datasets: pssMemoryDataSets
         };
+        const memoryInfoOptions = {
+            scales: {
+                xAxes: [{
+                    barPercentage: 0.3,
+                    categoryPercentage: 1.0
+                }]
+            },
+            title: {
+                display: true,
+                text: 'Memory Information(MB)'
+            }
+        };
+        const pssMemoryInfoOptions = {
+            scales: {
+                xAxes: [{
+                    barPercentage: 0.3,
+                    categoryPercentage: 1.0
+                }]
+            },
+            title: {
+                display: true,
+                text: 'Proportional Set Size Information(KB)'
+            }
+        };
 
         return (
             <div className="col-sm-9 ml-sm-auto col-md-10 pt-2">
                 <div className="row">
                     <div style={{width: 40 + '%'}}>
-                        <Bar data={memoryInfo} options={{
-                            scales: {
-                                xAxes: [{
-                                    barPercentage: 0.3,
-                                    categoryPercentage: 1.0
-                                }]
-                            },
-                            title: {
-                                display: true,
-                                text: 'Memory Information(MB)'
-                            }
-                        }}/>
+                        <Bar data={memoryInfo} options={memoryInfoOptions}/>
                     </div>
                     <div style={{width: 40 + '%'}}>
-                        <Bar data={pssMemoryInfo} options={{
-                            scales: {
-                                xAxes: [{
-                                    barPercentage: 0.3,
-                                    categoryPercentage: 1.0
-                                }]
-                            },
-                            title: {
-                                display: true,
-                                text: 'Proportional Set Size Information(KB)'
-                            }
-                        }}/>
+                        <Bar data={pssMemoryInfo} options={pssMemoryInfoOptions}/>
                     </div>
                 </div>
             </div>
@@ -384,11 +387,14 @@ class LogDataBox extends React.Component {
 
 class LogData extends React.Component {
     render() {
+        const query = queryString.parseUrl(this.props.url);
+        console.log(query);
+
         return (
             <div className="container-fluid">
                 <div className="row">
                     <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-                        <FilterBar/>
+                        <FilterBar packageName={query.query.packagename}/>
                         <LogDataBox url={this.props.url}/>
                     </main>
                 </div>

@@ -70,11 +70,11 @@ public class LogDataController {
         return new LogDataListResponse(logVOList);
     }
 
-    @RequestMapping(value = "/logdatalevelfilter/{level}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/logdatalevelfilter/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public LogDataListResponse logDataLevelList(Principal user, @RequestParam(value = "level") String level) {
-        List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndLevel(getUserApiKey(user), level, new Sort(Sort.Direction.DESC, "time"));
+    public LogDataListResponse logDataLevelList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "level") String level) {
+        List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, level, new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
             data.setStringTime(Utility.getTime(data.getTime()));
@@ -82,11 +82,11 @@ public class LogDataController {
         return new LogDataListResponse(logVOList);
     }
 
-    @RequestMapping(value = "/logdatatagfilter/{tag}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/logdatatagfilter/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public LogDataListResponse logDataTagList(Principal user, @RequestParam(value = "tag") String tag) {
-        List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndTag(getUserApiKey(user), tag, new Sort(Sort.Direction.DESC, "time"));
+    public LogDataListResponse logDataTagList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "tag") String tag) {
+        List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndPackageNameAndTag(getUserApiKey(user), packageName, tag, new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
             data.setStringTime(Utility.getTime(data.getTime()));

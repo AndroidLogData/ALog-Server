@@ -39,7 +39,7 @@ class MainPage extends React.Component {
 
         for (i = 0; i < this.state.logData.length; i++) {
             mainData.push(
-                <div className="card" style={{margin: 0.5 + "%"}}>
+                <div className="card" style={{marginRight: 0.5 + "%", marginBottom: 0.5 + "%"}}>
                     <div className="card-block">
                         <h3 className="card-title">{this.state.logData[i].packageName}</h3>
                         <p className="card-text">로그 데이터 갯수 : {this.state.logData[i].logDataCount}</p>

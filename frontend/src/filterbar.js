@@ -6,7 +6,7 @@ import $ from 'jquery';
 
 class FilterBar extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
     }
 
     render() {
@@ -21,15 +21,20 @@ class FilterBar extends React.Component {
                                 Level
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <Link className="dropdown-item" to="/levelfilter/i">i</Link>
-                                <Link className="dropdown-item" to="/levelfilter/d">d</Link>
-                                <Link className="dropdown-item" to="/levelfilter/w">w</Link>
-                                <Link className="dropdown-item" to="/levelfilter/v">v</Link>
-                                <Link className="dropdown-item" to="/levelfilter/e">e</Link>
+                                <Link className="dropdown-item"
+                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/v'}}>v</Link>
+                                <Link className="dropdown-item"
+                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/i'}}>i</Link>
+                                <Link className="dropdown-item"
+                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/d'}}>d</Link>
+                                <Link className="dropdown-item"
+                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/w'}}>w</Link>
+                                <Link className="dropdown-item"
+                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/e'}}>e</Link>
                             </div>
                         </div>
-                        <TagList/>
-                        <PackageNameList/>
+                        <TagList packageName={this.props.packageName}/>
+                        <PackageNameList packageName={this.props.packageName}/>
                     </div>
                 </div>
                 <br/>
@@ -75,7 +80,7 @@ class TagList extends React.Component {
         for (i = 0; i < this.state.logData.length; i++) {
             tagNodes.push(
                 <Link className="dropdown-item"
-                      to={{pathname: '/tagfilter/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
+                      to={{pathname: '/tagfilter/' + this.props.packageName + '/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
             );
         }
 
@@ -130,7 +135,7 @@ class PackageNameList extends React.Component {
         for (i = 0; i < this.state.logData.length; i++) {
             packageNameNodes.push(
                 <Link className="dropdown-item"
-                      to={{pathname: '/packagenamefilter/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
+                      to={{pathname: '/packagenamefilter/' + this.props.packageName + '/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
             );
         }
 
