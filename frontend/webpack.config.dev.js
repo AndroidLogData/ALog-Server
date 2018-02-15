@@ -10,6 +10,7 @@ const PATHS = {
 module.exports = {
     entry: {
         app: [
+            'react-hot-loader/patch',
             './src/index'
         ]
     },

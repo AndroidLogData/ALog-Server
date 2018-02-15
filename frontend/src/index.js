@@ -3,9 +3,26 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import App from './app';
 import registerServiceWorker from './registerServiceWorker';
+import {AppContainer} from 'react-hot-loader';
 
 const rootElement = document.getElementById('root');
-ReactDOM.render(<Router>
-        <App/>
-</Router>, rootElement);
+ReactDOM.render(
+    <AppContainer>
+        <Router>
+            <App/>
+        </Router>
+    </AppContainer>, rootElement);
+
+if (module.hot) {
+    module.hot.accept('./app', () => {
+        const NextApp = require('./app').default; // eslint-disable-line global-require
+        ReactDOM.render(
+            <AppContainer>
+                <NextApp/>
+            </AppContainer>,
+            rootElement
+        );
+    });
+}
+
 registerServiceWorker();
