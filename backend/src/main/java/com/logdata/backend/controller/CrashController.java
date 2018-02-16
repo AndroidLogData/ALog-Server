@@ -74,6 +74,7 @@ public class CrashController {
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user));
+        model.addAttribute("sideMenuItems", getPackageName(user));
 
         return "crash";
     }
@@ -125,14 +126,89 @@ public class CrashController {
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user));
+        model.addAttribute("sideMenuItems", getPackageName(user));
 
         return "crash";
     }
 
-    public ArrayList<String> getCrashTime(Principal user) {
-        UserVO u = this.userDataRepository.findByUserID(user.getName());
+    @RequestMapping(value = "/crashpackagenamefilter/{packageName}", method = RequestMethod.GET)
+    public String crashPackageNamePage(Principal user, Model model, @RequestParam(value = "packageName") String packageNamae) {
+        if (user == null) {
+            return "login";
+        }
 
-        ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyOrderByTimeAsc(u.getApiKey());
+        CrashVO crashVO = this.crashDataRepository.findCrashDataBy(new Sort(Sort.Direction.DESC, "time"));
+        List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(getUserApiKey(user), new Sort(Sort.Direction.ASC, "time"));
+
+        if (crashVO == null || chartTimeData.size() == 0) {
+            model.addAttribute("noData", true);
+            return "nodata";
+        }
+
+        Object display = crashVO.getDisplay().get("0");
+
+        Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
+        Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
+
+        for (String s : deviceFeaturesKey) {
+            deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
+        }
+
+        LinkedHashSet<ChartVO> chartData = new LinkedHashSet<ChartVO>();
+        for (CrashVO data : chartTimeData) {
+            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
+        }
+
+        model.addAttribute("crash", crashVO);
+        model.addAttribute("chartData", chartData);
+        model.addAttribute("time", crashVO.getTime());
+        model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
+        model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
+        model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
+        model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
+        model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
+        model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
+        model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
+        model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
+        model.addAttribute("model", crashVO.getBuild().get("MODEL"));
+        model.addAttribute("board", crashVO.getBuild().get("BOARD"));
+        model.addAttribute("deviceFeatures", deviceFeatures);
+        model.addAttribute("timeData", getCrashTime(user, packageNamae));
+        model.addAttribute("sideMenuItems", getPackageName(user));
+
+        return "crash";
+    }
+
+    private Set<String> getPackageName(Principal user) {
+        List<CrashVO> setData = this.crashDataRepository.findByApiKey(getUserApiKey(user));
+
+        Set<String> packageNameSet = new HashSet<String>();
+
+        for (CrashVO data : setData) {
+            packageNameSet.add(data.getPackageName());
+        }
+
+        return packageNameSet;
+    }
+
+    public String getUserApiKey(Principal user) {
+        UserVO u = this.userDataRepository.findByUserID(user.getName());
+        return u.getApiKey();
+    }
+
+    public ArrayList<String> getCrashTime(Principal user) {
+        ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyOrderByTimeAsc(getUserApiKey(user));
+        ArrayList<String> times = new ArrayList<String>();
+
+        for (CrashVO data : list) {
+            times.add(Utility.getTime(data.getTime()));
+        }
+
+        return times;
+    }
+
+    public ArrayList<String> getCrashTime(Principal user, String packageName) {
+        ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyAndPackageNameOrderByTimeAsc(getUserApiKey(user), packageName);
         ArrayList<String> times = new ArrayList<String>();
 
         for (CrashVO data : list) {

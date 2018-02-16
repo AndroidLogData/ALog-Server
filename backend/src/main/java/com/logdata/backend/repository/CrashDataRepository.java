@@ -15,4 +15,6 @@ public interface CrashDataRepository extends MongoRepository<CrashVO, String> {
     CrashVO findByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey);
     List<CrashVO> findByApiKeyOrderByTimeDesc(String apiKey, Sort sort);
     ArrayList<CrashVO> findByApiKeyOrderByTimeAsc(String apiKey);
+    ArrayList<CrashVO> findByApiKeyAndPackageNameOrderByTimeAsc(String apiKey, String packageName);
+    List<CrashVO> findByApiKey(String apiKey);
 }

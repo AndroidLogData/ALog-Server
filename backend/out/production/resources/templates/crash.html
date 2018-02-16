@@ -4,7 +4,17 @@
 </head>
 <body>
 <div th:replace="navigation :: navigation"></div>
-<div th:replace="side_menu :: sidemenu"></div>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item" th:each="item : ${sideMenuItems}">
+                    <a class="nav-link" th:href="@{http://localhost:8080/crashpackagenamefilter/query(packageName=${item})}" th:text="${item}"/>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
