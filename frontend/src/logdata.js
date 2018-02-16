@@ -116,20 +116,19 @@ class LogDataMemoryChart extends React.Component {
 
 class LogDataVerb extends React.Component {
     render() {
-        let i;
+        let i, count = 0;
         let logDataNodes = [];
 
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'v') {
+                count++;
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-body">
                             <p>Time : {this.props.logData[i].stringTime}</p>
                             <p>Tag : {this.props.logData[i].tag}</p>
                             <p>Message : {this.props.logData[i].message}</p>
-                            {(this.props.logData[i].memoryInfo == null) ?
-                                <h4>Debug Mode를 true로 해주세요</h4> :
-                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                            {(this.props.logData[i].memoryInfo == null) ? null : <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
                         </div>
                     </div>
                 );
@@ -140,7 +139,7 @@ class LogDataVerb extends React.Component {
             <div className="col-md">
                 <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header bg-success">
-                        Verb
+                        Verb<span className="badge badge-info">{count}</span>
                     </div>
                     <div className="card-body">
                         {logDataNodes}
@@ -153,20 +152,19 @@ class LogDataVerb extends React.Component {
 
 class LogDataInfo extends React.Component {
     render() {
-        let i;
+        let i, count = 0;
         let logDataNodes = [];
 
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'i') {
+                count++;
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-body">
                             <p>Time : {this.props.logData[i].stringTime}</p>
                             <p>Tag : {this.props.logData[i].tag}</p>
                             <p>Message : {this.props.logData[i].message}</p>
-                            {(this.props.logData[i].memoryInfo == null) ?
-                                <h4>Debug Mode를 true로 해주세요</h4> :
-                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                            {(this.props.logData[i].memoryInfo == null) ? null : <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
                         </div>
                     </div>
                 );
@@ -177,7 +175,7 @@ class LogDataInfo extends React.Component {
             <div className="col-md">
                 <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header bg-light">
-                        Info
+                        Info<span className="badge badge-info">{count}</span>
                     </div>
                     <div className="card-body">
                         {logDataNodes}
@@ -190,20 +188,19 @@ class LogDataInfo extends React.Component {
 
 class LogDataDebug extends React.Component {
     render() {
-        let i;
+        let i, count = 0;
         let logDataNodes = [];
 
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'd') {
+                count++;
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-body">
                             <p>Time : {this.props.logData[i].stringTime}</p>
                             <p>Tag : {this.props.logData[i].tag}</p>
                             <p>Message : {this.props.logData[i].message}</p>
-                            {(this.props.logData[i].memoryInfo == null) ?
-                                <h4>Debug Mode를 true로 해주세요</h4> :
-                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                            {(this.props.logData[i].memoryInfo == null) ? null : <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
                         </div>
                     </div>
                 );
@@ -214,7 +211,7 @@ class LogDataDebug extends React.Component {
             <div className="col-md">
                 <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header bg-primary">
-                        Debug
+                        Debug<span className="badge badge-info">{count}</span>
                     </div>
                     <div className="card-body">
                         {logDataNodes}
@@ -227,20 +224,19 @@ class LogDataDebug extends React.Component {
 
 class LogDataWarning extends React.Component {
     render() {
-        let i;
+        let i, count = 0;
         let logDataNodes = [];
 
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'w') {
+                count++;
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-body">
                             <p>Time : {this.props.logData[i].stringTime}</p>
                             <p>Tag : {this.props.logData[i].tag}</p>
                             <p>Message : {this.props.logData[i].message}</p>
-                            {(this.props.logData[i].memoryInfo == null) ?
-                                <h4>Debug Mode를 true로 해주세요</h4> :
-                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                            {(this.props.logData[i].memoryInfo == null) ? null : <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
                         </div>
                     </div>
                 );
@@ -251,7 +247,7 @@ class LogDataWarning extends React.Component {
             <div className="col-md">
                 <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header bg-warning">
-                        Warning
+                        Warning<span className="badge badge-info">{count}</span>
                     </div>
                     <div className="card-body">
                         {logDataNodes}
@@ -264,20 +260,19 @@ class LogDataWarning extends React.Component {
 
 class LogDataError extends React.Component {
     render() {
-        let i;
+        let i, count = 0;
         let logDataNodes = [];
 
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'e') {
+                count++;
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-body">
                             <p>Time : {this.props.logData[i].stringTime}</p>
                             <p>Tag : {this.props.logData[i].tag}</p>
                             <p>Message : {this.props.logData[i].message}</p>
-                            {(this.props.logData[i].memoryInfo == null) ?
-                                <h4>Debug Mode를 true로 해주세요</h4> :
-                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                            {(this.props.logData[i].memoryInfo == null) ? null : <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
                         </div>
                     </div>
                 );
@@ -288,7 +283,7 @@ class LogDataError extends React.Component {
             <div className="col-md">
                 <div className="card" style={{marginBottom: 0.5 + "%"}}>
                     <div className="card-header bg-danger">
-                        Error
+                        Error<span className="badge badge-info">{count}</span>
                     </div>
                     <div className="card-body">
                         {logDataNodes}

@@ -17,4 +17,5 @@ public interface LogDataRepository extends MongoRepository<LogVO, String> {
     List<LogVO> findByApiKeyAndTag(String apiKey, String tag);
     List<LogVO> findByApiKeyAndPackageName(String apiKey, String packageName);
     List<LogVO> findByApiKey(String apiKey);
+    List<LogVO> findByApiKeyAndPackageNameAndLevel(String apiKey, String packageName, String level);
 }

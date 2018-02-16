@@ -52,18 +52,21 @@ public class MainController {
             return null;
         }
 
-        UserVO u = this.userDataRepository.findByUserID(user.getName());
-
-        Set<String> logData = getPackageName(u.getApiKey());
+        Set<String> logData = getPackageName(getUserApiKey(user));
         List<MainPageVO> list = new ArrayList<MainPageVO>();
 
         for (String packageName : logData) {
-            int logDataCount = this.logDataRepository.findByPackageNameAndApiKey(packageName, u.getApiKey()).size();
-            CrashVO crashTime = this.crashDataRepository.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, u.getApiKey());
+            int verbCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "v").size();
+            int infoCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "i").size();
+            int debugCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "d").size();
+            int warningCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "w").size();
+            int errorCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "e").size();
+
+            CrashVO crashTime = this.crashDataRepository.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, getUserApiKey(user));
             if (crashTime == null) {
-                list.add(new MainPageVO(packageName, logDataCount, null));
+                list.add(new MainPageVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
             } else {
-                list.add(new MainPageVO(packageName, logDataCount, crashTime.getTime()));
+                list.add(new MainPageVO(packageName, Utility.getTime(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
             }
         }
 
