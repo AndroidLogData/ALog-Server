@@ -4,207 +4,6 @@ import $ from 'jquery';
 import {Bar} from 'react-chartjs-2';
 import queryString from "query-string";
 
-class LogDataListRow extends React.Component {
-    render() {
-        if (this.props.logData.level === 'v') {
-            return (
-                <div className="card" style={{marginBottom: 0.5 + "%"}}>
-                    <div className="card-header">
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab"
-                                   href={"#verb-logdata" + this.props.logDataIndex}>Log Data</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab"
-                                   href={"#verb-memory" + this.props.logDataIndex}>Memory</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="card-body">
-                        <div className="tab-content">
-                            <div className="tab-pane active" id={"#verb-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-success"
-                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
-                                    <div className="panel-heading">
-                                        Verb
-                                    </div>
-                                    <div className="panel-body">
-                                        <p>Time : {this.props.logData.stringTime}</p>
-                                        <p>Tag : {this.props.logData.tag}</p>
-                                        <p>Message : {this.props.logData.message}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-pane fade in" id={"#verb-memory" + this.props.logDataIndex}>
-                                {(this.props.logData.memoryInfo == null) ?
-                                    <h1>Debug Mode를 true로 해주세요</h1> :
-                                    <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else if (this.props.logData.level === 'w') {
-            return (
-                <div className="card" style={{marginBottom: 0.5 + "%"}}>
-                    <div className="card-header">
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab"
-                                   href={"#warning-logdata" + this.props.logDataIndex}>Log Data</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab"
-                                   href={"#warning-memory" + this.props.logDataIndex}>Memory</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="card-body">
-                        <div className="tab-content">
-                            <div className="tab-pane active" id={"warning-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-warning"
-                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
-                                    <div className="panel-heading">
-                                        Warning
-                                    </div>
-                                    <div className="panel-body">
-                                        <p>Time : {this.props.logData.stringTime}</p>
-                                        <p>Tag : {this.props.logData.tag}</p>
-                                        <p>Message : {this.props.logData.message}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-pane fade in" id={"warning-memory" + this.props.logDataIndex}>
-                                {(this.props.logData.memoryInfo == null) ?
-                                    <h1>Debug Mode를 true로 해주세요</h1> :
-                                    <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else if (this.props.logData.level === 'i') {
-            return (
-                <div className="card" style={{marginBottom: 0.5 + "%"}}>
-                    <div className="card-header">
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab"
-                                   href={"#info-logdata" + this.props.logDataIndex}>Log Data</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab"
-                                   href={"#info-memory" + this.props.logDataIndex}>Memory</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="card-body">
-                        <div className="tab-content">
-                            <div className="tab-pane active" id={"info-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-info"
-                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
-                                    <div className="panel-heading">
-                                        Info
-                                    </div>
-                                    <div className="panel-body">
-                                        <p>Time : {this.props.logData.stringTime}</p>
-                                        <p>Tag : {this.props.logData.tag}</p>
-                                        <p>Message : {this.props.logData.message}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-pane fade in" id={"info-memory" + this.props.logDataIndex}>
-                                {(this.props.logData.memoryInfo == null) ?
-                                    <h1>Debug Mode를 true로 해주세요</h1> :
-                                    <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else if (this.props.logData.level === 'd') {
-            return (
-                <div className="card" style={{marginBottom: 0.5 + "%"}}>
-                    <div className="card-header">
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab"
-                                   href={"#debug-logdata" + this.props.logDataIndex}>Log Data</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab"
-                                   href={"#debug-memory" + this.props.logDataIndex}>Memory</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="card-body">
-                        <div className="tab-content">
-                            <div className="tab-pane active" id={"debug-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-primary"
-                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
-                                    <div className="panel-heading">
-                                        Debug
-                                    </div>
-                                    <div className="panel-body">
-                                        <p>Time : {this.props.logData.stringTime}</p>
-                                        <p>Tag : {this.props.logData.tag}</p>
-                                        <p>Message : {this.props.logData.message}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-pane fade in" id={"debug-memory" + this.props.logDataIndex}>
-                                {(this.props.logData.memoryInfo == null) ?
-                                    <h1>Debug Mode를 true로 해주세요</h1> :
-                                    <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else if (this.props.logData.level === 'e') {
-            return (
-                <div className="card" style={{marginBottom: 0.5 + "%"}}>
-                    <div className="card-header">
-                        <ul className="nav nav-tabs card-header-tabs">
-                            <li className="nav-item">
-                                <a className="nav-link active" data-toggle="tab"
-                                   href={"#error-logdata" + this.props.logDataIndex}>Log Data</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" data-toggle="tab"
-                                   href={"#error-memory" + this.props.logDataIndex}>Memory</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="card-body">
-                        <div className="tab-content">
-                            <div className="tab-pane active" id={"error-logdata" + this.props.logDataIndex}>
-                                <div className="panel panel-danger"
-                                     style={{marginTop: 0.2 + "%", marginBottom: 0.2 + "%"}}>
-                                    <div className="panel-heading">
-                                        Error
-                                    </div>
-                                    <div className="panel-body">
-                                        <p>Time : {this.props.logData.stringTime}</p>
-                                        <p>Tag : {this.props.logData.tag}</p>
-                                        <p>Message : {this.props.logData.message}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-pane fade in" id={"error-memory" + this.props.logDataIndex}>
-                                {(this.props.logData.memoryInfo == null) ?
-                                    <h1>Debug Mode를 true로 해주세요</h1> :
-                                    <LogDataMemoryChart memoryInfo={this.props.logData.memoryInfo}/>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-    }
-}
-
 class LogDataMemoryChart extends React.Component {
     constructor(props) {
         super(props);
@@ -303,13 +102,48 @@ class LogDataMemoryChart extends React.Component {
         };
 
         return (
-            <div className="col-sm-9 ml-sm-auto col-md-10 pt-2">
-                <div className="row">
-                    <div style={{width: 40 + '%'}}>
-                        <Bar data={memoryInfo} options={memoryInfoOptions}/>
+            <div>
+                <div>
+                    <Bar data={memoryInfo} options={memoryInfoOptions}/>
+                </div>
+                <div>
+                    <Bar data={pssMemoryInfo} options={pssMemoryInfoOptions}/>
+                </div>
+            </div>
+        );
+    }
+}
+
+class LogDataVerb extends React.Component {
+    render() {
+        let i;
+        let logDataNodes = [];
+
+        for (i = 0; i < this.props.logData.length; i++) {
+            if (this.props.logData[i].level === 'v') {
+                logDataNodes.push(
+                    <div className="card">
+                        <div className="card-body">
+                            <p>Time : {this.props.logData[i].stringTime}</p>
+                            <p>Tag : {this.props.logData[i].tag}</p>
+                            <p>Message : {this.props.logData[i].message}</p>
+                            {(this.props.logData[i].memoryInfo == null) ?
+                                <h4>Debug Mode를 true로 해주세요</h4> :
+                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                        </div>
                     </div>
-                    <div style={{width: 40 + '%'}}>
-                        <Bar data={pssMemoryInfo} options={pssMemoryInfoOptions}/>
+                );
+            }
+        }
+
+        return (
+            <div className="col-md">
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
+                    <div className="card-header bg-success">
+                        Verb
+                    </div>
+                    <div className="card-body">
+                        {logDataNodes}
                     </div>
                 </div>
             </div>
@@ -317,36 +151,155 @@ class LogDataMemoryChart extends React.Component {
     }
 }
 
-class LogDataList extends React.Component {
+class LogDataInfo extends React.Component {
     render() {
         let i;
         let logDataNodes = [];
 
         for (i = 0; i < this.props.logData.length; i++) {
-            logDataNodes.push(
-                <div>
-                    <LogDataListRow logData={this.props.logData[i]} logDataIndex={i}/>
-                </div>
-            );
+            if (this.props.logData[i].level === 'i') {
+                logDataNodes.push(
+                    <div className="card">
+                        <div className="card-body">
+                            <p>Time : {this.props.logData[i].stringTime}</p>
+                            <p>Tag : {this.props.logData[i].tag}</p>
+                            <p>Message : {this.props.logData[i].message}</p>
+                            {(this.props.logData[i].memoryInfo == null) ?
+                                <h4>Debug Mode를 true로 해주세요</h4> :
+                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                        </div>
+                    </div>
+                );
+            }
         }
 
-        if (logDataNodes.length === 0) {
-            return (
-                <div>
-                    <h1>데이터가 없습니다!</h1>
+        return (
+            <div className="col-md">
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
+                    <div className="card-header bg-light">
+                        Info
+                    </div>
+                    <div className="card-body">
+                        {logDataNodes}
+                    </div>
                 </div>
-            );
-        } else {
-            return (
-                <div>
-                    {logDataNodes}
-                </div>
-            );
-        }
+            </div>
+        );
     }
 }
 
-class LogDataBox extends React.Component {
+class LogDataDebug extends React.Component {
+    render() {
+        let i;
+        let logDataNodes = [];
+
+        for (i = 0; i < this.props.logData.length; i++) {
+            if (this.props.logData[i].level === 'd') {
+                logDataNodes.push(
+                    <div className="card">
+                        <div className="card-body">
+                            <p>Time : {this.props.logData[i].stringTime}</p>
+                            <p>Tag : {this.props.logData[i].tag}</p>
+                            <p>Message : {this.props.logData[i].message}</p>
+                            {(this.props.logData[i].memoryInfo == null) ?
+                                <h4>Debug Mode를 true로 해주세요</h4> :
+                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        return (
+            <div className="col-md">
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
+                    <div className="card-header bg-primary">
+                        Debug
+                    </div>
+                    <div className="card-body">
+                        {logDataNodes}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class LogDataWarning extends React.Component {
+    render() {
+        let i;
+        let logDataNodes = [];
+
+        for (i = 0; i < this.props.logData.length; i++) {
+            if (this.props.logData[i].level === 'w') {
+                logDataNodes.push(
+                    <div className="card">
+                        <div className="card-body">
+                            <p>Time : {this.props.logData[i].stringTime}</p>
+                            <p>Tag : {this.props.logData[i].tag}</p>
+                            <p>Message : {this.props.logData[i].message}</p>
+                            {(this.props.logData[i].memoryInfo == null) ?
+                                <h4>Debug Mode를 true로 해주세요</h4> :
+                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        return (
+            <div className="col-md">
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
+                    <div className="card-header bg-warning">
+                        Warning
+                    </div>
+                    <div className="card-body">
+                        {logDataNodes}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class LogDataError extends React.Component {
+    render() {
+        let i;
+        let logDataNodes = [];
+
+        for (i = 0; i < this.props.logData.length; i++) {
+            if (this.props.logData[i].level === 'e') {
+                logDataNodes.push(
+                    <div className="card">
+                        <div className="card-body">
+                            <p>Time : {this.props.logData[i].stringTime}</p>
+                            <p>Tag : {this.props.logData[i].tag}</p>
+                            <p>Message : {this.props.logData[i].message}</p>
+                            {(this.props.logData[i].memoryInfo == null) ?
+                                <h4>Debug Mode를 true로 해주세요</h4> :
+                                <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        return (
+            <div className="col-md">
+                <div className="card" style={{marginBottom: 0.5 + "%"}}>
+                    <div className="card-header bg-danger">
+                        Error
+                    </div>
+                    <div className="card-body">
+                        {logDataNodes}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class LogData extends React.Component {
     constructor(props) {
         super(props);
 
@@ -377,25 +330,20 @@ class LogDataBox extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <LogDataList logData={this.state.logData}/>
-            </div>
-        );
-    }
-}
-
-class LogData extends React.Component {
-    render() {
         const query = queryString.parseUrl(this.props.url);
-        console.log(query);
 
         return (
             <div className="container-fluid">
                 <div className="row">
                     <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
                         <FilterBar packageName={query.query.packagename}/>
-                        <LogDataBox url={this.props.url}/>
+                        <div className="row">
+                            <LogDataVerb logData={this.state.logData}/>
+                            <LogDataInfo logData={this.state.logData}/>
+                            <LogDataDebug logData={this.state.logData}/>
+                            <LogDataWarning logData={this.state.logData}/>
+                            <LogDataError logData={this.state.logData}/>
+                        </div>
                     </main>
                 </div>
             </div>
