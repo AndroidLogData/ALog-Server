@@ -24,6 +24,15 @@ jobs:
     steps:
       - checkout
 
+       dependencies:
+         cache_directories:
+           - mongodb-linux-x86_64-3.6.1
+         pre:
+           - if [[ ! -d mongodb-linux-x86_64-3.6.1 ]]; then wget http://downloads.mongodb.org/linux/mongodb-linux-x86_64-3.6.1.tgz && tar xvzf mongodb-linux-x86_64-3.6.1.tgz; fi
+           - sudo /etc/init.d/mongodb stop
+           - sudo cp mongodb-linux-x86_64-3.6.1/bin/* /usr/bin
+           - sudo /etc/init.d/mongodb start
+
       # Download and cache dependencies
       - restore_cache:
           keys:
