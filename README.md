@@ -1,6 +1,6 @@
 # Android Log Data Server
 
-| distribute | Current Status |
+|  | Current Status |
 |--------|--------|
 | Travis-CI | [![Build Status](https://travis-ci.org/AndroidLogData/Logdata-Server-Spring.svg?branch=develop)](https://travis-ci.org/AndroidLogData/Logdata-Server-Spring) |
 | CircleCI | [![CircleCI](https://circleci.com/gh/AndroidLogData/Logdata-Server-Spring/tree/develop.svg?style=svg)](https://circleci.com/gh/AndroidLogData/Logdata-Server-Spring/tree/develop) |
@@ -8,6 +8,17 @@
 안드로이드 로그 데이터를 관리하기 위한 서버
 
 ## Installation
+* 개발용 서버
+```text
+npm run develop
+```
+
+* 배포용 빌드
+```text
+npm run build
+```
+
+* 서버 실행
 ```gradle
 gradle clean build
 java -jar build/libs/(jar 파일명.jar)
