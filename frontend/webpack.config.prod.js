@@ -1,7 +1,6 @@
-const packageJSON = require('./package.json');
 const path = require('path');
 const webpack = require('webpack');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const PATHS = {
     build: path.resolve(__dirname, '..', 'backend', 'src', 'main', 'resources', 'static', 'react')
@@ -62,13 +61,13 @@ module.exports = {
         extensions: ['.js', '.json', '.jsx', '.css'],
     },
     plugins: [
-        // new CleanWebpackPlugin([PATHS.build])
+        new CleanWebpackPlugin([PATHS.build]),
         new webpack.HotModuleReplacementPlugin(),
         // new webpack.DefinePlugin({
         //     'process.env': {
         //         NODE_ENV: JSON.stringify('production')
         //     }
         // }),
-        // new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin()
     ]
 };

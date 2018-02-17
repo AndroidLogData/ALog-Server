@@ -1,20 +1,10 @@
 import React from 'react';
 import LogData from './logdata';
 
-const LevelFilter = ({ match }) => {
-    let levelFilterUrl = "";
+const LevelFilter = ({match}) => {
+    let levelFilterUrl = '/logdatalevelfilter/query?packagename=' + match.params.packagename + '&level=' + match.params.level;
 
-    if (match.params.level === 'v') {
-        levelFilterUrl = '/logdatalevelfilter/query?level=v';
-    } else if (match.params.level === 'i') {
-        levelFilterUrl = '/logdatalevelfilter/query?level=i';
-    } else if (match.params.level === 'd') {
-        levelFilterUrl = '/logdatalevelfilter/query?level=d';
-    } else if (match.params.level === 'w') {
-        levelFilterUrl = '/logdatalevelfilter/query?level=w';
-    } else if (match.params.level === 'e') {
-        levelFilterUrl = '/logdatalevelfilter/query?level=e';
-    }
+    console.log(levelFilterUrl);
 
     return (
         <div>

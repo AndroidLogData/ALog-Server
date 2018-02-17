@@ -1,8 +1,10 @@
 import React from 'react';
 import LogData from './logdata';
 
-const TagFilter = ({ match }) => {
-    let tagFilterUrl = '/logdatatagfilter/query?tag=' + match.params.tag;
+const TagFilter = ({match}) => {
+    let tagFilterUrl = '/logdatatagfilter/query?packagename=' + match.params.packagename + '&tag=' + match.params.tag;
+
+    console.log(tagFilterUrl);
 
     return (
         <div>

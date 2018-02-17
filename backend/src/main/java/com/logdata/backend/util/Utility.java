@@ -4,6 +4,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Utility {
     public static String getTime(DateTime time) {
         DateTime date = new DateTime(time);
@@ -31,5 +34,16 @@ public class Utility {
             return true;
         }
         return false;
+    }
+
+    public static String findCrashName(String logcat) {
+        Pattern pattern = Pattern.compile("[0-9].*?(ACRA).*?(?i)(Exception|Error).*?(\\s|[a-zA-z]|\\.)+");
+        Matcher matcher = pattern.matcher(logcat);
+
+        if (!matcher.find()) {
+            return "null";
+        } else {
+            return matcher.group(0);
+        }
     }
 }
