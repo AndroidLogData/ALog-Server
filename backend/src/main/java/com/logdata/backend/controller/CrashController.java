@@ -1,6 +1,6 @@
 package com.logdata.backend.controller;
 
-import com.logdata.backend.model.ChartVO;
+import com.logdata.backend.model.CrashTimeVO;
 import com.logdata.backend.model.CrashVO;
 import com.logdata.backend.model.UserVO;
 import com.logdata.backend.repository.CrashDataRepository;
@@ -10,7 +10,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,69 +30,28 @@ public class CrashController {
     @RequestMapping(value = "/crash", method = RequestMethod.GET)
     public String crashPage(Principal user, Model model) {
         if (user == null) {
-            model.addAttribute("noData", true);
-            return "nodata";
-        }
-        UserVO u = this.userDataRepository.findByUserID(user.getName());
-
-        CrashVO crashVO = this.crashDataRepository.findCrashDataBy(new Sort(Sort.Direction.DESC, "time"));
-        List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(u.getApiKey(), new Sort(Sort.Direction.ASC, "time"));
-
-        if (crashVO == null || chartTimeData.size() == 0) {
-            model.addAttribute("noData", true);
-            return "nodata";
+            return "login";
         }
 
-        Object display = crashVO.getDisplay().get("0");
-
-        Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
-        Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
-
-        for (String s : deviceFeaturesKey) {
-            deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
-        }
-
-        LinkedHashSet<ChartVO> chartData = new LinkedHashSet<ChartVO>();
-        for (CrashVO data : chartTimeData) {
-//            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()) + " " + Utility.getChartDataTime(data.getTime())));
-            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
-        }
-
-        model.addAttribute("crash", crashVO);
-        model.addAttribute("chartData", chartData);
-        model.addAttribute("time", crashVO.getTime());
-        model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
-        model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
-        model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
-        model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
-        model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
-        model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
-        model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
-        model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
-        model.addAttribute("model", crashVO.getBuild().get("MODEL"));
-        model.addAttribute("board", crashVO.getBuild().get("BOARD"));
-        model.addAttribute("deviceFeatures", deviceFeatures);
-        model.addAttribute("timeData", getCrashTime(user));
+        model.addAttribute("noData", true);
         model.addAttribute("sideMenuItems", getPackageName(user));
 
         return "crash";
     }
 
     @RequestMapping(value = "/crashtimefilter/{time}", method = RequestMethod.GET)
-    public String crashDataTagView(Principal user, @RequestParam(value = "time") String time, Model model) {
+    public String crashDataTagView(Principal user, @RequestParam(value = "time") String time, @RequestParam(value = "packageName") String packageName, Model model) {
         if (user == null) {
             model.addAttribute("noData", true);
             return "crash";
         }
-        UserVO u = this.userDataRepository.findByUserID(user.getName());
 
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dddd HH:mm:ss.SSS");
         DateTime dt = formatter.parseDateTime(time);
 
-        CrashVO crashVO = this.crashDataRepository.findCrashDataByTimeAndApiKey(dt, u.getApiKey());
-        List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(u.getApiKey(), new Sort(Sort.Direction.ASC, "time"));
+        CrashVO crashVO = this.crashDataRepository.findCrashDataByTimeAndApiKeyAndPackageName(dt, getUserApiKey(user), packageName);
 
-        if (crashVO == null || !(u.getApiKey().equals(crashVO.getApiKey()))) {
+        if (crashVO == null || !(getUserApiKey(user).equals(crashVO.getApiKey()))) {
             return "nodata";
         }
 
@@ -106,13 +64,8 @@ public class CrashController {
             deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
         }
 
-        LinkedHashSet<ChartVO> chartData = new LinkedHashSet<ChartVO>();
-        for (CrashVO data : chartTimeData) {
-            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
-        }
-
+        model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
-        model.addAttribute("chartData", chartData);
         model.addAttribute("time", crashVO.getTime());
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
@@ -125,24 +78,23 @@ public class CrashController {
         model.addAttribute("model", crashVO.getBuild().get("MODEL"));
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
-        model.addAttribute("timeData", getCrashTime(user));
+        model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("sideMenuItems", getPackageName(user));
 
         return "crash";
     }
 
     @RequestMapping(value = "/crashpackagenamefilter/{packageName}", method = RequestMethod.GET)
-    public String crashPackageNamePage(Principal user, Model model, @RequestParam(value = "packageName") String packageNamae) {
+    public String crashPackageNamePage(Principal user, Model model, @RequestParam(value = "packageName") String packageName) {
         if (user == null) {
             return "login";
         }
 
-        CrashVO crashVO = this.crashDataRepository.findCrashDataBy(new Sort(Sort.Direction.DESC, "time"));
-        List<CrashVO> chartTimeData = this.crashDataRepository.findByApiKeyOrderByTimeDesc(getUserApiKey(user), new Sort(Sort.Direction.ASC, "time"));
+        CrashVO crashVO = this.crashDataRepository.findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(packageName, getUserApiKey(user));
 
-        if (crashVO == null || chartTimeData.size() == 0) {
+        if (crashVO == null) {
             model.addAttribute("noData", true);
-            return "nodata";
+            return "crash";
         }
 
         Object display = crashVO.getDisplay().get("0");
@@ -154,13 +106,8 @@ public class CrashController {
             deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
         }
 
-        LinkedHashSet<ChartVO> chartData = new LinkedHashSet<ChartVO>();
-        for (CrashVO data : chartTimeData) {
-            chartData.add(new ChartVO(Utility.getChartDataDate(data.getTime()), Utility.getChartDataTime(data.getTime())));
-        }
-
+        model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
-        model.addAttribute("chartData", chartData);
         model.addAttribute("time", crashVO.getTime());
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
@@ -173,7 +120,7 @@ public class CrashController {
         model.addAttribute("model", crashVO.getBuild().get("MODEL"));
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
-        model.addAttribute("timeData", getCrashTime(user, packageNamae));
+        model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("sideMenuItems", getPackageName(user));
 
         return "crash";
@@ -196,26 +143,15 @@ public class CrashController {
         return u.getApiKey();
     }
 
-    public ArrayList<String> getCrashTime(Principal user) {
-        ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyOrderByTimeAsc(getUserApiKey(user));
-        ArrayList<String> times = new ArrayList<String>();
-
-        for (CrashVO data : list) {
-            times.add(Utility.getTime(data.getTime()));
-        }
-
-        return times;
-    }
-
-    public ArrayList<String> getCrashTime(Principal user, String packageName) {
+    public ArrayList<CrashTimeVO> getCrashTime(Principal user, String packageName) {
         ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyAndPackageNameOrderByTimeAsc(getUserApiKey(user), packageName);
-        ArrayList<String> times = new ArrayList<String>();
+        ArrayList<CrashTimeVO> crashTimeVOs = new ArrayList<CrashTimeVO>();
 
-        for (CrashVO data : list) {
-            times.add(Utility.getTime(data.getTime()));
+        for (int i = 0; i < list.size(); i++) {
+            crashTimeVOs.add(new CrashTimeVO(packageName, Utility.getTime(list.get(i).getTime())));
         }
 
-        return times;
+        return crashTimeVOs;
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)

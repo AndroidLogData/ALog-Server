@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface CrashDataRepository extends MongoRepository<CrashVO, String> {
-    CrashVO findCrashDataBy(Sort sort);
+    CrashVO findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey);
     CrashVO findCrashDataByTimeAndApiKey(DateTime time, String apiKey);
+    CrashVO findCrashDataByTimeAndApiKeyAndPackageName(DateTime time, String apiKey, String packageName);
     CrashVO findCrashDataByOrderByTimeDescPackageName(String packageName);
     CrashVO findByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey);
-    List<CrashVO> findByApiKeyOrderByTimeDesc(String apiKey, Sort sort);
     ArrayList<CrashVO> findByApiKeyOrderByTimeAsc(String apiKey);
     ArrayList<CrashVO> findByApiKeyAndPackageNameOrderByTimeAsc(String apiKey, String packageName);
     List<CrashVO> findByApiKey(String apiKey);
+    ArrayList<CrashVO> findAllByApiKeyOrderByTimeDesc(String apiKey);
 }
