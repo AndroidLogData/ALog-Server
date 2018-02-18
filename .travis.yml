@@ -8,6 +8,8 @@ sudo: true
 #  only:
 #    - develop
 
+services: mongodb
+
 before_install:
 # - cd backend
  - chmod +x gradlew
