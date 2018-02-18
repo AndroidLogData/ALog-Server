@@ -24,6 +24,9 @@ script:
 #  - cd backend
   - gradle clean build
 
+after_success:
+  - ./gradlew jacocoTestReport coveralls
+
 # CI 실행 완료시 메일로 알람
 notifications:
   email:
