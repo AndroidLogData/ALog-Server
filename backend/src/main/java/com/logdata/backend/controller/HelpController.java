@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Controller
 public class HelpController {
@@ -34,10 +35,17 @@ public class HelpController {
 
         String apiKey = this.userDataRepository.findByUserID(user.getName()).getApiKey();
         ArrayList<CrashVO> crashVOArrayList = this.crashDataRepository.findAllByApiKeyOrderByTimeDesc(getUserApiKey(user));
-        ArrayList<String> crashList = new ArrayList<String>();
+        HashMap<String, Integer> crashList = new HashMap<String, Integer>();
 
         for (int i = 0; i < crashVOArrayList.size(); i++) {
-            crashList.add(Utility.findCrashName(crashVOArrayList.get(i).getLogcat()));
+            String packageName = Utility.findCrashName(crashVOArrayList.get(i).getLogcat());
+
+            if (crashList.get(packageName) == null) {
+                crashList.put(packageName, 1);
+            } else {
+                int count = crashList.get(packageName);
+                crashList.put(packageName, ++count);
+            }
         }
 
         model.addAttribute("crashList", crashList);
