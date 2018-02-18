@@ -10,7 +10,7 @@
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item" th:each="item : ${sideMenuItems}">
                     <a class="nav-link"
-                       th:href="@{http://localhost:8080/crashpackagenamefilter/query(packageName=${item})}"
+                       th:href="@{http://52.231.37.228:8080/crashpackagenamefilter/query(packageName=${item})}"
                        th:text="${item}"/>
                 </li>
             </ul>
@@ -51,7 +51,7 @@
                                              aria-labelledby="dropdown03">
                                             <div th:each="item : ${timeData}">
                                                 <a class="dropdown-item"
-                                                   th:href="@{http://localhost:8080/crashtimefilter/query(time=${item.getStringTime()}, packageName=${item.getPackageName()})}"
+                                                   th:href="@{http://52.231.37.228:8080/crashtimefilter/query(time=${item.getStringTime()}, packageName=${item.getPackageName()})}"
                                                    th:text="${item.getStringTime()}"/>
                                             </div>
                                         </div>
