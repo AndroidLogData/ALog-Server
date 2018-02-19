@@ -66,6 +66,7 @@ public class CrashController {
 
         model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
+        model.addAttribute("logcat", Utility.logcatSummary(crashVO.getLogcat()));
         model.addAttribute("time", crashVO.getTime());
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
@@ -108,6 +109,7 @@ public class CrashController {
 
         model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
+        model.addAttribute("logcat", Utility.logcatSummary(crashVO.getLogcat()));
         model.addAttribute("time", crashVO.getTime());
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));

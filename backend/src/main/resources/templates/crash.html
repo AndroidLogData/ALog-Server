@@ -12,6 +12,9 @@
                     <a class="nav-link"
                        th:href="@{http://52.231.37.228:8080/crashpackagenamefilter/query(packageName=${item})}"
                        th:text="${item}"/>
+                    <!--<a class="nav-link"-->
+                       <!--th:href="@{http://localhost:8080/crashpackagenamefilter/query(packageName=${item})}"-->
+                       <!--th:text="${item}"/>-->
                 </li>
             </ul>
         </nav>
@@ -28,8 +31,7 @@
                         <h5 class="card-header">
                             <ul class="nav nav-tabs card-header-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#crashdata" role="tab">Crash
-                                        Data</a>
+                                    <a class="nav-link active" data-toggle="tab" href="#crashdata" role="tab">Android Information</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#deviceFeatures" role="tab">Device
@@ -53,6 +55,9 @@
                                                 <a class="dropdown-item"
                                                    th:href="@{http://52.231.37.228:8080/crashtimefilter/query(time=${item.getStringTime()}, packageName=${item.getPackageName()})}"
                                                    th:text="${item.getStringTime()}"/>
+                                                <!--<a class="dropdown-item"-->
+                                                   <!--th:href="@{http://localhost:8080/crashtimefilter/query(time=${item.getStringTime()}, packageName=${item.getPackageName()})}"-->
+                                                   <!--th:text="${item.getStringTime()}"/>-->
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +177,7 @@
                                             <tr>
                                                 <td>Logcat</td>
                                                 <td>
-                                                    <pre th:text="${crash.getLogcat()}"></pre>
+                                                    <pre th:text="${logcat}"></pre>
                                                 </td>
                                             </tr>
                                             </tbody>
