@@ -73,7 +73,7 @@ public class Test {
         try {
             mvc.perform(post(baseUrl + "/logdata").with(user("user").password("user").roles("USER")))
                     .andDo(print())
-                    .andExpect(status().isNotFound());
+                    .andExpect(status().isBadRequest());
         } catch (Exception e) {
             e.printStackTrace();
         }
