@@ -1,9 +1,9 @@
 package com.logdata.backend;
 
 import com.logdata.backend.model.CrashVO;
-import com.logdata.backend.model.LogVO;
+import com.logdata.backend.model.UserVO;
 import com.logdata.backend.repository.CrashDataRepository;
-import com.logdata.backend.repository.LogDataRepository;
+import com.logdata.backend.repository.UserDataRepository;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,12 +18,9 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.fasterxml.jackson.databind.ObjectWriter.Prefetch.empty;
-import static java.util.Optional.empty;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
@@ -43,12 +40,13 @@ public class CrashControllerTest {
 
     @MockBean
     private CrashDataRepository crashDataRepository;
-
-    // This object will be magically initialized by the initFields method below.
-    private JacksonTester<CrashVO> crashVOJacksonTester;
+    @MockBean
+    private UserDataRepository userDataRepository;
 
     @org.junit.Test
     public void crashDataListTest() throws Exception {
+        UserVO user = new UserVO("user", "user");
+        when(userDataRepository.findByUserID("user")).thenReturn(user);
         Set<String> set = new HashSet<>();
         // when
         MockHttpServletResponse response = mvc.perform(

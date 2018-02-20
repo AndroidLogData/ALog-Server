@@ -1,7 +1,9 @@
 package com.logdata.backend;
 
 import com.logdata.backend.model.LogVO;
+import com.logdata.backend.model.UserVO;
 import com.logdata.backend.repository.LogDataRepository;
+import com.logdata.backend.repository.UserDataRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -31,12 +34,16 @@ public class LogDataControllerTest {
 
     @MockBean
     private LogDataRepository logDataRepository;
+    @MockBean
+    private UserDataRepository userDataRepository;
 
     // This object will be magically initialized by the initFields method below.
     private JacksonTester<LogVO> logVOJacksonTester;
 
     @org.junit.Test
     public void logDataListTest() throws Exception {
+        UserVO user = new UserVO("user", "user");
+        when(userDataRepository.findByUserID("user")).thenReturn(user);
         // when
         MockHttpServletResponse response = mvc.perform(
                 get("/logdatalist")

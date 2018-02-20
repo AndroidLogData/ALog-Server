@@ -2,7 +2,6 @@ package com.logdata.backend;
 
 import com.logdata.backend.model.LogVO;
 import com.logdata.backend.model.UserVO;
-import com.logdata.backend.repository.CrashDataRepository;
 import com.logdata.backend.repository.LogDataRepository;
 import com.logdata.backend.repository.UserDataRepository;
 import org.junit.Test;
@@ -10,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,8 +35,6 @@ public class MainControllerTest {
 
     @MockBean
     private LogDataRepository logDataRepository;
-    @MockBean
-    private CrashDataRepository crashDataRepository;
     @MockBean
     private UserDataRepository userDataRepository;
 
