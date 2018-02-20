@@ -40,10 +40,9 @@ public class CrashController {
     }
 
     @RequestMapping(value = "/crashtimefilter/{time}", method = RequestMethod.GET)
-    public String crashDataTagView(Principal user, @RequestParam(value = "time") String time, @RequestParam(value = "packageName") String packageName, Model model) {
+    public String crashDataTimeView(Principal user, @RequestParam(value = "time") String time, @RequestParam(value = "packageName") String packageName, Model model) {
         if (user == null) {
-            model.addAttribute("noData", true);
-            return "crash";
+            return "login";
         }
 
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dddd HH:mm:ss.SSS");
@@ -158,15 +157,6 @@ public class CrashController {
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> crashDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody CrashVO data) {
-        if (Utility.CheckedSecretKey(secretKey)) {
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
-            Map<String, String> result = new HashMap<String, String>();
-            result.put("result", "Need API Key");
-
-            return new ResponseEntity<>(result, responseHeaders, HttpStatus.BAD_REQUEST);
-        }
-
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         Set<String> set = data.getDeviceFeatures().keySet();
 
@@ -191,7 +181,7 @@ public class CrashController {
                 secretKey));
 
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+        responseHeaders.add("Content-Type", "application/json;charset=UTF-8");
         Map<String, String> result = new HashMap<String, String>();
         result.put("result", "Crash Data Transfer Success");
 

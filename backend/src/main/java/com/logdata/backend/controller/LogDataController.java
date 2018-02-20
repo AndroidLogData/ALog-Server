@@ -1,7 +1,7 @@
 package com.logdata.backend.controller;
 
-import com.logdata.backend.model.LogVO;
 import com.logdata.backend.model.LogDataListResponse;
+import com.logdata.backend.model.LogVO;
 import com.logdata.backend.model.SetDataListResponse;
 import com.logdata.backend.model.UserVO;
 import com.logdata.backend.repository.LogDataRepository;
@@ -13,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -33,15 +32,6 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
-        if (Utility.CheckedSecretKey(secretKey)) {
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
-            Map<String, String> result = new HashMap<String, String>();
-            result.put("result", "Need API Key");
-
-            return new ResponseEntity<>(result, responseHeaders, HttpStatus.BAD_REQUEST);
-        }
-
         this.logDataRepository.save(new LogVO(data.getPackageName(),
                 data.getLevel(),
                 data.getTag(),
@@ -51,7 +41,7 @@ public class LogDataController {
                 secretKey));
 
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+        responseHeaders.add("Content-Type", "application/json;charset=UTF-8");
         Map<String, String> result = new HashMap<String, String>();
         result.put("result", "Log Data Transfer Success");
 

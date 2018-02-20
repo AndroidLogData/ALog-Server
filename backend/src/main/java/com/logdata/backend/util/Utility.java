@@ -7,6 +7,8 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.util.Objects.isNull;
+
 public class Utility {
     public static String getTime(DateTime time) {
         DateTime date = new DateTime(time);
@@ -30,7 +32,7 @@ public class Utility {
     }
 
     public static boolean CheckedSecretKey(String secretKey) {
-        if (secretKey.equals("")) {
+        if (secretKey.equals("") || secretKey.equals("\"\"")) {
             return true;
         }
         return false;
@@ -58,11 +60,5 @@ public class Utility {
         }
 
         return result.toString();
-
-//        if (!matcher.find()) {
-//            return "null";
-//        } else {
-//            return matcher.group(0);
-//        }
     }
 }
