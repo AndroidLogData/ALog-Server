@@ -22,7 +22,8 @@ cache:
 
 script:
 #  - cd backend
-  - gradle clean build
+  - ./gradlew dependencies
+  - ./gradlew clean build
 
 after_success:
   - ./gradlew jacocoTestReport coveralls
