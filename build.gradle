@@ -32,6 +32,10 @@ subprojects {
         }
     }
 
+    jacoco {
+        toolVersion = "0.8.0"
+    }
+
     repositories {
         mavenCentral()
     }

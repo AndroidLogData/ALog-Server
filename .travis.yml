@@ -22,7 +22,6 @@ cache:
 
 script:
 #  - cd backend
-  - ./gradlew dependencies
   - ./gradlew clean build
 
 after_success:
