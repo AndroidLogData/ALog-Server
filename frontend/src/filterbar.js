@@ -15,7 +15,7 @@ class FilterBar extends React.Component {
                 <div className="card">
                     <h3 className="card-header">Filter</h3>
                     <div className="card-block">
-                        <div className="btn-group">
+                        <div className="btn-group" style={{marginRight: 0.5 + '%'}}>
                             <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 Level
@@ -85,7 +85,7 @@ class TagList extends React.Component {
         }
 
         return (
-            <div className="btn-group">
+            <div className="btn-group"  style={{marginRight: 0.5 + '%'}}>
                 <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     Tag

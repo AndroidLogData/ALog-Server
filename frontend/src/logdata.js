@@ -289,7 +289,8 @@ class LogDataWarning extends React.Component {
                         <div className="card-header">
                             <ul className="nav nav-tabs card-header-tabs">
                                 <li className="nav-item">
-                                    <a className="nav-link active" data-toggle="tab" href={"#warning-logdata" + i}>Log</a>
+                                    <a className="nav-link active" data-toggle="tab"
+                                       href={"#warning-logdata" + i}>Log</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" data-toggle="tab" href={"#warning-memory" + i}>Memory</a>
