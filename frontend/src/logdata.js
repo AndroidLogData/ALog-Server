@@ -109,6 +109,10 @@ class LogDataMemoryChart extends React.Component {
                 <div>
                     <Bar data={pssMemoryInfo} options={pssMemoryInfoOptions} width={50} height={50}/>
                 </div>
+                <div>
+                    <p>Memory Percentage : {memoryPercentage.toFixed(2)}</p>
+                    <p>Low Memory : {(lowMemory) ? 'true' : 'false'}</p>
+                </div>
             </div>
         );
     }
@@ -421,7 +425,7 @@ class LogData extends React.Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+                    <main className="col-sm offset-sm-3 col-md offset-md-2 pt-3">
                         <FilterBar packageName={query.query.packagename}/>
                         <div className="row">
                             <LogDataVerb logData={this.state.logData}/>

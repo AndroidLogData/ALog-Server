@@ -1,5 +1,4 @@
 import React from 'react';
-import LogData from './logdata';
 import LevelFilter from "./levelfilter";
 import TagFilter from "./tagfilter";
 import PackageFilter from "./packagefilter";

@@ -89,6 +89,7 @@ public class CrashControllerTest {
     @Test
     public void crashDataTimeTest() {
         try {
+            given(userDataRepository.findByUserID("user")).willReturn(new UserVO("user", "user"));
             given(crashDataRepository.findCrashDataByTimeAndApiKeyAndPackageName(new DateTime(1L), "apiKey", "android")).willReturn(new CrashVO());
             // when
             MockHttpServletResponse response = mvc.perform(
