@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.logdata.common")
+@ComponentScan("com.logdata.common.repository")
 public class ApiApplication {
 
 	public static void main(String[] args) {
