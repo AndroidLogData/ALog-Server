@@ -42,25 +42,10 @@ subprojects {
 
 
     dependencies {
-        compile('org.springframework.boot:spring-boot-starter-security')
-        compile('joda-time:joda-time:2.9.9')
-        testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '5.0.1.RELEASE'
-        testCompile('org.springframework.boot:spring-boot-starter-test')
+
     }
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.5.1'
-}
-
-project(':Logdata-Server-Api') {
-    dependencies {
-        compile project(':Logdata-Server-Common')
-    }
-}
-
-project(':Logdata-Server-Web') {
-    dependencies {
-        compile project(':Logdata-Server-Api')
-    }
 }
