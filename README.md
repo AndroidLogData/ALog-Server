@@ -11,18 +11,33 @@
 ## Installation
 * 개발용 서버
 ```text
+cd frontend
 npm run develop
 ```
+```text
+cd backend
+gradle bootRun
+```
+
+* webpack-dev-server와 spring-boot서버를 동시 구동해야하기 때문에 터미널이 두개가 필요함
+* localhost:3000에 접속하면 개발용 서버에 접속할 수 있다.
+* react-hot-loader가 적용되어 있음
 
 * 배포용 빌드
 ```text
+cd frontend
 npm run build
+cd ..
+cd backend
+gradle bootRun
 ```
+
+* ```backend/src/main/resources/static/react/bundle.js```가 생성됨
 
 * 서버 실행
 ```gradle
 gradle clean build
-java -jar build/libs/(jar 파일명.jar)
+java -jar backend/build/libs/(jar 파일명.jar)
 ```
 
 * Spring Boot 에서 개발 되었음
