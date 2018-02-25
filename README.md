@@ -40,6 +40,7 @@ gradle clean build
 java -jar backend/build/libs/(jar 파일명.jar)
 ```
 
+* localhost:8080에 접속하면 서버에 접속이 가능
 * Spring Boot 에서 개발 되었음
 
 ## Development Stack
