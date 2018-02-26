@@ -99,7 +99,7 @@ public class LogDataController {
     @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    private SetDataListResponse getTag2(Principal user) {
+    private SetDataListResponse getTag(Principal user) {
         List<LogVO> setData = this.logDataRepository.findByApiKey(getUserApiKey(user));
 
         Set<String> tagSet = new HashSet<String>();
@@ -114,7 +114,7 @@ public class LogDataController {
     @RequestMapping(value = "/packagenamedatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    private SetDataListResponse getPackageName2(Principal user) {
+    private SetDataListResponse getPackageName(Principal user) {
         List<LogVO> setData = this.logDataRepository.findByApiKey(getUserApiKey(user));
 
         Set<String> packageNameSet = new HashSet<String>();

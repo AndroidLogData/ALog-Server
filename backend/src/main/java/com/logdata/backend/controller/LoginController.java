@@ -21,17 +21,17 @@ public class LoginController {
     private UserDataRepository userDataRepository;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String UserLogin() {
+    public String userLogin() {
         return "login";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String UserRegistration() {
+    public String userRegistration() {
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String UserRegistration(@RequestParam Map<String, String> body, Model model) {
+    public String userRegistration(@RequestParam Map<String, String> body, Model model) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserVO newUser = new UserVO(body.get("username"), passwordEncoder.encode(body.get("password")));
         UserRoles userRoles = new UserRoles();
