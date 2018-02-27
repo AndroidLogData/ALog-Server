@@ -9,6 +9,12 @@
 안드로이드 로그 데이터를 관리하기 위한 서버
 
 ## Installation
+```text
+cd frontend
+npm install
+```
+* npm 모듈을 다운받는다
+
 * 개발용 서버
 ```text
 cd frontend
