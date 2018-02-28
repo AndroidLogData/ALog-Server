@@ -1,3 +1,3 @@
 rootProject.name = 'logdata'
 
-include 'Logdata-Server-Common', 'Logdata-Server-Web'
+include 'Logdata-Server-Common', 'Logdata-Server-Web', 'Logdata-Server-Api'

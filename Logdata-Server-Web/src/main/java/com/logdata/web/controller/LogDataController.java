@@ -1,5 +1,6 @@
 package com.logdata.web.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logdata.common.model.LogDataListResponse;
 import com.logdata.common.model.LogVO;
 import com.logdata.common.model.SetDataListResponse;
@@ -7,14 +8,15 @@ import com.logdata.common.model.UserVO;
 import com.logdata.common.repository.LogDataRepository;
 import com.logdata.common.repository.UserDataRepository;
 import com.logdata.common.util.Utility;
+import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.security.Principal;
 import java.util.*;
 
@@ -31,21 +33,8 @@ public class LogDataController {
     }
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
-        this.logDataRepository.save(new LogVO(data.getPackageName(),
-                data.getLevel(),
-                data.getTag(),
-                data.getMessage(),
-                data.getTime(),
-                data.getMemoryInfo(),
-                secretKey));
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Content-Type", "application/json;charset=UTF-8");
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("result", "Log Data Transfer Success");
-
-        return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
+    public ResponseEntity<Object> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
+        return RestAPIUtility.postData("/logdatasave", secretKey, data);
     }
 
     @RequestMapping(value = "/logdatalist", method = RequestMethod.GET, produces = "application/json")
@@ -55,7 +44,7 @@ public class LogDataController {
         List<LogVO> logVOList = this.logDataRepository.findByApiKey(getUserApiKey(user), new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
-            data.setStringTime(Utility.getTime(data.getTime()));
+            data.setStringTime(Utility.timeTranslate(data.getTime()));
         }
         return new LogDataListResponse(logVOList);
     }
@@ -67,7 +56,7 @@ public class LogDataController {
         List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, level, new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
-            data.setStringTime(Utility.getTime(data.getTime()));
+            data.setStringTime(Utility.timeTranslate(data.getTime()));
         }
         return new LogDataListResponse(logVOList);
     }
@@ -79,7 +68,7 @@ public class LogDataController {
         List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndPackageNameAndTag(getUserApiKey(user), packageName, tag, new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
-            data.setStringTime(Utility.getTime(data.getTime()));
+            data.setStringTime(Utility.timeTranslate(data.getTime()));
         }
         return new LogDataListResponse(logVOList);
     }
@@ -88,42 +77,45 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {
-        List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndPackageName(getUserApiKey(user), packageName, new Sort(Sort.Direction.DESC, "time"));
-
-        for (LogVO data : logVOList) {
-            data.setStringTime(Utility.getTime(data.getTime()));
-        }
-        return new LogDataListResponse(logVOList);
-    }
-
-    @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    private SetDataListResponse getTag(Principal user) {
-        List<LogVO> setData = this.logDataRepository.findByApiKey(getUserApiKey(user));
-
-        Set<String> tagSet = new HashSet<String>();
-
-        for (LogVO data : setData) {
-            tagSet.add(data.getTag());
-        }
-
-        return new SetDataListResponse(tagSet);
+        RestAPIUtility.getData("/logdatapackagenamefilter", "ea0cc2e630ed4b6683252eb6114f89a9", packageName);
+//        System.out.println(RestAPIUtility.getData("/logdatapackagenamefilter", "ea0cc2e630ed4b6683252eb6114f89a9", packageName));
+//        List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndPackageName(getUserApiKey(user), packageName, new Sort(Sort.Direction.DESC, "time"));
+//
+//        for (LogVO data : logVOList) {
+//            data.setStringTime(Utility.timeTranslate(data.getTime()));
+//        }
+//        return new LogDataListResponse(logVOList);
+        return null;
     }
 
     @RequestMapping(value = "/packagenamedatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    private SetDataListResponse getPackageName(Principal user) {
-        List<LogVO> setData = this.logDataRepository.findByApiKey(getUserApiKey(user));
+    private SetDataListResponse getPackageName(@RequestHeader(value = "secretKey") String secretKey) {
+        return (SetDataListResponse) RestAPIUtility.getData("/packagenamedatalist", secretKey);
+//        List<LogVO> setData = this.logDataRepository.findByApiKey(secretKey);
+//
+//        Set<String> packageNameSet = new HashSet<String>();
+//
+//        for (LogVO data : setData) {
+//            packageNameSet.add(data.getPackageName());
+//        }
+//
+//        return new SetDataListResponse(packageNameSet);
+    }
 
-        Set<String> packageNameSet = new HashSet<String>();
-
-        for (LogVO data : setData) {
-            packageNameSet.add(data.getPackageName());
-        }
-
-        return new SetDataListResponse(packageNameSet);
+    @RequestMapping(value = "/logdatapackagenamefilter/{packagename}", produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public LogDataListResponse logDataPackageNameList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName) {
+//        return (LogDataListResponse) RestAPIUtility.getData("/logdatapackagenamefilter", secretKey, packageName);
+//        List<LogVO> logVOList = this.logDataRepository.findByApiKeyAndPackageName(secretKey, packageName, new Sort(Sort.Direction.DESC, "time"));
+//
+//        for (LogVO data : logVOList) {
+//            data.setStringTime(Utility.timeTranslate(data.getTime()));
+//        }
+//        return new LogDataListResponse(logVOList);
+        return null;
     }
 
     public String getUserApiKey(Principal user) {

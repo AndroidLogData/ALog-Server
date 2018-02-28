@@ -4,6 +4,4 @@ bootRepackage {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
-	compile('joda-time:joda-time:2.9.9')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

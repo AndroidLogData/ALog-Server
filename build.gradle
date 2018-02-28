@@ -42,7 +42,10 @@ subprojects {
 
 
     dependencies {
-
+        compile('joda-time:joda-time:2.9.9')
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+        testCompile('org.springframework.security:spring-security-test')
+        testCompile('org.springframework.security:spring-security-test:5.0.1.RELEASE')
     }
 }
 
@@ -51,6 +54,12 @@ task wrapper(type: Wrapper) {
 }
 
 project(':Logdata-Server-Web') {
+    dependencies {
+        compile project(':Logdata-Server-Common')
+    }
+}
+
+project(':Logdata-Server-Api') {
     dependencies {
         compile project(':Logdata-Server-Common')
     }

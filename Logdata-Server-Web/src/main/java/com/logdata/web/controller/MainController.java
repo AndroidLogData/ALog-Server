@@ -68,7 +68,7 @@ public class MainController {
             if (crashTime == null) {
                 list.add(new MainPageVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
             } else {
-                list.add(new MainPageVO(packageName, Utility.getTime(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
+                list.add(new MainPageVO(packageName, Utility.timeTranslate(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
             }
         }
 

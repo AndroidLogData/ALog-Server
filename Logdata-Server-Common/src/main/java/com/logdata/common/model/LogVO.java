@@ -14,7 +14,7 @@ public class LogVO {
     private String level;
     private String tag;
     private String message;
-    private DateTime time;
+    private long time;
     private String stringTime;
     private Map<String, Object> memoryInfo;
     private String apiKey;
@@ -22,16 +22,7 @@ public class LogVO {
     public LogVO() {
     }
 
-    public LogVO(String packageName, String level, String tag, String message, DateTime time, String apiKey) {
-        this.packageName = packageName;
-        this.level = level;
-        this.tag = tag;
-        this.message = message;
-        this.time = time;
-        this.apiKey = apiKey;
-    }
-
-    public LogVO(String packageName, String level, String tag, String message, DateTime time, Map<String, Object> memoryInfo, String apiKey) {
+    public LogVO(String packageName, String level, String tag, String message, long time, Map<String, Object> memoryInfo, String apiKey) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
@@ -41,7 +32,7 @@ public class LogVO {
         this.apiKey = apiKey;
     }
 
-    public LogVO(String id, String packageName, String level, String tag, String message, DateTime time, Map<String, Object> memoryInfo, String apiKey) {
+    public LogVO(String id, String packageName, String level, String tag, String message, long time, Map<String, Object> memoryInfo, String apiKey) {
         this.id = id;
         this.packageName = packageName;
         this.level = level;
@@ -92,11 +83,11 @@ public class LogVO {
         this.message = message;
     }
 
-    public DateTime getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(DateTime time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

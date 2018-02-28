@@ -15,6 +15,13 @@ public class Utility {
         return date.toString(fmt);
     }
 
+    public static String timeTranslate(long time) {
+        DateTime date = new DateTime(time);
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
+        return date.toString(fmt);
+    }
+
     public static String getChartDataDate(DateTime time) {
         DateTime date = new DateTime(time);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");

@@ -66,7 +66,7 @@ public class CrashController {
         model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
         model.addAttribute("logcat", Utility.logcatSummary(crashVO.getLogcat()));
-        model.addAttribute("time", Utility.getTime(crashVO.getTime()));
+        model.addAttribute("time", Utility.timeTranslate(crashVO.getTime()));
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
         model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
@@ -109,7 +109,7 @@ public class CrashController {
         model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
         model.addAttribute("logcat", Utility.logcatSummary(crashVO.getLogcat()));
-        model.addAttribute("time", Utility.getTime(crashVO.getTime()));
+        model.addAttribute("time", Utility.timeTranslate(crashVO.getTime()));
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
         model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
@@ -149,7 +149,7 @@ public class CrashController {
         ArrayList<CrashTimeVO> crashTimeVOs = new ArrayList<CrashTimeVO>();
 
         for (int i = 0; i < list.size(); i++) {
-            crashTimeVOs.add(new CrashTimeVO(packageName, Utility.getTime(list.get(i).getTime())));
+            crashTimeVOs.add(new CrashTimeVO(packageName, Utility.timeTranslate(list.get(i).getTime())));
         }
 
         return crashTimeVOs;

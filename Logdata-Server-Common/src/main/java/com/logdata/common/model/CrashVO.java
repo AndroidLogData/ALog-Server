@@ -11,7 +11,7 @@ public class CrashVO {
     @Id
     private String id;
     private String packageName;
-    private DateTime time;
+    private long time;
     private String androidVersion;
     private String appVersionCode;
     private String appVersionName;
@@ -27,7 +27,7 @@ public class CrashVO {
 
     public CrashVO() {}
 
-    public CrashVO(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
+    public CrashVO(String packageName, long time, String androidVersion, String appVersionCode, String appVersionName,
                    long availableMemorySize, String brand, String logcat, String deviceID,
                    Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
                    Map<String, Object> build, String apiKey) {
@@ -47,7 +47,7 @@ public class CrashVO {
         this.apiKey = apiKey;
     }
 
-    public CrashVO(String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
+    public CrashVO(String packageName, long time, String androidVersion, String appVersionCode, String appVersionName,
                    long availableMemorySize, String brand, String logcat, String deviceID, Map<String, Object> display,
                    Map<String, Object> environment, Map<String, Object> build, String apiKey) {
         this.packageName = packageName;
@@ -65,7 +65,7 @@ public class CrashVO {
         this.apiKey = apiKey;
     }
 
-    public CrashVO(String id, String packageName, DateTime time, String androidVersion, String appVersionCode, String appVersionName,
+    public CrashVO(String id, String packageName, long time, String androidVersion, String appVersionCode, String appVersionName,
                    long availableMemorySize, String brand, String logcat, String deviceID,
                    Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
                    Map<String, Object> build, String apiKey) {
@@ -102,11 +102,11 @@ public class CrashVO {
         this.packageName = packageName;
     }
 
-    public DateTime getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(DateTime time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
