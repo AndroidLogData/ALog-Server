@@ -1,8 +1,8 @@
 package com.logdata.backend.controller;
 
-import com.logdata.backend.model.UserRoles;
-import com.logdata.backend.model.UserVO;
-import com.logdata.backend.repository.UserDataRepository;
+import com.logdata.common.model.UserRoles;
+import com.logdata.common.model.UserVO;
+import com.logdata.common.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;

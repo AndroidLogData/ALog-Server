@@ -1,8 +1,8 @@
 package com.logdata.backend.service;
 
 import com.logdata.backend.model.SecurityUser;
-import com.logdata.backend.model.UserVO;
-import com.logdata.backend.repository.UserDataRepository;
+import com.logdata.common.model.UserVO;
+import com.logdata.common.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

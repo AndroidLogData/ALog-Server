@@ -1,12 +1,12 @@
 package com.logdata.backend.controller;
 
-import com.logdata.backend.model.LogDataListResponse;
-import com.logdata.backend.model.LogVO;
-import com.logdata.backend.model.SetDataListResponse;
-import com.logdata.backend.model.UserVO;
-import com.logdata.backend.repository.LogDataRepository;
-import com.logdata.backend.repository.UserDataRepository;
-import com.logdata.backend.util.Utility;
+import com.logdata.common.model.LogDataListResponse;
+import com.logdata.common.model.LogVO;
+import com.logdata.common.model.SetDataListResponse;
+import com.logdata.common.model.UserVO;
+import com.logdata.common.repository.LogDataRepository;
+import com.logdata.common.repository.UserDataRepository;
+import com.logdata.common.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;

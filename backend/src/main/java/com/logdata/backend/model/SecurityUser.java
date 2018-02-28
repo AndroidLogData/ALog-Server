@@ -1,5 +1,7 @@
 package com.logdata.backend.model;
 
+import com.logdata.common.model.UserRoles;
+import com.logdata.common.model.UserVO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

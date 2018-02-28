@@ -1,7 +1,5 @@
 package com.logdata.backend;
 
-import com.logdata.backend.model.CrashVO;
-import com.logdata.backend.model.LogVO;
 import com.logdata.backend.repository.CrashDataRepository;
 import com.logdata.backend.repository.LogDataRepository;
 import org.joda.time.DateTime;

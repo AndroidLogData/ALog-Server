@@ -1,7 +1,5 @@
 package com.logdata.backend;
 
-import com.logdata.backend.model.CrashVO;
-import com.logdata.backend.model.UserVO;
 import com.logdata.backend.repository.CrashDataRepository;
 import com.logdata.backend.repository.UserDataRepository;
 import org.junit.runner.RunWith;

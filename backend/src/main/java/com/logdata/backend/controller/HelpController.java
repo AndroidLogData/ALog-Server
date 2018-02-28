@@ -1,10 +1,10 @@
 package com.logdata.backend.controller;
 
-import com.logdata.backend.model.CrashVO;
-import com.logdata.backend.model.UserVO;
-import com.logdata.backend.repository.CrashDataRepository;
-import com.logdata.backend.repository.UserDataRepository;
-import com.logdata.backend.util.Utility;
+import com.logdata.common.model.CrashVO;
+import com.logdata.common.model.UserVO;
+import com.logdata.common.repository.CrashDataRepository;
+import com.logdata.common.repository.UserDataRepository;
+import com.logdata.common.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
