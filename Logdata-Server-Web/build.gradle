@@ -1,0 +1,10 @@
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('joda-time:joda-time:2.9.9')
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '2.1.2.RELEASE'
+	testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '5.0.1.RELEASE'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
+}
