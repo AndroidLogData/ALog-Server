@@ -1,7 +1,9 @@
 package com.logdata.backend;
 
-import com.logdata.backend.repository.CrashDataRepository;
-import com.logdata.backend.repository.UserDataRepository;
+import com.logdata.common.model.CrashVO;
+import com.logdata.common.model.UserVO;
+import com.logdata.common.repository.CrashDataRepository;
+import com.logdata.common.repository.UserDataRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

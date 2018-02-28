@@ -1,7 +1,9 @@
 package com.logdata.backend;
 
-import com.logdata.backend.repository.CrashDataRepository;
-import com.logdata.backend.repository.UserDataRepository;
+import com.logdata.common.model.CrashVO;
+import com.logdata.common.model.UserVO;
+import com.logdata.common.repository.CrashDataRepository;
+import com.logdata.common.repository.UserDataRepository;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;

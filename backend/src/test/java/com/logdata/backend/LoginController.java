@@ -1,6 +1,7 @@
 package com.logdata.backend;
 
-import com.logdata.backend.repository.UserDataRepository;
+import com.logdata.common.model.UserVO;
+import com.logdata.common.repository.UserDataRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
