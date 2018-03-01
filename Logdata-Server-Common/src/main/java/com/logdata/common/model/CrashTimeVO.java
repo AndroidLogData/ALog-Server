@@ -1,12 +1,24 @@
 package com.logdata.common.model;
 
 public class CrashTimeVO {
+    private long time;
     private String packageName;
     private String stringTime;
 
-    public CrashTimeVO(String packageName, String stringTime) {
+    public CrashTimeVO() {}
+
+    public CrashTimeVO(long time, String packageName, String stringTime) {
+        this.time = time;
         this.packageName = packageName;
         this.stringTime = stringTime;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String getPackageName() {

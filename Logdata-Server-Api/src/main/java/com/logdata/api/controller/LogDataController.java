@@ -83,7 +83,6 @@ public class LogDataController {
     @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     private Set<String> getTag(@RequestHeader(value = "secretKey") String secretKey) {
-        System.out.println("Tag Data List");
         List<LogVO> setData = this.logDataService.findByApiKey(secretKey);
 
         Set<String> tagSet = new HashSet<String>();

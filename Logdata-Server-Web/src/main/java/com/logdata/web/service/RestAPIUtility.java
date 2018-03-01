@@ -1,9 +1,6 @@
 package com.logdata.web.service;
 
-import com.google.gson.Gson;
-import com.logdata.common.model.LogDataListResponse;
-import com.logdata.common.model.LogVO;
-import com.logdata.common.model.SetDataListResponse;
+import com.logdata.common.model.*;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -16,7 +13,6 @@ public class RestAPIUtility {
     private static HttpHeaders headers = new HttpHeaders();
     private static Map<String, String> params = new HashMap<String, String>();
     private static HttpEntity<Object> entity = null;
-    private static Gson gson = new Gson();
 
     public static ResponseEntity<Object> postData(String url, String secretKey, Object data) {
         try {
@@ -28,8 +24,6 @@ public class RestAPIUtility {
                     .build()
                     .encode()
                     .toUri();
-
-            System.out.println(uri.toString());
 
             headers.set("secretKey", secretKey);
             headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -100,7 +94,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static SetDataListResponse getData(String url, String secretKey) {
+    public static SetDataListResponse getSetListData(String url, String secretKey) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -125,7 +119,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static LogDataListResponse getData(String url, String secretKey, String packageName) {
+    public static LogDataListResponse getPackageNameList(String url, String secretKey, String packageName) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -146,6 +140,108 @@ public class RestAPIUtility {
             ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
             return new LogDataListResponse(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static CrashVO getCrashTimeData(String url, String secretKey, long time, String packageName) {
+        try {
+            URI uri = UriComponentsBuilder.newInstance()
+                    .scheme("http")
+                    .host("localhost")
+                    .port(8081)
+                    .path("/api" + url + "/query")
+                    .queryParam("time", time)
+                    .queryParam("packageName", packageName)
+                    .build()
+                    .encode()
+                    .toUri();
+
+            headers.set("secretKey", secretKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<CrashVO> response = restTemplate.exchange(uri, HttpMethod.GET, entity, CrashVO.class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static CrashVO getCrashTime(String url, String secretKey, String packageName) {
+        try {
+            URI uri = UriComponentsBuilder.newInstance()
+                    .scheme("http")
+                    .host("localhost")
+                    .port(8081)
+                    .path("/api" + url + "/query")
+                    .queryParam("packageName", packageName)
+                    .build()
+                    .encode()
+                    .toUri();
+
+            headers.set("secretKey", secretKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<CrashVO> response = restTemplate.exchange(uri, HttpMethod.GET, entity, CrashVO.class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList getCrashPackageNameList(String url, String secretKey) {
+        try {
+            URI uri = UriComponentsBuilder.newInstance()
+                    .scheme("http")
+                    .host("localhost")
+                    .port(8081)
+                    .path("/api" + url)
+                    .build()
+                    .encode()
+                    .toUri();
+
+            headers.set("secretKey", secretKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<ArrayList> response = restTemplate.exchange(uri, HttpMethod.GET, entity, ArrayList.class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList getCrashTimeList(String url, String secretKey, String packageName) {
+        try {
+            URI uri = UriComponentsBuilder.newInstance()
+                    .scheme("http")
+                    .host("localhost")
+                    .port(8081)
+                    .path("/api" + url + "/query")
+                    .queryParam("packageName", packageName)
+                    .build()
+                    .encode()
+                    .toUri();
+
+            headers.set("secretKey", secretKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<CrashTimeVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, CrashTimeVO[].class);
+
+            ArrayList<CrashTimeVO> list = new ArrayList<CrashTimeVO>(Arrays.asList(response.getBody()));
+
+            return list;
         } catch (Exception e) {
             e.printStackTrace();
         }

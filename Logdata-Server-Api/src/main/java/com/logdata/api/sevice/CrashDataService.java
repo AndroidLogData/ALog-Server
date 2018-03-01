@@ -30,7 +30,7 @@ public class CrashDataService {
         return this.crashDataRepository.findCrashDataByTimeAndApiKey(time, apiKey);
     }
 
-    public CrashVO findCrashDataByTimeAndApiKeyAndPackageName(DateTime time, String apiKey, String packageName) {
+    public CrashVO findCrashDataByTimeAndApiKeyAndPackageName(long time, String apiKey, String packageName) {
         return this.crashDataRepository.findCrashDataByTimeAndApiKeyAndPackageName(time, apiKey, packageName);
     }
 

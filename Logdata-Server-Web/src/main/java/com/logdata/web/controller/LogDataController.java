@@ -47,21 +47,21 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {
-        return RestAPIUtility.getData("/logdatapackagenamefilter", getUserApiKey(user), packageName);
+        return RestAPIUtility.getPackageNameList("/logdatapackagenamefilter", getUserApiKey(user), packageName);
     }
 
     @RequestMapping(value = "/packagenamedatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private SetDataListResponse getPackageName(Principal user) {
-        return RestAPIUtility.getData("/packagenamedatalist", getUserApiKey(user));
+        return RestAPIUtility.getSetListData("/packagenamedatalist", getUserApiKey(user));
     }
 
     @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private SetDataListResponse getTagName(Principal user) {
-        return RestAPIUtility.getData("/tagdatalist", getUserApiKey(user));
+        return RestAPIUtility.getSetListData("/tagdatalist", getUserApiKey(user));
     }
 
     public String getUserApiKey(Principal user) {

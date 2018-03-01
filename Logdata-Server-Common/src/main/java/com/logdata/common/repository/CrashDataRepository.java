@@ -10,7 +10,7 @@ import java.util.List;
 public interface CrashDataRepository extends MongoRepository<CrashVO, String> {
     CrashVO findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey);
     CrashVO findCrashDataByTimeAndApiKey(DateTime time, String apiKey);
-    CrashVO findCrashDataByTimeAndApiKeyAndPackageName(DateTime time, String apiKey, String packageName);
+    CrashVO findCrashDataByTimeAndApiKeyAndPackageName(long time, String apiKey, String packageName);
     CrashVO findCrashDataByOrderByTimeDescPackageName(String packageName);
     CrashVO findByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey);
     ArrayList<CrashVO> findByApiKeyOrderByTimeAsc(String apiKey);
