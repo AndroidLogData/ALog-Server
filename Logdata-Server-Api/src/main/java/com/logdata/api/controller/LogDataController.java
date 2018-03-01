@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -53,8 +54,36 @@ public class LogDataController {
         return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/logdatalevelfilter/{query}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public List<LogVO> logDataLevelList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "level") String level) {
+        List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageNameAndLevel(secretKey, packageName, level, new Sort(Sort.Direction.DESC, "time"));
+
+        for (LogVO data : logVOList) {
+            data.setStringTime(Utility.timeTranslate(data.getTime()));
+        }
+
+        return logVOList;
+    }
+
+    @RequestMapping(value = "/logdatatagfilter/{query}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public List<LogVO> logDataTagList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "tag") String tag) {
+        List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageNameAndTag(secretKey, packageName, tag, new Sort(Sort.Direction.DESC, "time"));
+
+        for (LogVO data : logVOList) {
+            data.setStringTime(Utility.timeTranslate(data.getTime()));
+        }
+
+        return logVOList;
+    }
+
     @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
-    private SetDataListResponse getTag(@RequestHeader(value = "secretKey") String secretKey) {
+    @ResponseBody
+    private Set<String> getTag(@RequestHeader(value = "secretKey") String secretKey) {
+        System.out.println("Tag Data List");
         List<LogVO> setData = this.logDataService.findByApiKey(secretKey);
 
         Set<String> tagSet = new HashSet<String>();
@@ -63,11 +92,12 @@ public class LogDataController {
             tagSet.add(data.getTag());
         }
 
-        return new SetDataListResponse(tagSet);
+        return tagSet;
     }
 
     @RequestMapping(value = "/packagenamedatalist", method = RequestMethod.GET, produces = "application/json")
-    private SetDataListResponse getPackageName(@RequestHeader(value = "secretKey") String secretKey) {
+    @ResponseBody
+    private Set<String> getPackageName(@RequestHeader(value = "secretKey") String secretKey) {
         List<LogVO> setData = this.logDataService.findByApiKey(secretKey);
 
         Set<String> packageNameSet = new HashSet<String>();
@@ -76,21 +106,19 @@ public class LogDataController {
             packageNameSet.add(data.getPackageName());
         }
 
-        return new SetDataListResponse(packageNameSet);
+        return packageNameSet;
     }
 
     @RequestMapping(value = "/logdatapackagenamefilter/{packagename}")
     @ResponseBody
-    public LogDataListResponse logDataPackageNameList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName) {
-        System.out.println(secretKey);
-        System.out.println(packageName);
+    public List<LogVO> logDataPackageNameList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName) {
         List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageName(secretKey, packageName, new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
             data.setStringTime(Utility.timeTranslate(data.getTime()));
         }
 
-//        return logVOList;
-        return new LogDataListResponse(logVOList);
+        return logVOList;
+//        return new LogDataListResponse(logVOList);
     }
 }
