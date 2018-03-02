@@ -22,7 +22,7 @@
                         You have been logged out.
                     </div>
                     <form th:action="@{/login}" method="post">
-                        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <div class="card" style="width: 50%">
                             <div class="card-header">
                                 <h3>Login</h3>

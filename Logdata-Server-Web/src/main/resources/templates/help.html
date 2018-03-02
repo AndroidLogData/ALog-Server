@@ -3,7 +3,12 @@
 </head>
 <body>
 <div th:replace="navigation :: navigation"></div>
-<div th:replace="side_menu :: sidemenu"></div>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+        </nav>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
@@ -22,11 +27,13 @@ allprojects {
             <h3>dependency 추가</h3>
             <hr/>
             <pre>dependencies {
-    compile 'com.github.AndroidLogData:Logdata-Android:0.1.2'
+    compile 'com.github.AndroidLogData:Logdata-Android:0.2.1'
 }</pre>
             <h3>mete-data 추가</h3>
             <hr/>
             <pre>
+&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+...
 &lt;meta-data android:name="com.logcat.apiKey"
     android:value="&lt;InsertYourKey&gt;"/&gt;
             </pre>
@@ -58,8 +65,13 @@ allprojects {
             <pre>
 git clone https://github.com/AndroidLogData/Logdata-Server-Spring.git
 cd Logdata-Server-Spring
-gradle npmInstall clean build
-java -jar build/libs/(jar 파일명.jar)
+cd frontend
+npm install
+npm run build
+cd ..
+gradle clean build
+java -jar Logdata-Server-Api/build/libs/(jar 파일명.jar)
+java -jar Logdata-Server-Web/build/libs/(jar 파일명.jar)
             </pre>
             <hr/>
             <p>Developer : <a href="https://github.com/KimBoWoon" target="_blank">Kim Bo Woon</a></p>
