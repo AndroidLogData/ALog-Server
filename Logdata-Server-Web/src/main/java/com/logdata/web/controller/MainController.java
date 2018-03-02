@@ -5,6 +5,7 @@ import com.logdata.common.repository.CrashDataRepository;
 import com.logdata.common.repository.LogDataRepository;
 import com.logdata.common.repository.UserDataRepository;
 import com.logdata.common.util.Utility;
+import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -54,25 +55,29 @@ public class MainController {
             return null;
         }
 
-        Set<String> logData = getPackageName(getUserApiKey(user));
-        List<MainPageVO> list = new ArrayList<MainPageVO>();
+//        Set<String> logData = getPackageName(getUserApiKey(user));
+//        List<MainPageVO> list = new ArrayList<MainPageVO>();
+//
+//        for (String packageName : logData) {
+//            int verbCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "v").size();
+//            int infoCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "i").size();
+//            int debugCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "d").size();
+//            int warningCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "w").size();
+//            int errorCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "e").size();
+//
+//            CrashVO crashTime = this.crashDataRepository.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, getUserApiKey(user));
+//            if (crashTime == null) {
+//                list.add(new MainPageVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
+//            } else {
+//                list.add(new MainPageVO(packageName, Utility.timeTranslate(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
+//            }
+//        }
+//
+//        return new MainPageDataListResponse(list);
 
-        for (String packageName : logData) {
-            int verbCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "v").size();
-            int infoCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "i").size();
-            int debugCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "d").size();
-            int warningCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "w").size();
-            int errorCount = this.logDataRepository.findByApiKeyAndPackageNameAndLevel(getUserApiKey(user), packageName, "e").size();
+        ArrayList<MainPageVO> mainPageVO = RestAPIUtility.getMainData("/main", getUserApiKey(user));
 
-            CrashVO crashTime = this.crashDataRepository.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, getUserApiKey(user));
-            if (crashTime == null) {
-                list.add(new MainPageVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
-            } else {
-                list.add(new MainPageVO(packageName, Utility.timeTranslate(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
-            }
-        }
-
-        return new MainPageDataListResponse(list);
+        return new MainPageDataListResponse(mainPageVO);
     }
 
     public String getUserApiKey(Principal user) {

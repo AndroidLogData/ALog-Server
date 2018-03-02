@@ -9,6 +9,8 @@ public class MainPageVO {
     private int warning;
     private int error;
 
+    public MainPageVO() {}
+
     public MainPageVO(String packageName, String recentCrashTime, int verb, int info, int debug, int warning, int error) {
         this.packageName = packageName;
         this.recentCrashTime = recentCrashTime;

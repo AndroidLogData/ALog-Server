@@ -1,9 +1,7 @@
 package com.logdata.api.controller;
 
 import com.logdata.api.sevice.LogDataService;
-import com.logdata.common.model.LogDataListResponse;
 import com.logdata.common.model.LogVO;
-import com.logdata.common.model.SetDataListResponse;
 import com.logdata.common.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -13,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.*;
 
 @Controller

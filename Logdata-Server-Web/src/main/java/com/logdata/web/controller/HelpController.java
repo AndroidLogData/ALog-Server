@@ -5,6 +5,7 @@ import com.logdata.common.model.UserVO;
 import com.logdata.common.repository.CrashDataRepository;
 import com.logdata.common.repository.UserDataRepository;
 import com.logdata.common.util.Utility;
+import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @Controller
 public class HelpController {
@@ -33,23 +35,10 @@ public class HelpController {
             return "login";
         }
 
-        String apiKey = this.userDataRepository.findByUserID(user.getName()).getApiKey();
-        ArrayList<CrashVO> crashVOArrayList = this.crashDataRepository.findAllByApiKeyOrderByTimeDesc(getUserApiKey(user));
-        HashMap<String, Integer> crashList = new HashMap<String, Integer>();
-
-        for (int i = 0; i < crashVOArrayList.size(); i++) {
-            String packageName = Utility.findCrashName(crashVOArrayList.get(i).getLogcat());
-
-            if (crashList.get(packageName) == null) {
-                crashList.put(packageName, 1);
-            } else {
-                int count = crashList.get(packageName);
-                crashList.put(packageName, ++count);
-            }
-        }
+        LinkedHashMap crashList = RestAPIUtility.getCrashList("/mypage", getUserApiKey(user));
 
         model.addAttribute("crashList", crashList);
-        model.addAttribute("apikey", apiKey);
+        model.addAttribute("apikey", getUserApiKey(user));
 
         return "mypage";
     }
