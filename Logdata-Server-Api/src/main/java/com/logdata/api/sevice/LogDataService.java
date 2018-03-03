@@ -25,6 +25,14 @@ public class LogDataService {
         this.logDataRepository.save(logVO);
     }
 
+    public List<LogVO> findAll() {
+        return this.logDataRepository.findAll();
+    }
+
+    public List<LogVO> findAll(Sort sort) {
+        return this.logDataRepository.findAll(sort);
+    }
+
     public List<LogVO> findByApiKeyAndPackageNameAndLevel(String apiKey, String packageName, String level, Sort sort) {
         return this.logDataRepository.findByApiKeyAndPackageNameAndLevel(apiKey, packageName, level, sort);
     }

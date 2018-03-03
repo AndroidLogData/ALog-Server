@@ -117,4 +117,10 @@ public class LogDataController {
         return logVOList;
 //        return new LogDataListResponse(logVOList);
     }
+
+    @RequestMapping(value = "/alllogdata", method = RequestMethod.GET)
+    @ResponseBody
+    public List<LogVO> allLogData() {
+        return this.logDataService.findAll();
+    }
 }
