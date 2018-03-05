@@ -1,45 +1,108 @@
-//package com.logdata.web;
-//
-//import com.logdata.common.model.LogVO;
-//import com.logdata.common.model.UserVO;
-//import com.logdata.common.repository.LogDataRepository;
-//import com.logdata.common.repository.UserDataRepository;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.json.JacksonTester;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.MediaType;
-//import org.springframework.mock.web.MockHttpServletResponse;
-//import org.springframework.test.context.junit4.SpringRunner;
-//import org.springframework.test.web.servlet.MockMvc;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static org.mockito.Mockito.when;
-//import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-//
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//public class LogDataControllerTest {
+package com.logdata.web;
+
+import com.logdata.common.model.LogVO;
+import com.logdata.common.model.UserVO;
+import com.logdata.common.repository.LogDataRepository;
+import com.logdata.common.repository.UserDataRepository;
+import com.logdata.web.controller.LogDataController;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.client.MockRestServiceServer;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestTemplate;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class LogDataControllerTest {
+    @Autowired
+    private MockMvc mvc;
+
 //    @Autowired
-//    private MockMvc mvc;
+//    private RestTemplate template;
+//    private MockRestServiceServer server;
+
+    @MockBean
+    private LogDataRepository logDataRepository;
+    @MockBean
+    private UserDataRepository userDataRepository;
+
+    // This object will be magically initialized by the initFields method below.
+    private JacksonTester<LogVO> logVOJacksonTester;
+
+//    @Before
+//    public void setUp() {
+//        server = MockRestServiceServer.createServer(template);
+//    }
+
+//    @Test
+//    public void logDataPostTest() throws Exception {
+//        this.server.expect(
+//                requestTo("/logdata"))
+//                .andRespond(withSuccess(
+//                        "{\"result\":\"Log Data Transfer Success\"}",
+//                        MediaType.APPLICATION_JSON_UTF8));
 //
-//    @MockBean
-//    private LogDataRepository logDataRepository;
-//    @MockBean
-//    private UserDataRepository userDataRepository;
+//        MockHttpServletResponse response = mvc.perform(
+//                post("/logdata")
+//                        .header("secretKey", "key")
+//                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                        .content("{}")
+//        )
+//                .andDo(print())
+//                .andReturn()
+//                .getResponse();
 //
-//    // This object will be magically initialized by the initFields method below.
-//    private JacksonTester<LogVO> logVOJacksonTester;
-//
+//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+//        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//        assertThat(response.getContentAsString()).isEqualTo("{\"result\":\"Log Data Transfer Success\"}");
+//    }
+
+    @Test
+    public void logDataGetTest() throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                get("/logdata")
+                        .with(
+                                user("user")
+                                        .password("user")
+                                        .roles("USER")
+                        )
+        )
+                .andDo(print())
+                .andExpect(view().name("logdata"))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8");
+    }
+
 //    @Test
 //    public void logDataListTest() throws Exception {
 //        UserVO user = new UserVO("user", "user");
@@ -285,4 +348,4 @@
 //            e.printStackTrace();
 //        }
 //    }
-//}
+}
