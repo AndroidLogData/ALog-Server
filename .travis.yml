@@ -24,17 +24,16 @@ jobs:
   include:
     - stage: build
       script: ./gradlew Logdata-Server-Api:clean build
+      after_success:
+        - ./gradlew Logdata-Server-Api:jacocoTestReport coveralls
     -
       script: ./gradlew Logdata-Server-Common:clean build
+      after_success:
+        - ./gradlew Logdata-Server-Common:jacocoTestReport coveralls
     -
       script: ./gradlew Logdata-Server-Web:clean build
-
-script:
-#  - cd backend
-  - ./gradlew clean build
-
-after_success:
-  - ./gradlew jacocoTestReport coveralls
+      after_success:
+        - ./gradlew Logdata-Server-Web:jacocoTestReport coveralls
 
 # CI 실행 완료시 메일로 알람
 notifications:
