@@ -25,7 +25,9 @@ script:
   - ./gradlew clean build
 
 after_success:
-  - ./gradlew jacocoTestReport coveralls
+  - ./gradlew Logdata-Server-Api:jacocoTestReport coveralls
+  - ./gradlew Logdata-Server-Common:jacocoTestReport coveralls
+  - ./gradlew Logdata-Server-Web:jacocoTestReport coveralls
 
 # CI 실행 완료시 메일로 알람
 notifications:
