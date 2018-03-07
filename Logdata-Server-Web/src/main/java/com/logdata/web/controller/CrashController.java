@@ -21,6 +21,12 @@ public class CrashController {
     private CrashDataRepository crashDataRepository;
     @Autowired
     private UserDataRepository userDataRepository;
+    private final RestAPIUtility restAPIUtility;
+
+    @Autowired
+    public CrashController(RestAPIUtility restAPIUtility) {
+        this.restAPIUtility = restAPIUtility;
+    }
 
     @RequestMapping(value = "/crash", method = RequestMethod.GET)
     public String crashPage(Principal user, Model model) {
@@ -40,7 +46,7 @@ public class CrashController {
             return "login";
         }
 
-        CrashVO crashVO = RestAPIUtility.getCrashTimeData("/crashtimefilter", getUserApiKey(user), time, packageName);
+        CrashVO crashVO = restAPIUtility.getCrashTimeData("/crashtimefilter", getUserApiKey(user), time, packageName);
 
         if (crashVO == null || !(getUserApiKey(user).equals(crashVO.getApiKey()))) {
             return "nodata";
@@ -82,7 +88,7 @@ public class CrashController {
             return "login";
         }
 
-        CrashVO crashVO = RestAPIUtility.getCrashTime("/crashpackagenamefilter", getUserApiKey(user), packageName);
+        CrashVO crashVO = restAPIUtility.getCrashTime("/crashpackagenamefilter", getUserApiKey(user), packageName);
 
         if (crashVO == null) {
             model.addAttribute("noData", true);
@@ -120,7 +126,7 @@ public class CrashController {
     }
 
     private ArrayList getPackageName(Principal user) {
-        return RestAPIUtility.getCrashPackageNameList("/crashpackagename", getUserApiKey(user));
+        return restAPIUtility.getCrashPackageNameList("/crashpackagename", getUserApiKey(user));
     }
 
     public String getUserApiKey(Principal user) {
@@ -129,7 +135,7 @@ public class CrashController {
     }
 
     public ArrayList getCrashTime(Principal user, String packageName) {
-        return RestAPIUtility.getCrashTimeList("/crashtime", getUserApiKey(user), packageName);
+        return restAPIUtility.getCrashTimeList("/crashtime", getUserApiKey(user), packageName);
 //        ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyAndPackageNameOrderByTimeAsc(getUserApiKey(user), packageName);
 //        ArrayList<CrashTimeVO> crashTimeVOs = new ArrayList<CrashTimeVO>();
 //
@@ -142,6 +148,6 @@ public class CrashController {
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
     public ResponseEntity<Object> crashDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody CrashVO data) {
-        return RestAPIUtility.postData("/crashdatasave", secretKey, data);
+        return restAPIUtility.postData("/crashdatasave", secretKey, data);
     }
 }

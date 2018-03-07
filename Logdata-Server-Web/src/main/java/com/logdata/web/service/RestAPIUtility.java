@@ -1,7 +1,10 @@
 package com.logdata.web.service;
 
 import com.logdata.common.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -9,12 +12,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.*;
 
+@Component
 public class RestAPIUtility {
-    private static final RestTemplate restTemplate = new RestTemplate();
-    private static HttpHeaders headers = new HttpHeaders();
-    private static HttpEntity<Object> entity = null;
+    private final RestTemplate restTemplate;
+    private HttpHeaders headers = new HttpHeaders();
+    private HttpEntity<Object> entity = null;
 
-    public static ResponseEntity<Object> postData(String url, String secretKey, Object data) {
+    @Autowired
+    public RestAPIUtility(RestTemplateBuilder builder) {
+        this.restTemplate = builder.build();
+    }
+
+    public ResponseEntity<Object> postData(String url, String secretKey, Object data) {
         try {
             URI uri = uriBuilder("/api", url);
 
@@ -29,7 +38,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static LogDataListResponse getLogDataLevel(String url, String secretKey, String packageName, String level) {
+    public LogDataListResponse getLogDataLevel(String url, String secretKey, String packageName, String level) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -58,7 +67,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static LogDataListResponse getLogDataTag(String url, String secretKey, String packageName, String tag) {
+    public LogDataListResponse getLogDataTag(String url, String secretKey, String packageName, String tag) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -87,7 +96,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static SetDataListResponse getSetListData(String url, String secretKey) {
+    public SetDataListResponse getSetListData(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/api", url);
 
@@ -105,7 +114,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static LogDataListResponse getPackageNameList(String url, String secretKey, String packageName) {
+    public LogDataListResponse getPackageNameList(String url, String secretKey, String packageName) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -133,7 +142,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static CrashVO getCrashTimeData(String url, String secretKey, long time, String packageName) {
+    public CrashVO getCrashTimeData(String url, String secretKey, long time, String packageName) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -159,7 +168,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static CrashVO getCrashTime(String url, String secretKey, String packageName) {
+    public CrashVO getCrashTime(String url, String secretKey, String packageName) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -184,7 +193,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static ArrayList getCrashPackageNameList(String url, String secretKey) {
+    public ArrayList getCrashPackageNameList(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/api", url);
 
@@ -201,7 +210,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static ArrayList getCrashTimeList(String url, String secretKey, String packageName) {
+    public ArrayList getCrashTimeList(String url, String secretKey, String packageName) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -228,7 +237,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static LinkedHashMap getCrashList(String url, String secretKey) {
+    public LinkedHashMap getCrashList(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/help", url);
 
@@ -245,7 +254,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public static ArrayList<MainPageVO> getMainData(String url, String secretKey) {
+    public ArrayList<MainPageVO> getMainData(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/main", url);
 
@@ -264,7 +273,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    private static URI uriBuilder(String path, String url) {
+    private URI uriBuilder(String path, String url) {
         return UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host("localhost")
@@ -275,7 +284,7 @@ public class RestAPIUtility {
                 .toUri();
     }
 
-    private static URI uriBuilder(String path, String url, MultiValueMap<String, String> params) {
+    private URI uriBuilder(String path, String url, MultiValueMap<String, String> params) {
         return UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host("localhost")

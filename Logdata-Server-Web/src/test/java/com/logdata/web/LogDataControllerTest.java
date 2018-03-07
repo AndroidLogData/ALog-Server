@@ -5,6 +5,7 @@ import com.logdata.common.model.UserVO;
 import com.logdata.common.repository.LogDataRepository;
 import com.logdata.common.repository.UserDataRepository;
 import com.logdata.web.controller.LogDataController;
+import com.logdata.web.service.RestAPIUtility;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,15 +21,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
+import org.springframework.test.web.client.ResponseActions;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -40,49 +44,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@RestClientTest(RestAPIUtility.class)
 public class LogDataControllerTest {
     @Autowired
     private MockMvc mvc;
-
-//    @Autowired
-//    private RestTemplate template;
-//    private MockRestServiceServer server;
+    @Autowired
+    private MockRestServiceServer server;
+    @Autowired
+    private RestAPIUtility restAPIUtility;
 
     @MockBean
     private LogDataRepository logDataRepository;
     @MockBean
     private UserDataRepository userDataRepository;
 
-    // This object will be magically initialized by the initFields method below.
-    private JacksonTester<LogVO> logVOJacksonTester;
+    @Test
+    public void logDataPostTest() throws Exception {
+        this.server.expect(
+                requestTo("http://localhost:8081/api/logdatasave"))
+                .andRespond(withSuccess(
+                        "{\"result\":\"Log Data Transfer Success\"}",
+                        MediaType.APPLICATION_JSON_UTF8));
 
-//    @Before
-//    public void setUp() {
-//        server = MockRestServiceServer.createServer(template);
-//    }
+        ResponseEntity response = restAPIUtility.postData("/logdatasave", "key", new LogVO());
 
-//    @Test
-//    public void logDataPostTest() throws Exception {
-//        this.server.expect(
-//                requestTo("/logdata"))
-//                .andRespond(withSuccess(
-//                        "{\"result\":\"Log Data Transfer Success\"}",
-//                        MediaType.APPLICATION_JSON_UTF8));
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                post("/logdata")
-//                        .header("secretKey", "key")
-//                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                        .content("{}")
-//        )
-//                .andDo(print())
-//                .andReturn()
-//                .getResponse();
-//
-//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-//        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-//        assertThat(response.getContentAsString()).isEqualTo("{\"result\":\"Log Data Transfer Success\"}");
-//    }
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8);
+        assertThat(response.getBody().toString()).isEqualTo("{result=Log Data Transfer Success}");
+    }
 
     @Test
     public void logDataGetTest() throws Exception {

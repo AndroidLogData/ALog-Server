@@ -23,6 +23,12 @@ public class HelpController {
     private UserDataRepository userDataRepository;
     @Autowired
     private CrashDataRepository crashDataRepository;
+    private final RestAPIUtility restAPIUtility;
+
+    @Autowired
+    public HelpController(RestAPIUtility restAPIUtility) {
+        this.restAPIUtility = restAPIUtility;
+    }
 
     @RequestMapping(value = "/help", method = RequestMethod.GET)
     public String help() {
@@ -35,7 +41,7 @@ public class HelpController {
             return "login";
         }
 
-        LinkedHashMap crashList = RestAPIUtility.getCrashList("/mypage", getUserApiKey(user));
+        LinkedHashMap crashList = restAPIUtility.getCrashList("/mypage", getUserApiKey(user));
 
         model.addAttribute("crashList", crashList);
         model.addAttribute("apikey", getUserApiKey(user));

@@ -18,6 +18,12 @@ import java.security.Principal;
 public class LogDataController {
     @Autowired
     private UserDataRepository userDataRepository;
+    private final RestAPIUtility restAPIUtility;
+
+    @Autowired
+    public LogDataController(RestAPIUtility restAPIUtility) {
+        this.restAPIUtility = restAPIUtility;
+    }
 
     @RequestMapping(value = "/logdata", method = RequestMethod.GET)
     public String logDataView() {
@@ -26,42 +32,42 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
     public ResponseEntity<Object> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
-        return RestAPIUtility.postData("/logdatasave", secretKey, data);
+        return restAPIUtility.postData("/logdatasave", secretKey, data);
     }
 
     @RequestMapping(value = "/logdatalevelfilter/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataLevelList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "level") String level) {
-        return RestAPIUtility.getLogDataLevel("/logdatalevelfilter", getUserApiKey(user), packageName, level);
+        return restAPIUtility.getLogDataLevel("/logdatalevelfilter", getUserApiKey(user), packageName, level);
     }
 
     @RequestMapping(value = "/logdatatagfilter/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataTagList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "tag") String tag) {
-        return RestAPIUtility.getLogDataTag("/logdatatagfilter", getUserApiKey(user), packageName, tag);
+        return restAPIUtility.getLogDataTag("/logdatatagfilter", getUserApiKey(user), packageName, tag);
     }
 
     @RequestMapping(value = "/logdatapackagenamefilter/{packagename}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {
-        return RestAPIUtility.getPackageNameList("/logdatapackagenamefilter", getUserApiKey(user), packageName);
+        return restAPIUtility.getPackageNameList("/logdatapackagenamefilter", getUserApiKey(user), packageName);
     }
 
     @RequestMapping(value = "/packagenamedatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private SetDataListResponse getPackageName(Principal user) {
-        return RestAPIUtility.getSetListData("/packagenamedatalist", getUserApiKey(user));
+        return restAPIUtility.getSetListData("/packagenamedatalist", getUserApiKey(user));
     }
 
     @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private SetDataListResponse getTagName(Principal user) {
-        return RestAPIUtility.getSetListData("/tagdatalist", getUserApiKey(user));
+        return restAPIUtility.getSetListData("/tagdatalist", getUserApiKey(user));
     }
 
     public String getUserApiKey(Principal user) {

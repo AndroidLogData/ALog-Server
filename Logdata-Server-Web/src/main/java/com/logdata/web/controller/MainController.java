@@ -29,6 +29,12 @@ public class MainController {
     private CrashDataRepository crashDataRepository;
     @Autowired
     private UserDataRepository userDataRepository;
+    private final RestAPIUtility restAPIUtility;
+
+    @Autowired
+    public MainController(RestAPIUtility restAPIUtility) {
+        this.restAPIUtility = restAPIUtility;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -75,7 +81,7 @@ public class MainController {
 //
 //        return new MainPageDataListResponse(list);
 
-        ArrayList<MainPageVO> mainPageVO = RestAPIUtility.getMainData("/main", getUserApiKey(user));
+        ArrayList<MainPageVO> mainPageVO = restAPIUtility.getMainData("/main", getUserApiKey(user));
 
         return new MainPageDataListResponse(mainPageVO);
     }
