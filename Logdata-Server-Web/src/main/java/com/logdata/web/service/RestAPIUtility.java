@@ -38,7 +38,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public LogDataListResponse getLogDataLevel(String url, String secretKey, String packageName, String level) {
+    public ResponseEntity<LogVO[]> getLogDataLevel(String url, String secretKey, String packageName, String level) {
         try {
             URI uri = UriComponentsBuilder.newInstance()
                     .scheme("http")
@@ -55,11 +55,8 @@ public class RestAPIUtility {
             entity = new HttpEntity<>(headers);
 
             ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
-            LogVO[] body = response.getBody();
 
-            ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
-
-            return new LogDataListResponse(list);
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
         }

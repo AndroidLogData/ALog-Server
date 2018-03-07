@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Controller
 public class LogDataController {
@@ -39,7 +41,11 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataLevelList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "level") String level) {
-        return restAPIUtility.getLogDataLevel("/logdatalevelfilter", getUserApiKey(user), packageName, level);
+        LogVO[] body = restAPIUtility.getLogDataLevel("/logdatalevelfilter", getUserApiKey(user), packageName, level).getBody();
+
+        ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
+
+        return new LogDataListResponse(list);
     }
 
     @RequestMapping(value = "/logdatatagfilter/{query}", method = RequestMethod.GET, produces = "application/json")
