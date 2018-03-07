@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -270,6 +271,24 @@ public class RestAPIUtility {
         return null;
     }
 
+    public UserVO findSecretKey(String url, String name) {
+        try {
+            MultiValueMap<String, String> parmas = new LinkedMultiValueMap<String, String>();
+
+            parmas.add("name", name);
+
+            URI uri = uriBuilder("/user", url, parmas);
+
+            ResponseEntity<UserVO> response = restTemplate.getForEntity(uri, UserVO.class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     private URI uriBuilder(String path, String url) {
         return UriComponentsBuilder.newInstance()
                 .scheme("http")
@@ -286,7 +305,7 @@ public class RestAPIUtility {
                 .scheme("http")
                 .host("localhost")
                 .port(8081)
-                .path(path + url)
+                .path(path + url + "/query")
                 .queryParams(params)
                 .build()
                 .encode()

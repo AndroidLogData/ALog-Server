@@ -14,6 +14,8 @@ public class UserVO {
     private String apiKey;
     private List<UserRoles> roles;
 
+    public UserVO() {}
+
     public UserVO(String userID, String password) {
         this.userID = userID;
         this.password = password;
