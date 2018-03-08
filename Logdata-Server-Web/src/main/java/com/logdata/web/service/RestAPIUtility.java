@@ -11,13 +11,16 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 @Component
 public class RestAPIUtility {
     private final RestTemplate restTemplate;
     private HttpHeaders headers = new HttpHeaders();
     private HttpEntity<Object> entity = null;
+    private MultiValueMap<String, String> parmas = null;
 
     @Autowired
     public RestAPIUtility(RestTemplateBuilder builder) {
@@ -41,16 +44,12 @@ public class RestAPIUtility {
 
     public ResponseEntity<LogVO[]> getLogDataLevel(String url, String secretKey, String packageName, String level) {
         try {
-            URI uri = UriComponentsBuilder.newInstance()
-                    .scheme("http")
-                    .host("localhost")
-                    .port(8081)
-                    .path("/api" + url + "/query")
-                    .queryParam("packagename", packageName)
-                    .queryParam("level", level)
-                    .build()
-                    .encode()
-                    .toUri();
+            parmas = new LinkedMultiValueMap<String, String>();
+
+            parmas.add("packagename", packageName);
+            parmas.add("level", level);
+
+            URI uri = uriBuilder("/api", url, parmas);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -65,28 +64,21 @@ public class RestAPIUtility {
         return null;
     }
 
-    public LogDataListResponse getLogDataTag(String url, String secretKey, String packageName, String tag) {
+    public ResponseEntity<LogVO[]> getLogDataTag(String url, String secretKey, String packageName, String tag) {
         try {
-            URI uri = UriComponentsBuilder.newInstance()
-                    .scheme("http")
-                    .host("localhost")
-                    .port(8081)
-                    .path("/api" + url + "/query")
-                    .queryParam("packagename", packageName)
-                    .queryParam("tag", tag)
-                    .build()
-                    .encode()
-                    .toUri();
+            parmas = new LinkedMultiValueMap<String, String>();
+
+            parmas.add("packagename", packageName);
+            parmas.add("tag", tag);
+
+            URI uri = uriBuilder("/api", url, parmas);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
 
             ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
-            LogVO[] body = response.getBody();
 
-            ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
-
-            return new LogDataListResponse(list);
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,7 +86,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public SetDataListResponse getSetListData(String url, String secretKey) {
+    public ResponseEntity<Set> getLogDataInfoSet(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/api", url);
 
@@ -102,9 +94,8 @@ public class RestAPIUtility {
             entity = new HttpEntity<>(headers);
 
             ResponseEntity<Set> response = restTemplate.exchange(uri, HttpMethod.GET, entity, Set.class);
-            Set<String> body = response.getBody();
 
-            return new SetDataListResponse(body);
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -112,27 +103,20 @@ public class RestAPIUtility {
         return null;
     }
 
-    public LogDataListResponse getPackageNameList(String url, String secretKey, String packageName) {
+    public ResponseEntity<LogVO[]> getPackageNameList(String url, String secretKey, String packageName) {
         try {
-            URI uri = UriComponentsBuilder.newInstance()
-                    .scheme("http")
-                    .host("localhost")
-                    .port(8081)
-                    .path("/api" + url + "/query")
-                    .queryParam("packagename", packageName)
-                    .build()
-                    .encode()
-                    .toUri();
+            parmas = new LinkedMultiValueMap<String, String>();
+
+            parmas.add("packagename", packageName);
+
+            URI uri = uriBuilder("/api", url, parmas);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
 
             ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
-            LogVO[] body = response.getBody();
 
-            ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
-
-            return new LogDataListResponse(list);
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,16 +126,12 @@ public class RestAPIUtility {
 
     public CrashVO getCrashTimeData(String url, String secretKey, long time, String packageName) {
         try {
-            URI uri = UriComponentsBuilder.newInstance()
-                    .scheme("http")
-                    .host("localhost")
-                    .port(8081)
-                    .path("/api" + url + "/query")
-                    .queryParam("time", time)
-                    .queryParam("packageName", packageName)
-                    .build()
-                    .encode()
-                    .toUri();
+            parmas = new LinkedMultiValueMap<String, String>();
+
+            parmas.add("time", String.valueOf(time));
+            parmas.add("packageName", packageName);
+
+            URI uri = uriBuilder("/api", url, parmas);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -168,15 +148,11 @@ public class RestAPIUtility {
 
     public CrashVO getCrashTime(String url, String secretKey, String packageName) {
         try {
-            URI uri = UriComponentsBuilder.newInstance()
-                    .scheme("http")
-                    .host("localhost")
-                    .port(8081)
-                    .path("/api" + url + "/query")
-                    .queryParam("packageName", packageName)
-                    .build()
-                    .encode()
-                    .toUri();
+            parmas = new LinkedMultiValueMap<String, String>();
+
+            parmas.add("packageName", packageName);
+
+            URI uri = uriBuilder("/api", url, parmas);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -208,26 +184,20 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ArrayList getCrashTimeList(String url, String secretKey, String packageName) {
+    public ResponseEntity<CrashTimeVO[]> getCrashTimeList(String url, String secretKey, String packageName) {
         try {
-            URI uri = UriComponentsBuilder.newInstance()
-                    .scheme("http")
-                    .host("localhost")
-                    .port(8081)
-                    .path("/api" + url + "/query")
-                    .queryParam("packageName", packageName)
-                    .build()
-                    .encode()
-                    .toUri();
+            parmas = new LinkedMultiValueMap<String, String>();
+
+            parmas.add("packageName", packageName);
+
+            URI uri = uriBuilder("/api", url, parmas);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
 
             ResponseEntity<CrashTimeVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, CrashTimeVO[].class);
 
-            ArrayList<CrashTimeVO> list = new ArrayList<CrashTimeVO>(Arrays.asList(response.getBody()));
-
-            return list;
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -252,7 +222,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ArrayList<MainPageVO> getMainData(String url, String secretKey) {
+    public ResponseEntity<MainPageVO[]> getMainData(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/main", url);
 
@@ -261,9 +231,7 @@ public class RestAPIUtility {
 
             ResponseEntity<MainPageVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, MainPageVO[].class);
 
-            ArrayList<MainPageVO> list = new ArrayList<MainPageVO>(Arrays.asList(response.getBody()));
-
-            return list;
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -273,7 +241,7 @@ public class RestAPIUtility {
 
     public UserVO findSecretKey(String url, String name) {
         try {
-            MultiValueMap<String, String> parmas = new LinkedMultiValueMap<String, String>();
+            parmas = new LinkedMultiValueMap<String, String>();
 
             parmas.add("name", name);
 
