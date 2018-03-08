@@ -54,7 +54,7 @@ public class ApiApplicationTests {
     @Test
     public void logDataSave() throws Exception {
         MockHttpServletResponse response = mvc.perform(
-                post("/api/logdatasave")
+                post("/api/logdata")
                         .header("secretKey", "key")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{}")
@@ -71,7 +71,7 @@ public class ApiApplicationTests {
     @Test
     public void logDataSaveNotApiKey() throws Exception {
         MockHttpServletResponse response = mvc.perform(
-                post("/api/logdatasave")
+                post("/api/logdata")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{}")
         )
@@ -90,7 +90,7 @@ public class ApiApplicationTests {
 //        given(logDataService.findByApiKeyAndPackageNameAndLevel("ea0cc2e630ed4b6683252eb6114f89a9", "android3", "v")).willReturn(list);
         when(logDataService.findByApiKeyAndPackageNameAndLevel("ea0cc2e630ed4b6683252eb6114f89a9", "android3", "v")).thenReturn(list);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/logdatalevelfilter/query?")
+                get("/api/logdata/filter/level/query?")
                         .header("secretKey", "ea0cc2e630ed4b6683252eb6114f89a9")
                         .param("packagename", "android3")
                         .param("level", "v")

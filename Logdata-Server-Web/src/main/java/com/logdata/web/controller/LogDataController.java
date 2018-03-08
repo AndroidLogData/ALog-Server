@@ -57,7 +57,7 @@ public class LogDataController {
         return new LogDataListResponse(list);
     }
 
-    @RequestMapping(value = "/logdata/filter/packagename/{packagename}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/logdata/filter/packageName/{packagename}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {

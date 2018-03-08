@@ -1,8 +1,5 @@
 package com.logdata.web;
 
-import com.logdata.common.model.LogVO;
-import com.logdata.common.model.UserVO;
-import com.logdata.common.repository.UserDataRepository;
 import com.logdata.web.controller.LogDataController;
 import com.logdata.web.service.RestAPIUtility;
 import org.junit.Before;
@@ -12,33 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.security.Principal;
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -76,7 +60,7 @@ public class LogDataRestServiceServerTest {
     @Test
     public void logDataPostTest() throws Exception {
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdatasave"))
+                requestTo(API_BASE_URL + "/api/logdata"))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(
                         withSuccess(
@@ -119,7 +103,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdatalevelfilter/query?packagename=android3&level=v"))
+                requestTo(API_BASE_URL + "/api/logdata/filter/level/query?packagename=android3&level=v"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -129,7 +113,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdatalevelfilter/query")
+                get("/logdata/filter/level/query")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -164,7 +148,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdatatagfilter/query?packagename=android3&tag=%5BMainActivity::onCreate%5D"))
+                requestTo(API_BASE_URL + "/api/logdata/filter/tag/query?packagename=android3&tag=%5BMainActivity::onCreate%5D"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -174,7 +158,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdatatagfilter/query")
+                get("/logdata/filter/tag/query")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -209,7 +193,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdatapackagenamefilter/query?packagename=android3"))
+                requestTo(API_BASE_URL + "/api/logdata/filter/packagename/query?packagename=android3"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -219,7 +203,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdatapackagenamefilter/query")
+                get("/logdata/filter/packageName/query?")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -253,7 +237,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/packagenamedatalist"))
+                requestTo(API_BASE_URL + "/api/logdata/packagename/set"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -263,7 +247,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/packagenamedatalist")
+                get("/logdata/packagename/set")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -296,7 +280,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/tagdatalist"))
+                requestTo(API_BASE_URL + "/api/logdata/tag/set"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -306,7 +290,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/tagdatalist")
+                get("/logdata/tag/set")
                         .principal(
                                 new Principal() {
                                     @Override
