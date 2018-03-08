@@ -56,7 +56,7 @@ class MainPage extends React.Component {
                         <p className="badge badge-danger">Error : {this.state.logData[i].error}</p>
                         <p className="card-text">최근 크래쉬 데이터
                             : {this.state.logData[i].recentCrashTime == null ? 'null' : this.state.logData[i].recentCrashTime}</p>
-                        <Link to={{pathname: '/packagenamefilter/' + this.state.logData[i].packageName}}
+                        <Link to={{pathname: '/logdata/filter/packagename/' + this.state.logData[i].packageName}}
                               className="btn btn-primary" role="button">Show</Link>
                     </div>
                 </div>
