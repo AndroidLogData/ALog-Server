@@ -25,6 +25,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -37,6 +38,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -193,5 +195,135 @@ public class LogDataRestServiceServerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
         assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[{\"id\":null,\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]}");
+    }
+
+    @Test
+    public void logDataPackageNameListTest() throws Exception {
+        this.server.expect(
+                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(
+                        "{}",
+                        MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/logdatapackagenamefilter/query?packagename=android3"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                "[{}]",
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        MockHttpServletResponse response = mvc.perform(
+                get("/logdatapackagenamefilter/query")
+                        .principal(
+                                new Principal() {
+                                    @Override
+                                    public String getName() {
+                                        return "user";
+                                    }
+                                }
+                        )
+                        .param("packagename", "android3")
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        this.server.verify();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[{\"id\":null,\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]}");
+    }
+
+    @Test
+    public void getPackageNameTest() throws Exception {
+        this.server.expect(
+                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(
+                        "{}",
+                        MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/packagenamedatalist"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                "[\"com.example.android\", \"com.logdata.android.example\"]",
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        MockHttpServletResponse response = mvc.perform(
+                get("/packagenamedatalist")
+                        .principal(
+                                new Principal() {
+                                    @Override
+                                    public String getName() {
+                                        return "user";
+                                    }
+                                }
+                        )
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        this.server.verify();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[\"com.logdata.android.example\",\"com.example.android\"]}");
+    }
+
+    @Test
+    public void getTagNameTest() throws Exception {
+        this.server.expect(
+                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(
+                        "{}",
+                        MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/tagdatalist"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                "[\"[MainActivity::onCreate]\", \"[Practice::method]\"]",
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        MockHttpServletResponse response = mvc.perform(
+                get("/tagdatalist")
+                        .principal(
+                                new Principal() {
+                                    @Override
+                                    public String getName() {
+                                        return "user";
+                                    }
+                                }
+                        )
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        this.server.verify();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[\"[MainActivity::onCreate]\",\"[Practice::method]\"]}");
     }
 }

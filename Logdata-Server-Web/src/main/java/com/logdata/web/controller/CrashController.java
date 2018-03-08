@@ -3,8 +3,6 @@ package com.logdata.web.controller;
 import com.logdata.common.model.CrashTimeVO;
 import com.logdata.common.model.CrashVO;
 import com.logdata.common.model.UserVO;
-import com.logdata.common.repository.CrashDataRepository;
-import com.logdata.common.repository.UserDataRepository;
 import com.logdata.common.util.Utility;
 import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,6 @@ import java.util.*;
 
 @Controller
 public class CrashController {
-    @Autowired
-    private CrashDataRepository crashDataRepository;
-    @Autowired
-    private UserDataRepository userDataRepository;
     private final RestAPIUtility restAPIUtility;
 
     @Autowired
@@ -47,9 +41,9 @@ public class CrashController {
             return "login";
         }
 
-        CrashVO crashVO = restAPIUtility.getCrashTimeData("/crashtimefilter", getUserApiKey(user), time, packageName);
+        CrashVO crashVO = restAPIUtility.getCrashTimeData("/crashtimefilter", getUserApiKey(user.getName()), time, packageName);
 
-        if (crashVO == null || !(getUserApiKey(user).equals(crashVO.getApiKey()))) {
+        if (crashVO == null || !(getUserApiKey(user.getName()).equals(crashVO.getApiKey()))) {
             return "nodata";
         }
 
@@ -89,7 +83,7 @@ public class CrashController {
             return "login";
         }
 
-        CrashVO crashVO = restAPIUtility.getCrashTime("/crashpackagenamefilter", getUserApiKey(user), packageName);
+        CrashVO crashVO = restAPIUtility.getCrashTime("/crashpackagenamefilter", getUserApiKey(user.getName()), packageName);
 
         if (crashVO == null) {
             model.addAttribute("noData", true);
@@ -127,16 +121,16 @@ public class CrashController {
     }
 
     private ArrayList getPackageName(Principal user) {
-        return restAPIUtility.getCrashPackageNameList("/crashpackagename", getUserApiKey(user));
+        return restAPIUtility.getCrashPackageNameList("/crashpackagename", getUserApiKey(user.getName()));
     }
 
-    public String getUserApiKey(Principal user) {
-        UserVO u = this.userDataRepository.findByUserID(user.getName());
+    public String getUserApiKey(String name) {
+        UserVO u = this.restAPIUtility.findSecretKey("/find", name);
         return u.getApiKey();
     }
 
     public ArrayList getCrashTime(Principal user, String packageName) {
-        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crashtime", getUserApiKey(user), packageName).getBody();
+        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crashtime", getUserApiKey(user.getName()), packageName).getBody();
 
         return new ArrayList<CrashTimeVO>(Arrays.asList(list));
     }

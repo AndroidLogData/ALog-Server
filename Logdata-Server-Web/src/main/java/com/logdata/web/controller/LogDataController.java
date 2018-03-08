@@ -4,7 +4,6 @@ import com.logdata.common.model.LogDataListResponse;
 import com.logdata.common.model.LogVO;
 import com.logdata.common.model.SetDataListResponse;
 import com.logdata.common.model.UserVO;
-import com.logdata.common.repository.UserDataRepository;
 import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +18,6 @@ import java.util.Set;
 
 @Controller
 public class LogDataController {
-    @Autowired
-    private UserDataRepository userDataRepository;
     private final RestAPIUtility restAPIUtility;
 
     @Autowired

@@ -18,8 +18,12 @@ import java.util.UUID;
 
 @Controller
 public class LoginController {
+    private final RestAPIUtility restAPIUtility;
+
     @Autowired
-    private UserDataRepository userDataRepository;
+    public LoginController(RestAPIUtility restAPIUtility) {
+        this.restAPIUtility = restAPIUtility;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String userLogin() {
@@ -41,8 +45,8 @@ public class LoginController {
 
         newUser.setApiKey(generatedApiKey());
 
-        if (this.userDataRepository.findByUserID(body.get("username")) == null) {
-            this.userDataRepository.save(newUser);
+        if (this.restAPIUtility.findSecretKey("/find", body.get("username")) == null) {
+            this.restAPIUtility.postData("/registration", null, newUser);
         } else {
             model.addAttribute("sameID", true);
             return "registration";
