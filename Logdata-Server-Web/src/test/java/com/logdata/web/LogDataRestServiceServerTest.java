@@ -18,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
@@ -49,15 +52,12 @@ public class LogDataRestServiceServerTest {
     @Autowired
     private MockRestServiceServer server;
     @Autowired
-    private RestAPIUtility restAPIUtility;
-    @Autowired
     private LogDataController logDataController;
     @Autowired
     private MockMvc mvc;
-    @Autowired
-    private WebApplicationContext context;
 
-    private String baseUrl = "http://localhost:8081/api";
+    private final String API_BASE_URL = "http://localhost:8081";
+    private final String WEB_BASE_URL = "http://localhost:8080";
 
     @Before
     public void setup() {
@@ -66,17 +66,15 @@ public class LogDataRestServiceServerTest {
         viewResolver.setSuffix(".html");
 
         mvc = MockMvcBuilders
-//                .webAppContextSetup(context)
                 .standaloneSetup(logDataController)
                 .setViewResolvers(viewResolver)
-//                .apply(springSecurity())
                 .build();
     }
 
     @Test
     public void logDataPostTest() throws Exception {
         this.server.expect(
-                requestTo(baseUrl + "/logdatasave"))
+                requestTo(API_BASE_URL + "/api/logdatasave"))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(
                         withSuccess(
@@ -100,6 +98,8 @@ public class LogDataRestServiceServerTest {
                 .andReturn()
                 .getResponse();
 
+        this.server.verify();
+
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
         assertThat(response.getContentAsString()).isEqualTo("{\"result\":\"Log Data Transfer Success\"}");
@@ -107,11 +107,8 @@ public class LogDataRestServiceServerTest {
 
     @Test
     public void logDataLevelListTest() throws Exception {
-        ArrayList<LogVO> list = new ArrayList<>();
-        list.add(new LogVO());
-
         this.server.expect(
-                requestTo("http://localhost:8081/user/find/query?name=user"))
+                requestTo(API_BASE_URL + "/user/find/query?name=user"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(
                         "{}",
@@ -120,7 +117,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(baseUrl + "/logdatalevelfilter/query?packagename=android3&level=v"))
+                requestTo(API_BASE_URL + "/api/logdatalevelfilter/query?packagename=android3&level=v"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -130,7 +127,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("http://localhost:8080/logdatalevelfilter/query")
+                get("/logdatalevelfilter/query")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -141,6 +138,51 @@ public class LogDataRestServiceServerTest {
                         )
                         .param("packagename", "android3")
                         .param("level", "v")
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        this.server.verify();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[{\"id\":null,\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]}");
+    }
+
+    @Test
+    public void logDataTagListTest() throws Exception {
+        this.server.expect(
+                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess(
+                        "{}",
+                        MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/logdatatagfilter/query?packagename=android3&tag=%5BMainActivity::onCreate%5D"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                "[{}]",
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        MockHttpServletResponse response = mvc.perform(
+                get("/logdatatagfilter/query")
+                        .principal(
+                                new Principal() {
+                                    @Override
+                                    public String getName() {
+                                        return "user";
+                                    }
+                                }
+                        )
+                        .param("packagename", "android3")
+                        .param("tag", "[MainActivity::onCreate]")
         )
                 .andDo(print())
                 .andReturn()

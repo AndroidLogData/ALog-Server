@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 @Controller
 public class LogDataController {
@@ -52,28 +53,40 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataTagList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "tag") String tag) {
-        return restAPIUtility.getLogDataTag("/logdatatagfilter", getUserApiKey(user.getName()), packageName, tag);
+        LogVO[] body = restAPIUtility.getLogDataTag("/logdatatagfilter", getUserApiKey(user.getName()), packageName, tag).getBody();
+
+        ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
+
+        return new LogDataListResponse(list);
     }
 
     @RequestMapping(value = "/logdatapackagenamefilter/{packagename}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataListResponse logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {
-        return restAPIUtility.getPackageNameList("/logdatapackagenamefilter", getUserApiKey(user.getName()), packageName);
+        LogVO[] body = restAPIUtility.getPackageNameList("/logdatapackagenamefilter", getUserApiKey(user.getName()), packageName).getBody();
+
+        ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
+
+        return new LogDataListResponse(list);
     }
 
     @RequestMapping(value = "/packagenamedatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private SetDataListResponse getPackageName(Principal user) {
-        return restAPIUtility.getSetListData("/packagenamedatalist", getUserApiKey(user.getName()));
+        Set<String> body = restAPIUtility.getLogDataInfoSet("/packagenamedatalist", getUserApiKey(user.getName())).getBody();
+
+        return new SetDataListResponse(body);
     }
 
     @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private SetDataListResponse getTagName(Principal user) {
-        return restAPIUtility.getSetListData("/tagdatalist", getUserApiKey(user.getName()));
+        Set<String> body = restAPIUtility.getLogDataInfoSet("/tagdatalist", getUserApiKey(user.getName())).getBody();
+
+        return new SetDataListResponse(body);
     }
 
     public String getUserApiKey(String name) {

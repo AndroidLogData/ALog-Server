@@ -1,5 +1,6 @@
 package com.logdata.web.controller;
 
+import com.logdata.common.model.CrashTimeVO;
 import com.logdata.common.model.CrashVO;
 import com.logdata.common.model.UserVO;
 import com.logdata.common.repository.CrashDataRepository;
@@ -135,15 +136,9 @@ public class CrashController {
     }
 
     public ArrayList getCrashTime(Principal user, String packageName) {
-        return restAPIUtility.getCrashTimeList("/crashtime", getUserApiKey(user), packageName);
-//        ArrayList<CrashVO> list = this.crashDataRepository.findByApiKeyAndPackageNameOrderByTimeAsc(getUserApiKey(user), packageName);
-//        ArrayList<CrashTimeVO> crashTimeVOs = new ArrayList<CrashTimeVO>();
-//
-//        for (int i = 0; i < list.size(); i++) {
-//            crashTimeVOs.add(new CrashTimeVO(list.get(i).getTime(), packageName, Utility.timeTranslate(list.get(i).getTime())));
-//        }
-//
-//        return crashTimeVOs;
+        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crashtime", getUserApiKey(user), packageName).getBody();
+
+        return new ArrayList<CrashTimeVO>(Arrays.asList(list));
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
