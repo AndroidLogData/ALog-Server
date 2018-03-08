@@ -23,7 +23,7 @@ public class LogDataController {
         this.logDataService = logDataService;
     }
 
-    @RequestMapping(value = "/logdatasave")
+    @RequestMapping(value = "/logdata", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json;charset=UTF-8");
@@ -51,7 +51,7 @@ public class LogDataController {
         return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/logdatalevelfilter/{query}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/logdata/filter/level/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public List<LogVO> logDataLevelList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "level") String level) {
@@ -64,7 +64,7 @@ public class LogDataController {
         return logVOList;
     }
 
-    @RequestMapping(value = "/logdatatagfilter/{query}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/logdata/filter/tag/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public List<LogVO> logDataTagList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "tag") String tag) {
@@ -77,7 +77,7 @@ public class LogDataController {
         return logVOList;
     }
 
-    @RequestMapping(value = "/tagdatalist", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/logdata/tag/set", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     private Set<String> getTag(@RequestHeader(value = "secretKey") String secretKey) {
         List<LogVO> setData = this.logDataService.findByApiKey(secretKey);
@@ -91,7 +91,7 @@ public class LogDataController {
         return tagSet;
     }
 
-    @RequestMapping(value = "/packagenamedatalist", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/logdata/packagename/set", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     private Set<String> getPackageName(@RequestHeader(value = "secretKey") String secretKey) {
         List<LogVO> setData = this.logDataService.findByApiKey(secretKey);
@@ -105,7 +105,7 @@ public class LogDataController {
         return packageNameSet;
     }
 
-    @RequestMapping(value = "/logdatapackagenamefilter/{packagename}")
+    @RequestMapping(value = "/logdata/filter/packagename/{packagename}")
     @ResponseBody
     public List<LogVO> logDataPackageNameList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName) {
         List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageName(secretKey, packageName, new Sort(Sort.Direction.DESC, "time"));
@@ -118,7 +118,7 @@ public class LogDataController {
 //        return new LogDataListResponse(logVOList);
     }
 
-    @RequestMapping(value = "/alllogdata", method = RequestMethod.GET)
+    @RequestMapping(value = "/logdata/list", method = RequestMethod.GET)
     @ResponseBody
     public List<LogVO> allLogData() {
         return this.logDataService.findAll();

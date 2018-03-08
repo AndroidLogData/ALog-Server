@@ -12,9 +12,9 @@ class App extends React.Component {
             <div>
                 <SideMenu/>
                 <Route exact path="/" component={MainPage}/>
-                <Route path="/levelfilter/:packagename/:level" component={LevelFilter}/>
-                <Route path="/tagfilter/:packagename/:tag" component={TagFilter}/>
-                <Route path="/packagenamefilter/:packagename" component={PackageFilter}/>
+                <Route path="/logdata/filter/level/:packagename/:level" component={LevelFilter}/>
+                <Route path="/logdata/filter/tag/:packagename/:tag" component={TagFilter}/>
+                <Route path="/logdata/filter/packagename/:packagename" component={PackageFilter}/>
             </div>
         );
     }

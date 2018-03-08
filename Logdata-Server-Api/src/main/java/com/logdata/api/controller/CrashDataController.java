@@ -23,7 +23,7 @@ public class CrashDataController {
         this.crashDataService = crashDataService;
     }
 
-    @RequestMapping(value = "/crashtimefilter/{time}", method = RequestMethod.GET)
+    @RequestMapping(value = "/crash/filter/time/{time}", method = RequestMethod.GET)
     @ResponseBody
     public CrashVO crashDataTimeView(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "time") long time, @RequestParam(value = "packageName") String packageName) {
         CrashVO crashVO = this.crashDataService.findCrashDataByTimeAndApiKeyAndPackageName(time, secretKey, packageName);
@@ -35,7 +35,7 @@ public class CrashDataController {
         return crashVO;
     }
 
-    @RequestMapping(value = "/crashpackagenamefilter/{packageName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/crash/filter/packagename/{packageName}", method = RequestMethod.GET)
     @ResponseBody
     public CrashVO crashPackageNamePage(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packageName") String packageName) {
         CrashVO crashVO = this.crashDataService.findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(packageName, secretKey);
@@ -47,7 +47,7 @@ public class CrashDataController {
         return crashVO;
     }
 
-    @RequestMapping(value = "/crashpackagename")
+    @RequestMapping(value = "/crash/packagename/set")
     @ResponseBody
     public Set<String> getPackageName(@RequestHeader(value = "secretKey") String secretKey) {
         List<CrashVO> setData = this.crashDataService.findByApiKey(secretKey);
@@ -61,7 +61,7 @@ public class CrashDataController {
         return packageNameSet;
     }
 
-    @RequestMapping(value = "/crashtime/{packageName}")
+    @RequestMapping(value = "/crash/packagename/time/{packageName}")
     @ResponseBody
     public List<CrashTimeVO> getCrashTime(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packageName") String packageName) {
         ArrayList<CrashVO> list = this.crashDataService.findByApiKeyAndPackageNameOrderByTimeAsc(secretKey, packageName);
@@ -74,7 +74,7 @@ public class CrashDataController {
         return crashTimeVOs;
     }
 
-    @RequestMapping(value = "/crashdatasave", method = RequestMethod.POST)
+    @RequestMapping(value = "/crash", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> crashDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody CrashVO data) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json;charset=UTF-8");

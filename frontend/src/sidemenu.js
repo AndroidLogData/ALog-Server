@@ -15,7 +15,7 @@ class SideMenu extends React.Component {
 
     fetchPackageName() {
         $.ajax({
-            url: '/packagenamedatalist',
+            url: '/logdata/packagename/set',
             dataType: "json",
             cache: false,
             success: function (data) {
@@ -40,7 +40,7 @@ class SideMenu extends React.Component {
             packageNameNode.push(
                 <li className="nav-item">
                     <Link className="nav-link"
-                          to={{pathname: '/packagenamefilter/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
+                          to={{pathname: '/logdata/filter/packagename/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
                 </li>
             );
         }

@@ -22,15 +22,15 @@ class FilterBar extends React.Component {
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/v'}}>v</Link>
+                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/v'}}>v</Link>
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/i'}}>i</Link>
+                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/i'}}>i</Link>
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/d'}}>d</Link>
+                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/d'}}>d</Link>
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/w'}}>w</Link>
+                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/w'}}>w</Link>
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/levelfilter/' + this.props.packageName + '/e'}}>e</Link>
+                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/e'}}>e</Link>
                             </div>
                         </div>
                         <TagList packageName={this.props.packageName}/>
@@ -56,7 +56,7 @@ class TagList extends React.Component {
 
     fetchTagData() {
         $.ajax({
-            url: '/tagdatalist',
+            url: '/logdata/tag/set',
             dataType: 'json',
             cache: false,
             success: function (data) {
@@ -80,7 +80,7 @@ class TagList extends React.Component {
         for (i = 0; i < this.state.logData.length; i++) {
             tagNodes.push(
                 <Link className="dropdown-item"
-                      to={{pathname: '/tagfilter/' + this.props.packageName + '/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
+                      to={{pathname: '/logdata/filter/tag/' + this.props.packageName + '/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
             );
         }
 
@@ -111,7 +111,7 @@ class PackageNameList extends React.Component {
 
     fetchPackageNameData() {
         $.ajax({
-            url: '/packagenamedatalist',
+            url: '/logdata/packagename/set',
             dataType: 'json',
             cache: false,
             success: function (data) {
@@ -135,7 +135,7 @@ class PackageNameList extends React.Component {
         for (i = 0; i < this.state.logData.length; i++) {
             packageNameNodes.push(
                 <Link className="dropdown-item"
-                      to={{pathname: '/packagenamefilter/' + this.props.packageName + '/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
+                      to={{pathname: '/logdata/filter/packagename/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
             );
         }
 
