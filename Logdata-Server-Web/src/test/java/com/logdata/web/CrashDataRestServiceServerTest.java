@@ -3,7 +3,7 @@ package com.logdata.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logdata.common.model.CrashTimeVO;
 import com.logdata.common.model.CrashVO;
-import com.logdata.web.controller.CrashController;
+import com.logdata.web.controller.CrashDataController;
 import com.logdata.web.service.RestAPIUtility;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,15 +25,15 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withNoContent;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -46,7 +46,7 @@ public class CrashDataRestServiceServerTest {
     @Autowired
     private MockRestServiceServer server;
     @Autowired
-    private CrashController crashController;
+    private CrashDataController crashDataController;
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -74,7 +74,7 @@ public class CrashDataRestServiceServerTest {
         viewResolver.setSuffix(".html");
 
         mvc = MockMvcBuilders
-                .standaloneSetup(crashController)
+                .standaloneSetup(crashDataController)
                 .setViewResolvers(viewResolver)
                 .build();
 
@@ -176,60 +176,165 @@ public class CrashDataRestServiceServerTest {
         assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
     }
 
-//    @Test
-//    public void crashDataTimeViewTest() throws Exception {
-//        this.server.expect(
-//                requestTo(API_BASE_URL + "/user/find/query?name=user"))
-//                .andExpect(method(HttpMethod.GET))
-//                .andRespond(
-//                        withSuccess(
-//                                "{}",
-//                                MediaType.APPLICATION_JSON_UTF8
-//                        )
-//                );
-//
-//        this.server.expect(
-//                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&packageName=com.example.android"))
-//                .andExpect(method(HttpMethod.GET))
-//                .andRespond(
-//                        withSuccess(
-//                                "{}",
-//                                MediaType.APPLICATION_JSON_UTF8
-//                        )
-//                );
-//
-//        this.server.expect(
-//                requestTo(API_BASE_URL + "/api/crash/packagename/set"))
-//                .andExpect(method(HttpMethod.GET))
-//                .andRespond(
-//                        withSuccess(
-//                                "[\"com.example.android\", \"com.example.practice\"]",
-//                                MediaType.APPLICATION_JSON_UTF8
-//                        )
-//                );
-//
-//        MockHttpServletResponse response = mvc.perform(
-//                get("/crash/filter/time/query")
-//                        .principal(
-//                                new Principal() {
-//                                    @Override
-//                                    public String getName() {
-//                                        return "user";
-//                                    }
-//                                }
-//                        )
-//                .param("time", "1")
-//                .param("packageName", "com.example.android")
-//        )
-//                .andDo(print())
-//                .andReturn()
-//                .getResponse();
-//
-//        this.server.verify();
-//
-//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-//        assertThat(response.getForwardedUrl()).isEqualTo("templates/nodata.html");
-//    }
+    @Test
+    public void crashPageUserNullTest() throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                get("/crash")
+        )
+                .andDo(print())
+                .andExpect(view().name("login"))
+                .andReturn()
+                .getResponse();
+
+        this.server.verify();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getForwardedUrl()).isEqualTo("templates/login.html");
+    }
+
+    @Test
+    public void crashDataTimeViewTest() throws Exception {
+        this.server.expect(
+                ExpectedCount.manyTimes(),
+                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                userDataJsonString,
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&packageName=com.example.android"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                crashDataJsonString,
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/crash/packagename/time/query?packageName=com.example.android"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                crashTimeDataJsonString,
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/crash/packagename/set"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                "[\"com.example.android\", \"com.example.practice\"]",
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        MockHttpServletResponse response = mvc.perform(
+                get("/crash/filter/time/query")
+                        .principal(
+                                new Principal() {
+                                    @Override
+                                    public String getName() {
+                                        return "user";
+                                    }
+                                }
+                        )
+                        .param("time", String.valueOf(1L))
+                        .param("packageName", "com.example.android")
+        )
+                .andDo(print())
+                .andExpect(view().name("crash"))
+                .andExpect(model().attribute("noData", false))
+//                .andExpect(model().attribute("crash", newCrashData))
+                .andExpect(model().attribute("logcat", ""))
+//                .andExpect(model().attribute("time", "1970-01-01 09:00:00.001"))
+                .andExpect(model().attribute("realSize", displayContent.get("realSize")))
+                .andExpect(model().attribute("rotation", "ROTATION_0"))
+                .andExpect(model().attribute("bootLoader", "N900SKSU0GPI1"))
+                .andExpect(model().attribute("CPU_ABI", "armeabi-v7a"))
+                .andExpect(model().attribute("CPU_ABI2", "armeabi"))
+                .andExpect(model().attribute("buildDisplay", "LRX21V.N900SKSU0GPI1"))
+                .andExpect(model().attribute("TWRP", "hlteskt"))
+                .andExpect(model().attribute("deviceFeatures", deviceFeatures))
+                .andExpect(model().attribute("model", "SM-N900S"))
+                .andExpect(model().attribute("board", "MSM8974"))
+//                .andExpect(model().attribute("timeData", crashTimeDataJsonString))
+                .andExpect(model().attribute("sideMenuItems", sideMenuItemsList))
+                .andReturn()
+                .getResponse();
+
+        this.server.verify();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
+    }
+
+    @Test
+    public void crashDataTimeViewUserNullTest() throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                get("/crash/filter/time/query")
+                        .param("time", String.valueOf(1L))
+                        .param("packageName", "com.example.android")
+        )
+                .andDo(print())
+                .andExpect(view().name("login"))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getForwardedUrl()).isEqualTo("templates/login.html");
+    }
+
+    @Test
+    public void crashDataTimeViewCrashVONullTest() throws Exception {
+        this.server.expect(
+                ExpectedCount.manyTimes(),
+                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                userDataJsonString,
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&packageName=com.example.android"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withNoContent()
+                );
+
+        MockHttpServletResponse response = mvc.perform(
+                get("/crash/filter/time/query")
+                        .principal(
+                                new Principal() {
+                                    @Override
+                                    public String getName() {
+                                        return "user";
+                                    }
+                                }
+                        )
+                        .param("time", String.valueOf(1L))
+                        .param("packageName", "com.example.android")
+                        .content("")
+        )
+                .andDo(print())
+                .andExpect(view().name("nodata"))
+                .andReturn()
+                .getResponse();
+
+        this.server.verify();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getForwardedUrl()).isEqualTo("templates/nodata.html");
+    }
 
     @Test
     public void crashPackageNamePageTest() throws Exception {
@@ -312,110 +417,91 @@ public class CrashDataRestServiceServerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
     }
+
+    @Test
+    public void crashPackageNamePageUserNullTest() throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                get("/crash/filter/packagename/query")
+                        .param("packageName", "com.example.android")
+        )
+                .andDo(print())
+                .andExpect(view().name("login"))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getForwardedUrl()).isEqualTo("templates/login.html");
+    }
+
+    @Test
+    public void crashPackageNamePageCrashVONullTest() throws Exception {
+        this.server.expect(
+                ExpectedCount.manyTimes(),
+                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                userDataJsonString,
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/crash/filter/packagename/query?packageName=com.example.android"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withNoContent()
+                );
+
+        MockHttpServletResponse response = mvc.perform(
+                get("/crash/filter/packagename/query")
+                        .principal(
+                                new Principal() {
+                                    @Override
+                                    public String getName() {
+                                        return "user";
+                                    }
+                                }
+                        )
+                        .param("packageName", "com.example.android")
+                        .content("")
+        )
+                .andDo(print())
+                .andExpect(view().name("crash"))
+                .andExpect(model().attribute("noData", true))
+                .andReturn()
+                .getResponse();
+
+        this.server.verify();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
+    }
+
+    @Test
+    public void crashDataSaveTest() throws Exception {
+        this.server.expect(
+                requestTo(API_BASE_URL + "/api/crash"))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(
+                        withSuccess(
+                                crashDataJsonString,
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
+        MockHttpServletResponse response = mvc.perform(
+                post("/crash")
+                        .header("secretKey", "key")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content("{}")
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo(crashDataJsonString);
+    }
 }
-
-
-//    @RequestMapping(value = "/crash/filter/time/{time}", method = RequestMethod.GET)
-//    public String crashDataTimeView(Principal user, @RequestParam(value = "time") long time, @RequestParam(value = "packageName") String packageName, Model model) {
-//        if (user == null) {
-//            return "login";
-//        }
-//
-//        CrashVO crashVO = restAPIUtility.getCrashTimeData("/crash/filter/time", getUserApiKey(user.getName()), time, packageName);
-//
-//        if (crashVO == null || !(getUserApiKey(user.getName()).equals(crashVO.getApiKey()))) {
-//            return "nodata";
-//        }
-//
-//        Object display = crashVO.getDisplay().get("0");
-//
-//        Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
-//        Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
-//
-//        for (String s : deviceFeaturesKey) {
-//            deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
-//        }
-//
-//        model.addAttribute("noData", false);
-//        model.addAttribute("crash", crashVO);
-//        model.addAttribute("logcat", Utility.logcatSummary(crashVO.getLogcat()));
-//        model.addAttribute("time", Utility.timeTranslate(crashVO.getTime()));
-//        model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
-//        model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
-//        model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
-//        model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
-//        model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
-//        model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
-//        model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
-//        model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
-//        model.addAttribute("model", crashVO.getBuild().get("MODEL"));
-//        model.addAttribute("board", crashVO.getBuild().get("BOARD"));
-//        model.addAttribute("deviceFeatures", deviceFeatures);
-//        model.addAttribute("timeData", getCrashTime(user, packageName));
-//        model.addAttribute("sideMenuItems", getPackageName(user));
-//
-//        return "crash";
-//    }
-//
-//    @RequestMapping(value = "/crash/filter/packagename/{packageName}", method = RequestMethod.GET)
-//    public String crashPackageNamePage(Principal user, Model model, @RequestParam(value = "packageName") String packageName) {
-//        if (user == null) {
-//            return "login";
-//        }
-//
-//        CrashVO crashVO = restAPIUtility.getCrashTime("/crash/filter/packagename", getUserApiKey(user.getName()), packageName);
-//
-//        if (crashVO == null) {
-//            model.addAttribute("noData", true);
-//            return "crash";
-//        }
-//
-//        Object display = crashVO.getDisplay().get("0");
-//
-//        Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
-//        Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
-//
-//        for (String s : deviceFeaturesKey) {
-//            deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
-//        }
-//
-//        model.addAttribute("noData", false);
-//        model.addAttribute("crash", crashVO);
-//        model.addAttribute("logcat", Utility.logcatSummary(crashVO.getLogcat()));
-//        model.addAttribute("time", Utility.timeTranslate(crashVO.getTime()));
-//        model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
-//        model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
-//        model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
-//        model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
-//        model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
-//        model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
-//        model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
-//        model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
-//        model.addAttribute("model", crashVO.getBuild().get("MODEL"));
-//        model.addAttribute("board", crashVO.getBuild().get("BOARD"));
-//        model.addAttribute("deviceFeatures", deviceFeatures);
-//        model.addAttribute("timeData", getCrashTime(user, packageName));
-//        model.addAttribute("sideMenuItems", getPackageName(user));
-//
-//        return "crash";
-//    }
-//
-//    private ArrayList getPackageName(Principal user) {
-//        return restAPIUtility.getCrashPackageNameList("/crash/packagename/set", getUserApiKey(user.getName()));
-//    }
-//
-//    public String getUserApiKey(String name) {
-//        UserVO u = this.restAPIUtility.findSecretKey("/find", name);
-//        return u.getApiKey();
-//    }
-//
-//    public ArrayList getCrashTime(Principal user, String packageName) {
-//        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crash/packagename/time", getUserApiKey(user.getName()), packageName).getBody();
-//
-//        return new ArrayList<CrashTimeVO>(Arrays.asList(list));
-//    }
-//
-//    @RequestMapping(value = "/crash", method = RequestMethod.POST)
-//    public ResponseEntity<Object> crashDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody CrashVO data) {
-//        return restAPIUtility.postData("/crashdatasave", secretKey, data);
-//    }
