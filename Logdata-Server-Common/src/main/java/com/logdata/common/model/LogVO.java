@@ -1,6 +1,5 @@
 package com.logdata.common.model;
 
-import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -30,25 +29,6 @@ public class LogVO {
         this.time = time;
         this.memoryInfo = memoryInfo;
         this.apiKey = apiKey;
-    }
-
-    public LogVO(String id, String packageName, String level, String tag, String message, long time, Map<String, Object> memoryInfo, String apiKey) {
-        this.id = id;
-        this.packageName = packageName;
-        this.level = level;
-        this.tag = tag;
-        this.message = message;
-        this.time = time;
-        this.memoryInfo = memoryInfo;
-        this.apiKey = apiKey;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getPackageName() {

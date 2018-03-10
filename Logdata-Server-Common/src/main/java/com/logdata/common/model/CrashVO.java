@@ -46,53 +46,6 @@ public class CrashVO {
         this.apiKey = apiKey;
     }
 
-    public CrashVO(String packageName, long time, String androidVersion, String appVersionCode, String appVersionName,
-                   long availableMemorySize, String brand, String logcat, String deviceID, Map<String, Object> display,
-                   Map<String, Object> environment, Map<String, Object> build, String apiKey) {
-        this.packageName = packageName;
-        this.time = time;
-        this.androidVersion = androidVersion;
-        this.appVersionCode = appVersionCode;
-        this.appVersionName = appVersionName;
-        this.availableMemorySize = availableMemorySize;
-        this.brand = brand;
-        this.logcat = logcat;
-        this.deviceID = deviceID;
-        this.display = display;
-        this.environment = environment;
-        this.build = build;
-        this.apiKey = apiKey;
-    }
-
-    public CrashVO(String id, String packageName, long time, String androidVersion, String appVersionCode, String appVersionName,
-                   long availableMemorySize, String brand, String logcat, String deviceID,
-                   Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
-                   Map<String, Object> build, String apiKey) {
-        this.id = id;
-        this.packageName = packageName;
-        this.time = time;
-        this.androidVersion = androidVersion;
-        this.appVersionCode = appVersionCode;
-        this.appVersionName = appVersionName;
-        this.availableMemorySize = availableMemorySize;
-        this.brand = brand;
-        this.logcat = logcat;
-        this.deviceID = deviceID;
-        this.display = display;
-        this.environment = environment;
-        this.deviceFeatures = deviceFeatures;
-        this.build = build;
-        this.apiKey = apiKey;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getPackageName() {
         return packageName;
     }

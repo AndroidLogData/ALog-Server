@@ -22,29 +22,7 @@ public class Utility {
         return date.toString(fmt);
     }
 
-    public static String getChartDataDate(DateTime time) {
-        DateTime date = new DateTime(time);
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
-
-        return date.toString(fmt);
-    }
-
-    public static String getChartDataTime(DateTime time) {
-        DateTime date = new DateTime(time);
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss.SSS");
-
-        return date.toString(fmt);
-    }
-
-    public static boolean CheckedSecretKey(String secretKey) {
-        if (secretKey.equals("") || secretKey.equals("\"\"")) {
-            return true;
-        }
-        return false;
-    }
-
     public static String findCrashName(String logcat) {
-//        Pattern pattern = Pattern.compile("[0-9].*?(ACRA).*?(?i)(Exception|Error).*?(\\s|[a-zA-z]|\\.)+");
         Pattern pattern = Pattern.compile("[a-zA-Z]+(Exception|Error).*?");
         Matcher matcher = pattern.matcher(logcat);
 
@@ -61,7 +39,7 @@ public class Utility {
         StringBuilder result = new StringBuilder();
 
         while (matcher.find()) {
-            result.append(matcher.group() + "\n");
+            result.append(matcher.group()).append("\n");
         }
 
         return result.toString();
