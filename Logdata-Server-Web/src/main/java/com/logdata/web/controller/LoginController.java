@@ -46,7 +46,7 @@ public class LoginController {
         newUser.setApiKey(generatedApiKey());
 
         if (this.restAPIUtility.findSecretKey("/find", body.get("username")) == null) {
-            this.restAPIUtility.postData("/registration", null, newUser);
+            this.restAPIUtility.postData("/user", "/registration", null, newUser);
         } else {
             model.addAttribute("sameID", true);
             return "registration";

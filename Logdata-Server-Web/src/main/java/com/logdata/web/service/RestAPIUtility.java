@@ -27,9 +27,9 @@ public class RestAPIUtility {
         this.restTemplate = builder.build();
     }
 
-    public ResponseEntity<Object> postData(String url, String secretKey, Object data) {
+    public ResponseEntity<Object> postData(String path, String url, String secretKey, Object data) {
         try {
-            URI uri = uriBuilder("/api", url);
+            URI uri = uriBuilder(path, url);
 
             headers.set("secretKey", secretKey);
             headers.setContentType(MediaType.APPLICATION_JSON_UTF8);

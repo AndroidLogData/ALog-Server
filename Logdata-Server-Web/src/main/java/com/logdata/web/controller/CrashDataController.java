@@ -137,6 +137,6 @@ public class CrashDataController {
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
     public ResponseEntity<Object> crashDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody CrashVO data) {
-        return restAPIUtility.postData("/crash", secretKey, data);
+        return restAPIUtility.postData("/api", "/crash", secretKey, data);
     }
 }

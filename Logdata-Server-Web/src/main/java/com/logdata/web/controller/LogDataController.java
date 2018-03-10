@@ -32,7 +32,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
     public ResponseEntity<Object> logDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody LogVO data) {
-        return restAPIUtility.postData("/logdata", secretKey, data);
+        return restAPIUtility.postData("/api", "/logdata", secretKey, data);
     }
 
     @RequestMapping(value = "/logdata/filter/level/{query}", method = RequestMethod.GET, produces = "application/json")
