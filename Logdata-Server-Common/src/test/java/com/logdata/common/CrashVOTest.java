@@ -88,7 +88,7 @@ public class CrashVOTest {
         CrashTimeVO crashTimeVO1 = new CrashTimeVO();
         crashTimeVO1.setTime(0L);
         crashTimeVO1.setPackageName("android");
-        crashTimeVO1.setStringTime("1970-01-01 09:00:00.000");
+        crashTimeVO1.setStringTime("1970-01-01 00:00:00.000");
 
         when(crashDataRepository.findCrashDataByTimeAndApiKey(new DateTime(0), "key")).thenReturn(crashVO);
         CrashVO result1 = crashDataRepository.findCrashDataByTimeAndApiKey(new DateTime(0), "key");
@@ -96,7 +96,7 @@ public class CrashVOTest {
         assertThat(result1.getPackageName()).isEqualTo(crashTimeVO1.getPackageName());
         assertThat(Utility.getTime(new DateTime(result1.getTime()))).isEqualTo(crashTimeVO1.getStringTime());
 
-        CrashTimeVO crashTimeVO2 = new CrashTimeVO(0L, "android", "1970-01-01 09:00:00.000");
+        CrashTimeVO crashTimeVO2 = new CrashTimeVO(0L, "android", "1970-01-01 00:00:00.000");
         when(crashDataRepository.findCrashDataByTimeAndApiKey(new DateTime(0), "key")).thenReturn(crashVO);
         CrashVO result2 = crashDataRepository.findCrashDataByTimeAndApiKey(new DateTime(0), "key");
         assertThat(result2.getTime()).isEqualTo(crashTimeVO2.getTime());
