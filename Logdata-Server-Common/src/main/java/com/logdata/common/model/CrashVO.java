@@ -157,4 +157,22 @@ public class CrashVO {
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
+
+    @Override
+    public String toString() {
+        return "{\"packageName\":\"" + getPackageName() + "\"," +
+                "\"time\":" + getTime() + "," +
+                "\"androidVersion\":\"" + getAndroidVersion() + "\"," +
+                "\"appVersionCode\":\"" + getAppVersionCode() + "\"," +
+                "\"appVersionName\":\"" + getAppVersionName() + "\"," +
+                "\"availableMemorySize\":" + getAvailableMemorySize() + "," +
+                "\"brand\":\"" + getBrand() + "\"," +
+                "\"logcat\":\"" + getLogcat() + "\"," +
+                "\"deviceID\":\"" + getDeviceID() + "\"," +
+                "\"display\":" + getDisplay() + "," +
+                "\"environment\":" + getEnvironment() + "," +
+                "\"deviceFeatures\":" + getDeviceFeatures() + "," +
+                "\"build\":" + getBuild() + "," +
+                "\"apiKey\":\"" + getApiKey() + "\"" + "}";
+    }
 }

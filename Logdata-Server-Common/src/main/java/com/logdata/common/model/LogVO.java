@@ -94,4 +94,15 @@ public class LogVO {
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
+
+    @Override
+    public String toString() {
+        return "{\"packageName\":\"" + getPackageName() + "\"," +
+                "\"Level\":\"" + getLevel() + "\"," +
+                "\"Tag\":\"" + getTag() + "\"," +
+                "\"Message\":\"" + getMessage() + "\"," +
+                "\"Time\":" + getTime() + "," +
+                "\"MemoryInfo\":" + getMessage() + "," +
+                "\"ApiKey\":\"" + getApiKey() + "\"" + "}";
+    }
 }

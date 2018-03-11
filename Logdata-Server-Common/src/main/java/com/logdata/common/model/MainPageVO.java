@@ -76,4 +76,15 @@ public class MainPageVO {
     public void setError(int error) {
         this.error = error;
     }
+
+    @Override
+    public String toString() {
+        return "{\"packageName\":\"" + getPackageName() + "\"," +
+                "\"RecentCrashTime\":\"" + getRecentCrashTime() + "\"," +
+                "\"Verb\":" + getVerb() + "," +
+                "\"Info\":" + getInfo() + "," +
+                "\"Debug\":" + getDebug() + "," +
+                "\"Warning\":" + getWarning() + "," +
+                "\"Error\":" + getError() + "}";
+    }
 }

@@ -36,4 +36,11 @@ public class CrashTimeVO {
     public void setStringTime(String stringTime) {
         this.stringTime = stringTime;
     }
+
+    @Override
+    public String toString() {
+        return "{\"Time\":" + getTime() + "," +
+                "\"PackageName\":\"" + getPackageName() + "\"," +
+                "\"StringTime\":\"" + getStringTime() + "\"}";
+    }
 }
