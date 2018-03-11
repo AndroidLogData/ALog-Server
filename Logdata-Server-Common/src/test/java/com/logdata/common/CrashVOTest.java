@@ -7,6 +7,7 @@ import com.logdata.common.util.Utility;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,6 +22,8 @@ import static org.mockito.Mockito.when;
 public class CrashVOTest {
     @MockBean
     private CrashDataRepository crashDataRepository;
+    @Autowired
+    private Utility utility;
 
     @Test
     public void contextLoads() {
@@ -94,13 +97,13 @@ public class CrashVOTest {
         CrashVO result1 = crashDataRepository.findCrashDataByTimeAndApiKey(new DateTime(0), "key");
         assertThat(result1.getTime()).isEqualTo(crashTimeVO1.getTime());
         assertThat(result1.getPackageName()).isEqualTo(crashTimeVO1.getPackageName());
-        assertThat(Utility.getTime(new DateTime(result1.getTime()))).isEqualTo(crashTimeVO1.getStringTime());
+        assertThat(utility.getStringTimeToDateTime(new DateTime(result1.getTime()))).isEqualTo(crashTimeVO1.getStringTime());
 
         CrashTimeVO crashTimeVO2 = new CrashTimeVO(0L, "android", "1970-01-01 00:00:00.000");
         when(crashDataRepository.findCrashDataByTimeAndApiKey(new DateTime(0), "key")).thenReturn(crashVO);
         CrashVO result2 = crashDataRepository.findCrashDataByTimeAndApiKey(new DateTime(0), "key");
         assertThat(result2.getTime()).isEqualTo(crashTimeVO2.getTime());
         assertThat(result2.getPackageName()).isEqualTo(crashTimeVO2.getPackageName());
-        assertThat(Utility.getTime(new DateTime(result2.getTime()))).isEqualTo(crashTimeVO2.getStringTime());
+        assertThat(utility.getStringTimeToDateTime(new DateTime(result2.getTime()))).isEqualTo(crashTimeVO2.getStringTime());
     }
 }

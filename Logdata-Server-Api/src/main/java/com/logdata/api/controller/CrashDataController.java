@@ -16,11 +16,13 @@ import java.util.*;
 @Controller
 @RequestMapping("/api")
 public class CrashDataController {
-    private CrashDataService crashDataService;
+    private final CrashDataService crashDataService;
+    private final Utility utility;
 
     @Autowired
-    public CrashDataController(CrashDataService crashDataService) {
+    public CrashDataController(CrashDataService crashDataService, Utility utility) {
         this.crashDataService = crashDataService;
+        this.utility = utility;
     }
 
     @RequestMapping(value = "/crash/filter/time/{time}", method = RequestMethod.GET)
@@ -68,7 +70,7 @@ public class CrashDataController {
         ArrayList<CrashTimeVO> crashTimeVOs = new ArrayList<CrashTimeVO>();
 
         for (int i = 0; i < list.size(); i++) {
-            crashTimeVOs.add(new CrashTimeVO(list.get(i).getTime(), packageName, Utility.timeTranslate(list.get(i).getTime())));
+            crashTimeVOs.add(new CrashTimeVO(list.get(i).getTime(), packageName, utility.getStringTimeToLong(list.get(i).getTime())));
         }
 
         return crashTimeVOs;

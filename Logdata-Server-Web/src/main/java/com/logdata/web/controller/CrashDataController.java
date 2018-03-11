@@ -17,10 +17,12 @@ import java.util.*;
 @Controller
 public class CrashDataController {
     private final RestAPIUtility restAPIUtility;
+    private final Utility utility;
 
     @Autowired
-    public CrashDataController(RestAPIUtility restAPIUtility) {
+    public CrashDataController(RestAPIUtility restAPIUtility, Utility utility) {
         this.restAPIUtility = restAPIUtility;
+        this.utility = utility;
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.GET)
@@ -58,8 +60,8 @@ public class CrashDataController {
 
         model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
-        model.addAttribute("logcat", Utility.logcatSummary(crashVO.getLogcat()));
-        model.addAttribute("time", Utility.timeTranslate(crashVO.getTime()));
+        model.addAttribute("logcat", utility.logcatSummary(crashVO.getLogcat()));
+        model.addAttribute("time", utility.getStringTimeToLong(crashVO.getTime()));
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
         model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
@@ -101,8 +103,8 @@ public class CrashDataController {
 
         model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
-        model.addAttribute("logcat", Utility.logcatSummary(crashVO.getLogcat()));
-        model.addAttribute("time", Utility.timeTranslate(crashVO.getTime()));
+        model.addAttribute("logcat", utility.logcatSummary(crashVO.getLogcat()));
+        model.addAttribute("time", utility.getStringTimeToLong(crashVO.getTime()));
         model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
         model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
         model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));

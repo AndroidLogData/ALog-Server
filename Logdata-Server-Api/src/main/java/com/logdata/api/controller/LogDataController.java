@@ -17,10 +17,12 @@ import java.util.*;
 @RequestMapping(value = "/api")
 public class LogDataController {
     private final LogDataService logDataService;
+    private final Utility utility;
 
     @Autowired
-    public LogDataController(LogDataService logDataService) {
+    public LogDataController(LogDataService logDataService, Utility utility) {
         this.logDataService = logDataService;
+        this.utility = utility;
     }
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
@@ -58,7 +60,7 @@ public class LogDataController {
         List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageNameAndLevel(secretKey, packageName, level, new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
-            data.setStringTime(Utility.timeTranslate(data.getTime()));
+            data.setStringTime(utility.getStringTimeToLong(data.getTime()));
         }
 
         return logVOList;
@@ -71,7 +73,7 @@ public class LogDataController {
         List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageNameAndTag(secretKey, packageName, tag, new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
-            data.setStringTime(Utility.timeTranslate(data.getTime()));
+            data.setStringTime(utility.getStringTimeToLong(data.getTime()));
         }
 
         return logVOList;
@@ -111,7 +113,7 @@ public class LogDataController {
         List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageName(secretKey, packageName, new Sort(Sort.Direction.DESC, "time"));
 
         for (LogVO data : logVOList) {
-            data.setStringTime(Utility.timeTranslate(data.getTime()));
+            data.setStringTime(utility.getStringTimeToLong(data.getTime()));
         }
 
         return logVOList;

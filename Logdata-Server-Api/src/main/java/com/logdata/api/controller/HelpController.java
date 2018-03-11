@@ -18,10 +18,12 @@ import java.util.HashMap;
 @RequestMapping("/help")
 public class HelpController {
     private final CrashDataService crashDataService;
+    private final Utility utility;
 
     @Autowired
-    public HelpController(CrashDataService crashDataService) {
+    public HelpController(CrashDataService crashDataService, Utility utility) {
         this.crashDataService = crashDataService;
+        this.utility = utility;
     }
 
     @RequestMapping(value = "/mypage", method = RequestMethod.GET)
@@ -31,7 +33,7 @@ public class HelpController {
         HashMap<String, Integer> crashList = new HashMap<String, Integer>();
 
         for (int i = 0; i < crashVOArrayList.size(); i++) {
-            String packageName = Utility.findCrashName(crashVOArrayList.get(i).getLogcat());
+            String packageName = utility.findCrashName(crashVOArrayList.get(i).getLogcat());
 
             if (crashList.get(packageName) == null) {
                 crashList.put(packageName, 1);

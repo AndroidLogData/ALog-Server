@@ -22,11 +22,13 @@ import java.util.Set;
 public class MainController {
     private final LogDataService logDataService;
     private final CrashDataService crashDataService;
+    private final Utility utility;
 
     @Autowired
-    public MainController(LogDataService logDataService, CrashDataService crashDataService) {
+    public MainController(LogDataService logDataService, CrashDataService crashDataService, Utility utility) {
         this.logDataService = logDataService;
         this.crashDataService = crashDataService;
+        this.utility = utility;
     }
 
     private Set<String> getPackageName(String apiKey) {
@@ -59,7 +61,7 @@ public class MainController {
             if (crashTime == null) {
                 list.add(new MainPageVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
             } else {
-                list.add(new MainPageVO(packageName, Utility.timeTranslate(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
+                list.add(new MainPageVO(packageName, utility.getStringTimeToLong(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
             }
         }
 
