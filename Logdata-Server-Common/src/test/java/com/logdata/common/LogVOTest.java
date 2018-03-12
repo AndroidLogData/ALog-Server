@@ -4,6 +4,7 @@ import com.logdata.common.model.LogVO;
 import com.logdata.common.repository.LogDataRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -37,6 +38,7 @@ public class LogVOTest {
         assertThat(result1.getTime()).isEqualTo(0L);
         assertThat(result1.getMemoryInfo()).isEqualTo(null);
         assertThat(result1.getApiKey()).isEqualTo(null);
+        assertThat(result1.toString()).isEqualTo("{\"packageName\":\"null\",\"Level\":\"null\",\"Tag\":\"null\",\"Message\":\"null\",\"Time\":0,\"MemoryInfo\":null,\"ApiKey\":\"null\"}");
 
         when(logDataRepository.findOne("1")).thenReturn(logVO2);
         LogVO result2 = logDataRepository.findOne("1");
@@ -47,6 +49,7 @@ public class LogVOTest {
         assertThat(result2.getTime()).isEqualTo(logVO2.getTime());
         assertThat(result2.getMemoryInfo()).isEqualTo(logVO2.getMemoryInfo());
         assertThat(result2.getApiKey()).isEqualTo(logVO2.getApiKey());
+        assertThat(result2.toString()).isEqualTo("{\"packageName\":\"android\",\"Level\":\"v\",\"Tag\":\"MainActivity\",\"Message\":\"Hello\",\"Time\":1,\"MemoryInfo\":Hello,\"ApiKey\":\"key\"}");
     }
 
     @Test

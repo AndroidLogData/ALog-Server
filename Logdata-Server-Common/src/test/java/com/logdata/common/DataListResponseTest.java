@@ -60,5 +60,6 @@ public class DataListResponseTest {
         assertThat(mainPageVO.getDebug()).isEqualTo(mainPageVO.getDebug());
         assertThat(mainPageVO.getWarning()).isEqualTo(mainPageVO.getWarning());
         assertThat(mainPageVO.getError()).isEqualTo(mainPageVO.getError());
+        assertThat(mainPageVO.toString()).isEqualTo("{\"packageName\":\"android\",\"RecentCrashTime\":\"1970-01-01 09:00:00.000\",\"Verb\":0,\"Info\":1,\"Debug\":2,\"Warning\":3,\"Error\":5}");
     }
 }
