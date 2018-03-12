@@ -133,7 +133,7 @@ public class LogDataRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]}");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]");
     }
 
     @Test
@@ -178,7 +178,7 @@ public class LogDataRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]}");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]");
     }
 
     @Test
@@ -222,7 +222,7 @@ public class LogDataRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]}");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":null}]");
     }
 
     @Test
@@ -265,7 +265,7 @@ public class LogDataRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[\"com.logdata.android.example\",\"com.example.android\"]}");
+        assertThat(response.getContentAsString()).isEqualTo("[\"com.logdata.android.example\",\"com.example.android\"]");
     }
 
     @Test
@@ -308,6 +308,6 @@ public class LogDataRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[\"[MainActivity::onCreate]\",\"[Practice::method]\"]}");
+        assertThat(response.getContentAsString()).isEqualTo("[\"[MainActivity::onCreate]\",\"[Practice::method]\"]");
     }
 }

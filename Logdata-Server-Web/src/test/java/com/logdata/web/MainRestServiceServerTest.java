@@ -134,7 +134,7 @@ public class MainRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("{\"logData\":[{\"packageName\":\"android\",\"recentCrashTime\":\"2017-06-24 12:34:59:000\",\"verb\":0,\"info\":1,\"debug\":2,\"warning\":3,\"error\":4}]}");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":\"android\",\"recentCrashTime\":\"2017-06-24 12:34:59:000\",\"verb\":0,\"info\":1,\"debug\":2,\"warning\":3,\"error\":4}]");
     }
 
     @Test
