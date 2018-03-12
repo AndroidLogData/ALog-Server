@@ -19,7 +19,7 @@ class MainPage extends React.Component {
             dataType: "json",
             cache: false,
             success: function (data) {
-                this.setState({logData: data.logData});
+                this.setState({logData: data});
             }.bind(this),
             error: function (data) {
                 console.log("error");

@@ -222,14 +222,14 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ResponseEntity<MainPageVO[]> getMainData(String url, String secretKey) {
+    public ResponseEntity<LogDataInfoVO[]> getMainData(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/main", url);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
 
-            ResponseEntity<MainPageVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, MainPageVO[].class);
+            ResponseEntity<LogDataInfoVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogDataInfoVO[].class);
 
             return response;
         } catch (Exception e) {

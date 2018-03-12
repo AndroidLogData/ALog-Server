@@ -1,4 +1,4 @@
-package com.logdata.web.service;
+package com.logdata.web.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;

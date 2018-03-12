@@ -1,7 +1,6 @@
 package com.logdata.web.controller;
 
-import com.logdata.common.model.MainPageDataListResponse;
-import com.logdata.common.model.MainPageVO;
+import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.common.model.UserVO;
 import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +32,14 @@ public class MainController {
     @RequestMapping(value = "/main", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public MainPageDataListResponse mainPageDataList(Principal user) {
+    public ArrayList<LogDataInfoVO> mainPageDataList(Principal user) {
         if (user == null) {
             return null;
         }
 
-        MainPageVO[] mainPageVO = restAPIUtility.getMainData("/main", getUserApiKey(user.getName())).getBody();
+        LogDataInfoVO[] logDataInfoVO = restAPIUtility.getMainData("/main", getUserApiKey(user.getName())).getBody();
 
-        return new MainPageDataListResponse(new ArrayList<MainPageVO>(Arrays.asList(mainPageVO)));
+        return new ArrayList<LogDataInfoVO>(Arrays.asList(logDataInfoVO));
     }
 
     public String getUserApiKey(String name) {

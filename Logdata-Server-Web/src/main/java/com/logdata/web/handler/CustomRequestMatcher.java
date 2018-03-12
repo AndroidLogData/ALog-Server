@@ -1,4 +1,4 @@
-package com.logdata.web.service;
+package com.logdata.web.handler;
 
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;

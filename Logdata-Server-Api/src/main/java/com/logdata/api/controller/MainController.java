@@ -4,7 +4,7 @@ import com.logdata.api.sevice.CrashDataService;
 import com.logdata.api.sevice.LogDataService;
 import com.logdata.common.model.CrashVO;
 import com.logdata.common.model.LogVO;
-import com.logdata.common.model.MainPageVO;
+import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.common.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -46,9 +46,9 @@ public class MainController {
     @RequestMapping(value = "/main", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public List<MainPageVO> mainPageDataList(@RequestHeader(value = "secretKey") String secretKey) {
+    public List<LogDataInfoVO> mainPageDataList(@RequestHeader(value = "secretKey") String secretKey) {
         Set<String> logData = getPackageName(secretKey);
-        List<MainPageVO> list = new ArrayList<MainPageVO>();
+        List<LogDataInfoVO> list = new ArrayList<LogDataInfoVO>();
 
         for (String packageName : logData) {
             int verbCount = this.logDataService.findByApiKeyAndPackageNameAndLevel(secretKey, packageName, "v").size();
@@ -59,9 +59,9 @@ public class MainController {
 
             CrashVO crashTime = this.crashDataService.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, secretKey);
             if (crashTime == null) {
-                list.add(new MainPageVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
+                list.add(new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
             } else {
-                list.add(new MainPageVO(packageName, utility.getStringTimeToLong(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
+                list.add(new LogDataInfoVO(packageName, utility.getStringTimeToLong(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount));
             }
         }
 

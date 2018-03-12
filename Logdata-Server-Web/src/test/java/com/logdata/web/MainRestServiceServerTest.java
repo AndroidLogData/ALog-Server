@@ -1,7 +1,7 @@
 package com.logdata.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.logdata.common.model.MainPageVO;
+import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.web.controller.MainController;
 import com.logdata.web.service.RestAPIUtility;
 import org.junit.Before;
@@ -80,8 +80,8 @@ public class MainRestServiceServerTest {
 
     @Test
     public void mainPageDataListTest() throws Exception {
-        MainPageVO[] mainPageVO = new MainPageVO[1];
-        mainPageVO[0] = new MainPageVO(
+        LogDataInfoVO[] logDataInfoVO = new LogDataInfoVO[1];
+        logDataInfoVO[0] = new LogDataInfoVO(
                 "android",
                 "2017-06-24 12:34:59:000",
                 0,
@@ -91,7 +91,7 @@ public class MainRestServiceServerTest {
                 4
         );
 
-        String mainPageVOJsonString = objectMapper.writeValueAsString(mainPageVO);
+        String mainPageVOJsonString = objectMapper.writeValueAsString(logDataInfoVO);
 
         this.server.expect(
                 ExpectedCount.manyTimes(),

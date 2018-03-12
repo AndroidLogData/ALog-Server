@@ -1,6 +1,6 @@
 package com.logdata.common.model;
 
-public class MainPageVO {
+public class LogDataInfoVO {
     private String packageName;
     private String recentCrashTime;
     private int verb;
@@ -9,9 +9,9 @@ public class MainPageVO {
     private int warning;
     private int error;
 
-    public MainPageVO() {}
+    public LogDataInfoVO() {}
 
-    public MainPageVO(String packageName, String recentCrashTime, int verb, int info, int debug, int warning, int error) {
+    public LogDataInfoVO(String packageName, String recentCrashTime, int verb, int info, int debug, int warning, int error) {
         this.packageName = packageName;
         this.recentCrashTime = recentCrashTime;
         this.verb = verb;

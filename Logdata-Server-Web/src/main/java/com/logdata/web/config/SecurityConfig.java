@@ -1,8 +1,8 @@
 package com.logdata.web.config;
 
-import com.logdata.web.service.CustomLoginSuccessHandler;
-import com.logdata.web.service.CustomRequestMatcher;
-import com.logdata.web.service.CustomUserDetailsService;
+import com.logdata.web.handler.CustomLoginSuccessHandler;
+import com.logdata.web.handler.CustomRequestMatcher;
+import com.logdata.web.handler.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
