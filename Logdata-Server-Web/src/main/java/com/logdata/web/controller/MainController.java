@@ -43,7 +43,7 @@ public class MainController {
     }
 
     public String getUserApiKey(String name) {
-        UserVO u = this.restAPIUtility.findSecretKey("/find", name);
+        UserVO u = this.restAPIUtility.findUser("/find", name);
         return u.getApiKey();
     }
 }

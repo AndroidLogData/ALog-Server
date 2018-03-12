@@ -20,7 +20,7 @@ public class RestAPIUtility {
     private final RestTemplate restTemplate;
     private HttpHeaders headers = new HttpHeaders();
     private HttpEntity<Object> entity = null;
-    private MultiValueMap<String, String> parmas = null;
+    private MultiValueMap<String, String> params = null;
 
     @Autowired
     public RestAPIUtility(RestTemplateBuilder builder) {
@@ -44,12 +44,12 @@ public class RestAPIUtility {
 
     public ResponseEntity<LogVO[]> getLogDataLevel(String url, String secretKey, String packageName, String level) {
         try {
-            parmas = new LinkedMultiValueMap<String, String>();
+            params = new LinkedMultiValueMap<String, String>();
 
-            parmas.add("packagename", packageName);
-            parmas.add("level", level);
+            params.add("packagename", packageName);
+            params.add("level", level);
 
-            URI uri = uriBuilder("/api", url, parmas);
+            URI uri = uriBuilder("/api", url, params);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -66,12 +66,12 @@ public class RestAPIUtility {
 
     public ResponseEntity<LogVO[]> getLogDataTag(String url, String secretKey, String packageName, String tag) {
         try {
-            parmas = new LinkedMultiValueMap<String, String>();
+            params = new LinkedMultiValueMap<String, String>();
 
-            parmas.add("packagename", packageName);
-            parmas.add("tag", tag);
+            params.add("packagename", packageName);
+            params.add("tag", tag);
 
-            URI uri = uriBuilder("/api", url, parmas);
+            URI uri = uriBuilder("/api", url, params);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -105,11 +105,11 @@ public class RestAPIUtility {
 
     public ResponseEntity<LogVO[]> getPackageNameList(String url, String secretKey, String packageName) {
         try {
-            parmas = new LinkedMultiValueMap<String, String>();
+            params = new LinkedMultiValueMap<String, String>();
 
-            parmas.add("packagename", packageName);
+            params.add("packagename", packageName);
 
-            URI uri = uriBuilder("/api", url, parmas);
+            URI uri = uriBuilder("/api", url, params);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -126,12 +126,12 @@ public class RestAPIUtility {
 
     public CrashVO getCrashTimeData(String url, String secretKey, long time, String packageName) {
         try {
-            parmas = new LinkedMultiValueMap<String, String>();
+            params = new LinkedMultiValueMap<String, String>();
 
-            parmas.add("time", String.valueOf(time));
-            parmas.add("packageName", packageName);
+            params.add("time", String.valueOf(time));
+            params.add("packageName", packageName);
 
-            URI uri = uriBuilder("/api", url, parmas);
+            URI uri = uriBuilder("/api", url, params);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -148,11 +148,11 @@ public class RestAPIUtility {
 
     public CrashVO getCrashTime(String url, String secretKey, String packageName) {
         try {
-            parmas = new LinkedMultiValueMap<String, String>();
+            params = new LinkedMultiValueMap<String, String>();
 
-            parmas.add("packageName", packageName);
+            params.add("packageName", packageName);
 
-            URI uri = uriBuilder("/api", url, parmas);
+            URI uri = uriBuilder("/api", url, params);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -186,11 +186,11 @@ public class RestAPIUtility {
 
     public ResponseEntity<CrashTimeVO[]> getCrashTimeList(String url, String secretKey, String packageName) {
         try {
-            parmas = new LinkedMultiValueMap<String, String>();
+            params = new LinkedMultiValueMap<String, String>();
 
-            parmas.add("packageName", packageName);
+            params.add("packageName", packageName);
 
-            URI uri = uriBuilder("/api", url, parmas);
+            URI uri = uriBuilder("/api", url, params);
 
             headers.set("secretKey", secretKey);
             entity = new HttpEntity<>(headers);
@@ -239,13 +239,13 @@ public class RestAPIUtility {
         return null;
     }
 
-    public UserVO findSecretKey(String url, String name) {
+    public UserVO findUser(String url, String name) {
         try {
-            parmas = new LinkedMultiValueMap<String, String>();
+            params = new LinkedMultiValueMap<String, String>();
 
-            parmas.add("name", name);
+            params.add("name", name);
 
-            URI uri = uriBuilder("/user", url, parmas);
+            URI uri = uriBuilder("/user", url, params);
 
             ResponseEntity<UserVO> response = restTemplate.getForEntity(uri, UserVO.class);
 

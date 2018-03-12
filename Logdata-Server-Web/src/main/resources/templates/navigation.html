@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="head :: headfile">
 </head>
 <body>
@@ -15,14 +15,14 @@
 
     <div class="collapse navbar-collapse justify-content-md-end" id="navbarsExampleDefault">
         <ul class="navbar-nav">
-            <!--<li class="nav-item"><a class="nav-link" href="/">Dash Board</a></li>-->
-            <!--<li class="nav-item"><a class="nav-link" href="/logdata">Log Data</a></li>-->
             <li class="nav-item"><a class="nav-link" href="/crash">Crash Data</a></li>
             <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
             <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-            <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/registration">Registration</a></li>
-            <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authentication="name"/>
+            <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/registration">Registration</a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   sec:authentication="name"/>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown03">
                     <a class="dropdown-item" href="/mypage" th:text="'My Page'"/>
                     <div class="dropdown-divider"></div>
@@ -30,10 +30,6 @@
                 </div>
             </li>
         </ul>
-        <!--<form class="form-inline mt-2 mt-md-0">-->
-        <!--<input class="form-control mr-sm-2" type="text" placeholder="Search"/>-->
-        <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-        <!--</form>-->
     </div>
 </nav>
 </body>
