@@ -11,10 +11,8 @@ class LogDataMemoryChart extends React.Component {
 
     render() {
         let hexColor = ['#36A2EB', '#FFCE56', '#FF6384', '#3CF0FF'];
-        let memoryName = [];
-        let memoryValue = [];
-        let pssMemoryName = [];
-        let pssMemoryValue = [];
+        let memoryMap = new Map();
+        let pssMemoryMap = new Map();
         let memoryPercentage = 0;
         let threshold = 0;
         let lowMemory = false;
@@ -22,8 +20,7 @@ class LogDataMemoryChart extends React.Component {
 
         JSON.parse(jsonString, (key, value) => {
             if (key === 'availMemory' || key === 'totalMemory') {
-                memoryName.push(key);
-                memoryValue.push(value / 1024);
+                memoryMap.set(memoryMap.size, [key, value / 1024]);
             } else if (key === 'memoryPercentage') {
                 memoryPercentage = value;
             } else if (key === 'lowMemory') {
@@ -31,49 +28,47 @@ class LogDataMemoryChart extends React.Component {
             } else if (key === 'threshold') {
                 threshold = value;
             } else if (key === 'dalvikPss' || key === 'nativePss' || key === 'totalPss' || key === 'otherPss') {
-                pssMemoryName.push(key);
-                pssMemoryValue.push(value);
+                pssMemoryMap.set(pssMemoryMap.size, [key, value]);
             }
         });
 
         let memoryDataSets = [];
         let pssMemoryDataSets = [];
 
-        for (let i = 0; i < memoryName.length; i++) {
+        for (let i = 0; i < memoryMap.size; i++) {
             memoryDataSets.push(
                 {
-                    label: memoryName[i],
+                    label: memoryMap.get(i)[0],
                     backgroundColor: hexColor[i],
                     borderColor: hexColor[i],
                     borderWidth: 1,
                     hoverBackgroundColor: hexColor[i],
                     hoverBorderColor: hexColor[i],
-                    data: [memoryValue[i]]
+                    data: [memoryMap.get(i)[1]]
                 }
             );
         }
 
-        for (let i = 0; i < pssMemoryName.length; i++) {
+        for (let i = 0; i < pssMemoryMap.size; i++) {
             pssMemoryDataSets.push(
                 {
-                    label: pssMemoryName[i],
+                    label: pssMemoryMap.get(i)[0],
                     backgroundColor: hexColor[i],
                     borderColor: hexColor[i],
                     borderWidth: 1,
                     hoverBackgroundColor: hexColor[i],
                     hoverBorderColor: hexColor[i],
-                    data: [pssMemoryValue[i]]
+                    data: [pssMemoryMap.get(i)[1]]
                 }
             );
         }
 
-
         const memoryInfo = {
-            labels: memoryName,
+            // labels: [memoryMap.get(0)[0]],
             datasets: memoryDataSets
         };
         const pssMemoryInfo = {
-            labels: pssMemoryName,
+            // labels: [pssMemoryMap.get(0)[0]],
             datasets: pssMemoryDataSets
         };
         const memoryInfoOptions = {

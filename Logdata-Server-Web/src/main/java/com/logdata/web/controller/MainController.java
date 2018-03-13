@@ -37,7 +37,7 @@ public class MainController {
             return null;
         }
 
-        LogDataInfoVO[] logDataInfoVO = restAPIUtility.getMainData("/main", getUserApiKey(user.getName())).getBody();
+        LogDataInfoVO[] logDataInfoVO = restAPIUtility.getLogDataInfo("/main", getUserApiKey(user.getName()));
 
         return new ArrayList<LogDataInfoVO>(Arrays.asList(logDataInfoVO));
     }

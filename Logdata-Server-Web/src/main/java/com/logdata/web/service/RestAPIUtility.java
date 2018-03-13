@@ -42,7 +42,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ResponseEntity<LogVO[]> getLogDataLevel(String url, String secretKey, String packageName, String level) {
+    public LogVO[] getLogDataLevel(String url, String secretKey, String packageName, String level) {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
@@ -56,7 +56,7 @@ public class RestAPIUtility {
 
             ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
 
-            return response;
+            return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ResponseEntity<LogVO[]> getLogDataTag(String url, String secretKey, String packageName, String tag) {
+    public LogVO[] getLogDataTag(String url, String secretKey, String packageName, String tag) {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
@@ -78,7 +78,7 @@ public class RestAPIUtility {
 
             ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
 
-            return response;
+            return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,7 +86,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ResponseEntity<Set> getLogDataInfoSet(String url, String secretKey) {
+    public Set getLogDataInfoSet(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/api", url);
 
@@ -95,7 +95,7 @@ public class RestAPIUtility {
 
             ResponseEntity<Set> response = restTemplate.exchange(uri, HttpMethod.GET, entity, Set.class);
 
-            return response;
+            return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,7 +103,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ResponseEntity<LogVO[]> getPackageNameList(String url, String secretKey, String packageName) {
+    public LogVO[] getPackageNameList(String url, String secretKey, String packageName) {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
@@ -116,7 +116,7 @@ public class RestAPIUtility {
 
             ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
 
-            return response;
+            return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -184,7 +184,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ResponseEntity<CrashTimeVO[]> getCrashTimeList(String url, String secretKey, String packageName) {
+    public CrashTimeVO[] getCrashTimeList(String url, String secretKey, String packageName) {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
@@ -197,7 +197,7 @@ public class RestAPIUtility {
 
             ResponseEntity<CrashTimeVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, CrashTimeVO[].class);
 
-            return response;
+            return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -222,7 +222,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public ResponseEntity<LogDataInfoVO[]> getMainData(String url, String secretKey) {
+    public LogDataInfoVO[] getLogDataInfo(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/main", url);
 
@@ -231,7 +231,7 @@ public class RestAPIUtility {
 
             ResponseEntity<LogDataInfoVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogDataInfoVO[].class);
 
-            return response;
+            return response.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }

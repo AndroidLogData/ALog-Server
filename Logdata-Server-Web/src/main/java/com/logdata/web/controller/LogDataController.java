@@ -37,7 +37,7 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public ArrayList<LogVO> logDataLevelList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "level") String level) {
-        LogVO[] body = restAPIUtility.getLogDataLevel("/logdata/filter/level", getUserApiKey(user.getName()), packageName, level).getBody();
+        LogVO[] body = restAPIUtility.getLogDataLevel("/logdata/filter/level", getUserApiKey(user.getName()), packageName, level);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
@@ -48,7 +48,7 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public ArrayList<LogVO> logDataTagList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "tag") String tag) {
-        LogVO[] body = restAPIUtility.getLogDataTag("/logdata/filter/tag", getUserApiKey(user.getName()), packageName, tag).getBody();
+        LogVO[] body = restAPIUtility.getLogDataTag("/logdata/filter/tag", getUserApiKey(user.getName()), packageName, tag);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
@@ -59,7 +59,7 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public ArrayList<LogVO> logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {
-        LogVO[] body = restAPIUtility.getPackageNameList("/logdata/filter/packagename", getUserApiKey(user.getName()), packageName).getBody();
+        LogVO[] body = restAPIUtility.getPackageNameList("/logdata/filter/packagename", getUserApiKey(user.getName()), packageName);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
@@ -70,7 +70,7 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private Set<String> getPackageName(Principal user) {
-        Set<String> body = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName())).getBody();
+        Set<String> body = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
 
         return body;
     }
@@ -79,7 +79,7 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private Set<String> getTagName(Principal user) {
-        Set<String> body = restAPIUtility.getLogDataInfoSet("/logdata/tag/set", getUserApiKey(user.getName())).getBody();
+        Set<String> body = restAPIUtility.getLogDataInfoSet("/logdata/tag/set", getUserApiKey(user.getName()));
 
         return body;
     }

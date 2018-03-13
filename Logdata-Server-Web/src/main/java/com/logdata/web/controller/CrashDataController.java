@@ -132,7 +132,7 @@ public class CrashDataController {
     }
 
     public ArrayList getCrashTime(Principal user, String packageName) {
-        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crash/packagename/time", getUserApiKey(user.getName()), packageName).getBody();
+        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crash/packagename/time", getUserApiKey(user.getName()), packageName);
 
         return new ArrayList<CrashTimeVO>(Arrays.asList(list));
     }
