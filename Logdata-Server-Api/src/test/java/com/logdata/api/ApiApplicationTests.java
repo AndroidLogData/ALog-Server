@@ -171,7 +171,7 @@ public class ApiApplicationTests {
     public void logDataPackageNameListTest() throws Exception {
         when(logDataService.findByApiKeyAndPackageName("key", "android3")).thenReturn(list);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/logdata/packagename/set")
+                get("/api/logdata/filter/packagename/query")
                         .header("secretKey", "key")
                         .param("packagename", "android3")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
