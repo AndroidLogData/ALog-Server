@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -46,6 +48,14 @@ public class ApiApplicationTests {
     private MockMvc mvc;
     @MockBean
     private LogDataService logDataService;
+
+    private ArrayList<LogVO> list;
+
+    @Before
+    public void setUp() {
+        list = new ArrayList<>();
+        list.add(new LogVO("android3", "v", "MainActivity", "Hello", 1L, null, "key"));
+    }
 
     @Test
     public void contextLoads() {
@@ -85,13 +95,11 @@ public class ApiApplicationTests {
 
     @Test
     public void logDataLevelFilterTest() throws Exception {
-        ArrayList<LogVO> list = new ArrayList<>();
-        list.add(new LogVO("android3", "v", "MainActivity", "Hello", 1L, null, "ea0cc2e630ed4b6683252eb6114f89a9"));
-//        given(logDataService.findByApiKeyAndPackageNameAndLevel("ea0cc2e630ed4b6683252eb6114f89a9", "android3", "v")).willReturn(list);
-        when(logDataService.findByApiKeyAndPackageNameAndLevel("ea0cc2e630ed4b6683252eb6114f89a9", "android3", "v")).thenReturn(list);
+//        given(logDataService.findByApiKeyAndPackageNameAndLevel("key", "android3", "v")).willReturn(list);
+        when(logDataService.findByApiKeyAndPackageNameAndLevel("key", "android3", "v")).thenReturn(list);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/logdata/filter/level/query?")
-                        .header("secretKey", "ea0cc2e630ed4b6683252eb6114f89a9")
+                get("/api/logdata/filter/level/query")
+                        .header("secretKey", "key")
                         .param("packagename", "android3")
                         .param("level", "v")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -103,5 +111,94 @@ public class ApiApplicationTests {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
         assertThat(response.getContentAsString()).isEqualTo("[]");
+    }
+
+    @Test
+    public void logDataTagFilterTest() throws Exception {
+//        given(logDataService.findByApiKeyAndPackageNameAndLevel("key", "android3", "v")).willReturn(list);
+        when(logDataService.findByApiKeyAndPackageNameAndTag("key", "android3", "[MainActivity::onCreate]", new Sort(Sort.Direction.ASC, "time"))).thenReturn(list);
+        MockHttpServletResponse response = mvc.perform(
+                get("/api/logdata/filter/tag/query")
+                        .header("secretKey", "key")
+                        .param("packagename", "android3")
+                        .param("tag", "[MainActivity::onCreate]")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("[]");
+    }
+
+    @Test
+    public void getTagTest() throws Exception {
+        when(logDataService.findByApiKey("key")).thenReturn(list);
+        MockHttpServletResponse response = mvc.perform(
+                get("/api/logdata/tag/set")
+                        .header("secretKey", "key")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("[\"MainActivity\"]");
+    }
+
+    @Test
+    public void getPackageNameTest() throws Exception {
+        when(logDataService.findByApiKey("key")).thenReturn(list);
+        MockHttpServletResponse response = mvc.perform(
+                get("/api/logdata/packagename/set")
+                        .header("secretKey", "key")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("[\"android3\"]");
+    }
+
+    @Test
+    public void logDataPackageNameListTest() throws Exception {
+        when(logDataService.findByApiKeyAndPackageName("key", "android3")).thenReturn(list);
+        MockHttpServletResponse response = mvc.perform(
+                get("/api/logdata/packagename/set")
+                        .header("secretKey", "key")
+                        .param("packagename", "android3")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("[]");
+    }
+
+    @Test
+    public void allLogDataTest() throws Exception {
+        when(logDataService.findAll()).thenReturn(list);
+        MockHttpServletResponse response = mvc.perform(
+                get("/api/logdata/list")
+                        .header("secretKey", "key")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":\"android3\",\"level\":\"v\",\"tag\":\"MainActivity\",\"message\":\"Hello\",\"time\":1,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":\"key\"}]");
     }
 }
