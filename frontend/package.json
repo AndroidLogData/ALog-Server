@@ -17,6 +17,7 @@
   "dependencies": {
     "chart.js": "^2.7.1",
     "jquery": "^3.3.1",
+    "moment": "^2.21.0",
     "query-string": "^5.1.0",
     "react": "^16.2.0",
     "react-chartjs-2": "^2.7.0",

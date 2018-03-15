@@ -49,7 +49,7 @@ public class LogVOTest {
         assertThat(result2.getTime()).isEqualTo(logVO2.getTime());
         assertThat(result2.getMemoryInfo()).isEqualTo(logVO2.getMemoryInfo());
         assertThat(result2.getApiKey()).isEqualTo(logVO2.getApiKey());
-        assertThat(result2.toString()).isEqualTo("{\"packageName\":\"android\",\"Level\":\"v\",\"Tag\":\"MainActivity\",\"Message\":\"Hello\",\"Time\":1,\"MemoryInfo\":Hello,\"ApiKey\":\"key\"}");
+        assertThat(result2.toString()).isEqualTo("{\"packageName\":\"android\",\"Level\":\"v\",\"Tag\":\"MainActivity\",\"Message\":\"Hello\",\"Time\":1,\"MemoryInfo\":null,\"ApiKey\":\"key\"}");
     }
 
     @Test
@@ -63,8 +63,6 @@ public class LogVOTest {
         logVO.setMemoryInfo(new HashMap<String, Object>());
         logVO.setApiKey("key");
 
-        logVO.setStringTime("2017-06-24 12:34:56.000");
-
         when(logDataRepository.save(logVO)).thenReturn(logVO);
         LogVO result = logDataRepository.save(logVO);
         assertThat(result.getPackageName()).isEqualTo(logVO.getPackageName());
@@ -74,6 +72,5 @@ public class LogVOTest {
         assertThat(result.getTime()).isEqualTo(logVO.getTime());
         assertThat(result.getMemoryInfo()).isEqualTo(logVO.getMemoryInfo());
         assertThat(result.getApiKey()).isEqualTo(logVO.getApiKey());
-        assertThat(result.getStringTime()).isEqualTo(logVO.getStringTime());
     }
 }

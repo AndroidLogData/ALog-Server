@@ -2,7 +2,8 @@ import React from 'react';
 import FilterBar from './filterbar';
 import $ from 'jquery';
 import {Bar} from 'react-chartjs-2';
-import queryString from "query-string";
+import queryString from 'query-string';
+import moment from 'moment';
 
 class LogDataMemoryChart extends React.Component {
     constructor(props) {
@@ -136,7 +137,7 @@ class LogDataVerb extends React.Component {
                         <div className="card-body">
                             <div className="tab-content">
                                 <div className="tab-pane active" id={"verb-logdata" + i}>
-                                    <p>Time : {this.props.logData[i].stringTime}</p>
+                                    <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {this.props.logData[i].message}</p>
                                 </div>
@@ -190,7 +191,7 @@ class LogDataInfo extends React.Component {
                         <div className="card-body">
                             <div className="tab-content">
                                 <div className="tab-pane active" id={"info-logdata" + i}>
-                                    <p>Time : {this.props.logData[i].stringTime}</p>
+                                    <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {this.props.logData[i].message}</p>
                                 </div>
@@ -244,7 +245,7 @@ class LogDataDebug extends React.Component {
                         <div className="card-body">
                             <div className="tab-content">
                                 <div className="tab-pane active" id={"debug-logdata" + i}>
-                                    <p>Time : {this.props.logData[i].stringTime}</p>
+                                    <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {this.props.logData[i].message}</p>
                                 </div>
@@ -299,7 +300,7 @@ class LogDataWarning extends React.Component {
                         <div className="card-body">
                             <div className="tab-content">
                                 <div className="tab-pane active" id={"warning-logdata" + i}>
-                                    <p>Time : {this.props.logData[i].stringTime}</p>
+                                    <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {this.props.logData[i].message}</p>
                                 </div>
@@ -353,7 +354,7 @@ class LogDataError extends React.Component {
                         <div className="card-body">
                             <div className="tab-content">
                                 <div className="tab-pane active" id={"error-logdata" + i}>
-                                    <p>Time : {this.props.logData[i].stringTime}</p>
+                                    <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {this.props.logData[i].message}</p>
                                 </div>

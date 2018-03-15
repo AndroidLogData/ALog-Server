@@ -46,10 +46,4 @@ public class UserDataController {
 
         return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
     }
-
-//    @RequestMapping(value = "/find", method = RequestMethod.GET, produces = "application/json")
-//    @ResponseBody
-//    public UserVO findByUserID(String name) {
-//        return this.userDataService.findByUserID(name);
-//    }
 }

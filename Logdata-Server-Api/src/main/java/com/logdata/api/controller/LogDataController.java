@@ -17,12 +17,10 @@ import java.util.*;
 @RequestMapping(value = "/api")
 public class LogDataController {
     private final LogDataService logDataService;
-    private final Utility utility;
 
     @Autowired
-    public LogDataController(LogDataService logDataService, Utility utility) {
+    public LogDataController(LogDataService logDataService) {
         this.logDataService = logDataService;
-        this.utility = utility;
     }
 
     @RequestMapping(value = "/logdata", method = RequestMethod.POST)
@@ -59,10 +57,6 @@ public class LogDataController {
     public List<LogVO> logDataLevelList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "level") String level) {
         List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageNameAndLevel(secretKey, packageName, level, new Sort(Sort.Direction.DESC, "time"));
 
-        for (LogVO data : logVOList) {
-            data.setStringTime(utility.getStringTimeToLong(data.getTime()));
-        }
-
         return logVOList;
     }
 
@@ -71,10 +65,6 @@ public class LogDataController {
     @ResponseBody
     public List<LogVO> logDataTagList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "tag") String tag) {
         List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageNameAndTag(secretKey, packageName, tag, new Sort(Sort.Direction.DESC, "time"));
-
-        for (LogVO data : logVOList) {
-            data.setStringTime(utility.getStringTimeToLong(data.getTime()));
-        }
 
         return logVOList;
     }
@@ -112,12 +102,7 @@ public class LogDataController {
     public List<LogVO> logDataPackageNameList(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName) {
         List<LogVO> logVOList = this.logDataService.findByApiKeyAndPackageName(secretKey, packageName, new Sort(Sort.Direction.DESC, "time"));
 
-        for (LogVO data : logVOList) {
-            data.setStringTime(utility.getStringTimeToLong(data.getTime()));
-        }
-
         return logVOList;
-//        return new LogDataListResponse(logVOList);
     }
 
     @RequestMapping(value = "/logdata/list", method = RequestMethod.GET)

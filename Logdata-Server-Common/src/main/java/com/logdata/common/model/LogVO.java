@@ -14,7 +14,6 @@ public class LogVO {
     private String tag;
     private String message;
     private long time;
-    private String stringTime;
     private Map<String, Object> memoryInfo;
     private String apiKey;
 
@@ -79,14 +78,6 @@ public class LogVO {
         this.memoryInfo = memoryInfo;
     }
 
-    public String getStringTime() {
-        return stringTime;
-    }
-
-    public void setStringTime(String stringTime) {
-        this.stringTime = stringTime;
-    }
-
     public String getApiKey() {
         return apiKey;
     }
@@ -102,7 +93,7 @@ public class LogVO {
                 "\"Tag\":\"" + getTag() + "\"," +
                 "\"Message\":\"" + getMessage() + "\"," +
                 "\"Time\":" + getTime() + "," +
-                "\"MemoryInfo\":" + getMessage() + "," +
+                "\"MemoryInfo\":" + getMemoryInfo() + "," +
                 "\"ApiKey\":\"" + getApiKey() + "\"" + "}";
     }
 }

@@ -199,6 +199,6 @@ public class ApiApplicationTests {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":\"android3\",\"level\":\"v\",\"tag\":\"MainActivity\",\"message\":\"Hello\",\"time\":1,\"stringTime\":null,\"memoryInfo\":null,\"apiKey\":\"key\"}]");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":\"android3\",\"level\":\"v\",\"tag\":\"MainActivity\",\"message\":\"Hello\",\"time\":1,\"memoryInfo\":null,\"apiKey\":\"key\"}]");
     }
 }
