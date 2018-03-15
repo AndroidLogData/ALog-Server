@@ -21,6 +21,12 @@ public class UserVO {
         this.password = password;
     }
 
+    public UserVO(String userID, String password, List<UserRoles> userRoles) {
+        this.userID = userID;
+        this.password = password;
+        this.roles = userRoles;
+    }
+
     public String getUserID() {
         return userID;
     }

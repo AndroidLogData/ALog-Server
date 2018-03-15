@@ -38,7 +38,8 @@ public class UserDataController {
 
         this.userDataService.save(new UserVO(
                 data.getUserID(),
-                data.getPassword()
+                data.getPassword(),
+                data.getRoles()
                 ));
 
         responseHeaders = new HttpHeaders();
