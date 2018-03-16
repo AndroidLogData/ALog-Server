@@ -1,6 +1,7 @@
 package com.logdata.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.web.controller.HelpController;
 import com.logdata.web.service.RestAPIUtility;
 import org.junit.Before;
@@ -22,7 +23,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -51,6 +55,8 @@ public class HelpRestServiceServerTest {
     private final String WEB_BASE_URL = "http://localhost:8080";
     private String userDataJsonString;
 
+    private LogDataInfoVO logDataInfoVO;
+
     @Before
     public void setup() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -63,6 +69,8 @@ public class HelpRestServiceServerTest {
                 .build();
 
         userDataJsonString = "{\"id\":\"5a893a6441f1180c84d51d91\",\"userID\":\"user\",\"password\":\"$2a$10$IWl.imN.n9/4ltXsR43bl.Zx/2TKANCV4Io99UssMFLFwpD29oZky\",\"apiKey\":\"key\",\"roles\":[{\"roleName\":\"USER\",\"rno\":null}]}";
+
+        logDataInfoVO = new LogDataInfoVO("android", "1970-01-01 12:34:56.000", 0, 1, 2, 3, 4);
     }
 
     @Test
@@ -83,8 +91,11 @@ public class HelpRestServiceServerTest {
     public void myPageTest() throws Exception {
         LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
         map.put("NullPointerException", 3);
+        ArrayList<LogDataInfoVO> logDataInfoVOS = new ArrayList<LogDataInfoVO>();
+//        logDataInfoVOS.add(logDataInfoVO);
 
         String crashList = objectMapper.writeValueAsString(map);
+        String logDataInfoList = objectMapper.writeValueAsString(logDataInfoVOS);
 
         this.server.expect(
                 ExpectedCount.manyTimes(),
@@ -107,6 +118,16 @@ public class HelpRestServiceServerTest {
                         )
                 );
 
+        this.server.expect(
+                requestTo(API_BASE_URL + "/main/main"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(
+                        withSuccess(
+                                logDataInfoList,
+                                MediaType.APPLICATION_JSON_UTF8
+                        )
+                );
+
         MockHttpServletResponse response = mvc.perform(
                 get("/mypage")
                         .principal(
@@ -121,6 +142,7 @@ public class HelpRestServiceServerTest {
                 .andDo(print())
                 .andExpect(view().name("mypage"))
                 .andExpect(model().attribute("crashList", map))
+                .andExpect(model().attribute("logDataInfo", logDataInfoVOS))
                 .andExpect(model().attribute("apikey", "key"))
                 .andReturn()
                 .getResponse();
