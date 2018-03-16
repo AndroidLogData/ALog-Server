@@ -39,7 +39,8 @@ public class UserDataController {
         this.userDataService.save(new UserVO(
                 data.getUserID(),
                 data.getPassword(),
-                data.getRoles()
+                data.getRoles(),
+                data.getApiKey()
                 ));
 
         responseHeaders = new HttpHeaders();

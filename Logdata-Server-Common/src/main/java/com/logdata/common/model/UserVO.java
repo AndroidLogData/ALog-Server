@@ -21,10 +21,11 @@ public class UserVO {
         this.password = password;
     }
 
-    public UserVO(String userID, String password, List<UserRoles> userRoles) {
+    public UserVO(String userID, String password, List<UserRoles> userRoles, String apiKey) {
         this.userID = userID;
         this.password = password;
         this.roles = userRoles;
+        this.apiKey = apiKey;
     }
 
     public String getUserID() {
