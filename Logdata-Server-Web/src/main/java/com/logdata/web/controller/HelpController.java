@@ -1,5 +1,6 @@
 package com.logdata.web.controller;
 
+import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.common.model.UserVO;
 import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 @Controller
@@ -31,9 +34,11 @@ public class HelpController {
             return "login";
         }
 
-        LinkedHashMap crashList = restAPIUtility.getCrashList("/mypage", getUserApiKey(user.getName()));
+        LinkedHashMap<String, Integer> crashList = restAPIUtility.getCrashList("/mypage", getUserApiKey(user.getName()));
+        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIUtility.getLogDataInfo("/main", getUserApiKey(user.getName()))));
 
         model.addAttribute("crashList", crashList);
+        model.addAttribute("logDataInfo", logDataInfoVO);
         model.addAttribute("apikey", getUserApiKey(user.getName()));
 
         return "mypage";

@@ -51,6 +51,21 @@ public class LogDataController {
         return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/logdata/{query}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> deleteLogData(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packagename") String packageName) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json;charset=UTF-8");
+        Map<String, String> result = new HashMap<String, String>();
+
+        logDataService.delete(packageName);
+
+        responseHeaders = new HttpHeaders();
+        result.put("result", "Log Data Delete Success");
+
+        return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/logdata/filter/level/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody

@@ -33,6 +33,13 @@ public class LogDataController {
         return restAPIUtility.postData("/api", "/logdata", secretKey, data);
     }
 
+    @RequestMapping(value = "/logdata/{query}", method = {RequestMethod.POST, RequestMethod.DELETE})
+    public String logDataDelete(Principal user, @RequestParam(value = "packagename") String packageName) {
+        System.out.println(restAPIUtility.deleteLogData("/logdata", getUserApiKey(user.getName()), packageName));
+
+        return "index";
+    }
+
     @RequestMapping(value = "/logdata/filter/level/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody

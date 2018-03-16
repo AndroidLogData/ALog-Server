@@ -25,6 +25,10 @@ public class LogDataService {
         this.logDataRepository.save(logVO);
     }
 
+    public void delete(String packageName) {
+        this.logDataRepository.deleteLogVOSByPackageName(packageName);
+    }
+
     public List<LogVO> findAll() {
         return this.logDataRepository.findAll();
     }

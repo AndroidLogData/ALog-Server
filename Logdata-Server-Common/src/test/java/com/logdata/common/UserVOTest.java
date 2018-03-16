@@ -46,7 +46,7 @@ public class UserVOTest {
         assertThat(result1.getRoles().get(0).getRno()).isEqualTo(userVO1.getRoles().get(0).getRno());
         assertThat(result1.getRoles().get(0).getRoleName()).isEqualTo(userVO1.getRoles().get(0).getRoleName());
 
-        UserVO userVO2 = new UserVO("user", "user");
+        UserVO userVO2 = new UserVO("user", "user", userRoles, "key");
         when(userDataRepository.findOne("1")).thenReturn(userVO2);
         UserVO result2 = userDataRepository.findOne("1");
         assertThat(result2.getUserID()).isEqualTo(userVO2.getUserID());

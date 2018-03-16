@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
@@ -37,12 +38,10 @@ public class LoginController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String userRegistration(@RequestParam Map<String, String> body, Model model) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        UserVO newUser = new UserVO(body.get("username"), passwordEncoder.encode(body.get("password")));
         UserRoles userRoles = new UserRoles();
         userRoles.setRoleName("USER");
-        newUser.setRoles(Collections.singletonList(userRoles));
 
-        newUser.setApiKey(generatedApiKey());
+        UserVO newUser = new UserVO(body.get("username"), passwordEncoder.encode(body.get("password")), Collections.singletonList(userRoles), generatedApiKey());
 
         if (this.restAPIUtility.findUser("/find", body.get("username")) == null) {
             this.restAPIUtility.postData("/user", "/registration", null, newUser);

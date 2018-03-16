@@ -205,7 +205,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public LinkedHashMap getCrashList(String url, String secretKey) {
+    public LinkedHashMap<String, Integer> getCrashList(String url, String secretKey) {
         try {
             URI uri = uriBuilder("/help", url);
 
@@ -230,6 +230,25 @@ public class RestAPIUtility {
             entity = new HttpEntity<>(headers);
 
             ResponseEntity<LogDataInfoVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogDataInfoVO[].class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Object deleteLogData(String url, String secretKey, String packageName) {
+        try {
+            params.add("packagename", packageName);
+
+            URI uri = uriBuilder("/api", url, params);
+
+            headers.set("secretKey", secretKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.DELETE, entity, Object.class);
 
             return response.getBody();
         } catch (Exception e) {

@@ -16,11 +16,6 @@ public class UserVO {
 
     public UserVO() {}
 
-    public UserVO(String userID, String password) {
-        this.userID = userID;
-        this.password = password;
-    }
-
     public UserVO(String userID, String password, List<UserRoles> userRoles, String apiKey) {
         this.userID = userID;
         this.password = password;
