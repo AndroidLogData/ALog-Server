@@ -118,28 +118,21 @@ class LogDataMemoryChart extends React.Component {
 class MessageJsonModal extends React.Component {
     render() {
         return (
-            <div>
-                <button type="button" className="btn btn-primary" data-toggle="modal"
-                        data-target="#jsonModal">
-                    JSON Data
-                </button>
-
-                <div className="modal fade" id="jsonModal" tabIndex="-1" role="dialog"
-                     aria-labelledby="jsonModalLabel" aria-hidden="true">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="jsonModalLabel">Modal title</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <ReactJson src={this.props.message}/>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+            <div className="modal fade" id="jsonModal" tabIndex="-1" role="dialog"
+                 aria-labelledby="jsonModalLabel" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="jsonModalLabel">JSON Data Viewer</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body" style={{textAlign: 'justify'}}>
+                            <ReactJson src={this.props.message}/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -175,8 +168,12 @@ class LogDataVerb extends React.Component {
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
-                                        <MessageJsonModal message={this.props.logData[i].message}/> :
-                                        <p>{this.props.logData[i].message}</p>}</p>
+                                        <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                data-target="#jsonModal">
+                                            JSON Data
+                                            <MessageJsonModal message={this.props.logData[i].message}/>
+                                        </button> :
+                                        this.props.logData[i].message}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"verb-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -232,7 +229,11 @@ class LogDataInfo extends React.Component {
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
-                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                data-target="#jsonModal">
+                                            JSON Data
+                                            <MessageJsonModal message={this.props.logData[i].message}/>
+                                        </button> :
                                         <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"info-memory" + i}>
@@ -289,7 +290,11 @@ class LogDataDebug extends React.Component {
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
-                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                data-target="#jsonModal">
+                                            JSON Data
+                                            <MessageJsonModal message={this.props.logData[i].message}/>
+                                        </button> :
                                         <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"debug-memory" + i}>
@@ -347,7 +352,11 @@ class LogDataWarning extends React.Component {
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
-                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                data-target="#jsonModal">
+                                            JSON Data
+                                            <MessageJsonModal message={this.props.logData[i].message}/>
+                                        </button> :
                                         <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"warning-memory" + i}>
@@ -404,7 +413,11 @@ class LogDataError extends React.Component {
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
                                     <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
-                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                data-target="#jsonModal">
+                                            JSON Data
+                                            <MessageJsonModal message={this.props.logData[i].message}/>
+                                        </button> :
                                         <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"error-memory" + i}>
