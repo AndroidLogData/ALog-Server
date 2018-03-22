@@ -12,7 +12,7 @@ public class LogVO {
     private String packageName;
     private String level;
     private String tag;
-    private String message;
+    private Object message;
     private long time;
     private Map<String, Object> memoryInfo;
     private String apiKey;
@@ -20,7 +20,7 @@ public class LogVO {
     public LogVO() {
     }
 
-    public LogVO(String packageName, String level, String tag, String message, long time, Map<String, Object> memoryInfo, String apiKey) {
+    public LogVO(String packageName, String level, String tag, Object message, long time, Map<String, Object> memoryInfo, String apiKey) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
@@ -54,11 +54,11 @@ public class LogVO {
         this.tag = tag;
     }
 
-    public String getMessage() {
+    public Object getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Object message) {
         this.message = message;
     }
 

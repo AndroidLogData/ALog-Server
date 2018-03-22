@@ -4,6 +4,7 @@ import $ from 'jquery';
 import {Bar} from 'react-chartjs-2';
 import queryString from 'query-string';
 import moment from 'moment';
+import ReactJson from 'react-json-view'
 
 class LogDataMemoryChart extends React.Component {
     constructor(props) {
@@ -114,6 +115,39 @@ class LogDataMemoryChart extends React.Component {
     }
 }
 
+class MessageJsonModal extends React.Component {
+    render() {
+        return (
+            <div>
+                <button type="button" className="btn btn-primary" data-toggle="modal"
+                        data-target="#jsonModal">
+                    JSON Data
+                </button>
+
+                <div className="modal fade" id="jsonModal" tabIndex="-1" role="dialog"
+                     aria-labelledby="jsonModalLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="jsonModalLabel">Modal title</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <ReactJson src={this.props.message}/>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
 class LogDataVerb extends React.Component {
     render() {
         let i, count = 0;
@@ -122,6 +156,7 @@ class LogDataVerb extends React.Component {
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'v') {
                 count++;
+
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-header">
@@ -139,7 +174,9 @@ class LogDataVerb extends React.Component {
                                 <div className="tab-pane active" id={"verb-logdata" + i}>
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
-                                    <p>Message : {this.props.logData[i].message}</p>
+                                    <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"verb-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -176,6 +213,7 @@ class LogDataInfo extends React.Component {
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'i') {
                 count++;
+
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-header">
@@ -193,7 +231,9 @@ class LogDataInfo extends React.Component {
                                 <div className="tab-pane active" id={"info-logdata" + i}>
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
-                                    <p>Message : {this.props.logData[i].message}</p>
+                                    <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"info-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -230,6 +270,7 @@ class LogDataDebug extends React.Component {
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'd') {
                 count++;
+
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-header">
@@ -247,7 +288,9 @@ class LogDataDebug extends React.Component {
                                 <div className="tab-pane active" id={"debug-logdata" + i}>
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
-                                    <p>Message : {this.props.logData[i].message}</p>
+                                    <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"debug-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -284,6 +327,7 @@ class LogDataWarning extends React.Component {
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'w') {
                 count++;
+
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-header">
@@ -302,7 +346,9 @@ class LogDataWarning extends React.Component {
                                 <div className="tab-pane active" id={"warning-logdata" + i}>
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
-                                    <p>Message : {this.props.logData[i].message}</p>
+                                    <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"warning-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -339,6 +385,7 @@ class LogDataError extends React.Component {
         for (i = 0; i < this.props.logData.length; i++) {
             if (this.props.logData[i].level === 'e') {
                 count++;
+
                 logDataNodes.push(
                     <div className="card">
                         <div className="card-header">
@@ -356,7 +403,9 @@ class LogDataError extends React.Component {
                                 <div className="tab-pane active" id={"error-logdata" + i}>
                                     <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                     <p>Tag : {this.props.logData[i].tag}</p>
-                                    <p>Message : {this.props.logData[i].message}</p>
+                                    <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                        <MessageJsonModal message={this.props.logData[i].message}/> :
+                                        <p>{this.props.logData[i].message}</p>}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"error-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?

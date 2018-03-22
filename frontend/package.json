@@ -22,6 +22,7 @@
     "react": "^16.2.0",
     "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.2.0",
+    "react-json-view": "^1.16.1",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
