@@ -15,7 +15,7 @@ npm install
 ```
 * npm 모듈을 다운받는다
 
-* 개발용 서버
+### 개발용 서버
 ```text
 cd frontend
 npm run develop
@@ -29,7 +29,7 @@ gradle bootRun
 * localhost:3000에 접속하면 개발용 서버에 접속할 수 있다.
 * react-hot-loader가 적용되어 있음
 
-* 배포용 빌드
+### 배포용 빌드
 ```text
 cd frontend
 npm run build
@@ -40,10 +40,11 @@ gradle bootRun
 
 * ```backend/src/main/resources/static/react/bundle.js```가 생성됨
 
-* 서버 실행
+### 서버 실행
 ```gradle
 gradle clean build
-java -jar backend/build/libs/(jar 파일명.jar)
+java -jar Logdata-Server-Api/build/libs/Logdata-Server-Api-{lasted version}-SNAPSHOT.jar
+java -jar Logdata-Server-Web/build/libs/Logdata-Server-Web-{lasted version}-SNAPSHOT.jar
 ```
 
 * localhost:8080에 접속하면 서버에 접속이 가능
@@ -57,6 +58,28 @@ java -jar backend/build/libs/(jar 파일명.jar)
 ## 사용된 오픈소스
 * Java에서 시간 데이터를 얻기 위한 joda-time
 	* https://github.com/JodaOrg/joda-time
+* Test를 하기 위한 spring-security
+	* https://github.com/spring-projects/spring-security
+* Test Covarage를 보기 위한 jacoco
+	* https://github.com/jacoco/jacoco
+* Coveralls를 사용하기 위한 coveralls-gradle-plugin
+	* https://github.com/kt3k/coveralls-gradle-plugin
+* Spring을 쉽게 사용하기 위한 spring boot
+	* https://github.com/spring-projects/spring-boot
+* Thymeleaf의 부가 적인 도구
+	* https://github.com/thymeleaf/thymeleaf-extras-springsecurity
+* frontend의 js파일을 통합하기 위한 webpack
+	* https://github.com/webpack/webpack
+* 실시간으로 데이터를 보여주기 위한 react
+	* https://github.com/facebook/react
+* react.js에서 차트를 사용하기 위한 react-chartjs-2
+	* https://github.com/jerairrest/react-chartjs-2
+* react.js에서 json viewer를 위한 react-json-view
+	* https://github.com/mac-s-g/react-json-view
+* 개발 서버에서 실시간 업데이트를 위한 react-hot-loader
+	* https://github.com/gaearon/react-hot-loader
+* ES5를 사용하기 위한 babel
+	* https://github.com/babel/babel
 
 ## License
 ```
