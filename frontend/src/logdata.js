@@ -173,7 +173,7 @@ class LogDataVerb extends React.Component {
                                             JSON Data
                                             <MessageJsonModal message={this.props.logData[i].message}/>
                                         </button> :
-                                        this.props.logData[i].message}</p>
+                                        this.props.logData[i].message.toString()}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"verb-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -234,7 +234,7 @@ class LogDataInfo extends React.Component {
                                             JSON Data
                                             <MessageJsonModal message={this.props.logData[i].message}/>
                                         </button> :
-                                        <p>{this.props.logData[i].message}</p>}</p>
+                                        this.props.logData[i].message.toString()}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"info-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -295,7 +295,7 @@ class LogDataDebug extends React.Component {
                                             JSON Data
                                             <MessageJsonModal message={this.props.logData[i].message}/>
                                         </button> :
-                                        <p>{this.props.logData[i].message}</p>}</p>
+                                        this.props.logData[i].message.toString()}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"debug-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -357,7 +357,7 @@ class LogDataWarning extends React.Component {
                                             JSON Data
                                             <MessageJsonModal message={this.props.logData[i].message}/>
                                         </button> :
-                                        <p>{this.props.logData[i].message}</p>}</p>
+                                        this.props.logData[i].message.toString()}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"warning-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -418,7 +418,7 @@ class LogDataError extends React.Component {
                                             JSON Data
                                             <MessageJsonModal message={this.props.logData[i].message}/>
                                         </button> :
-                                        <p>{this.props.logData[i].message}</p>}</p>
+                                        this.props.logData[i].message.toString()}</p>
                                 </div>
                                 <div className="tab-pane fade in" id={"error-memory" + i}>
                                     {(this.props.logData[i].memoryInfo == null) ?
@@ -480,6 +480,10 @@ class LogData extends React.Component {
 
     render() {
         const query = queryString.parseUrl(this.props.url);
+
+        for (let i = 0; i < this.state.logData.length; i++) {
+            console.log(typeof(this.state.logData[i].message));
+        }
 
         return (
             <div className="container-fluid">
