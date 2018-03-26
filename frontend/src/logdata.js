@@ -14,7 +14,8 @@ class LogDataMemoryChart extends React.Component {
     render() {
         let hexColor = ['#36A2EB', '#FFCE56', '#FF6384', '#3CF0FF'];
         let memoryMap = new Map();
-        let pssMemoryMap = new Map();
+        let nativeMemoryMap = new Map();
+        let debugMemoryMap = new Map();
         let memoryPercentage = 0;
         let threshold = 0;
         let lowMemory = false;
@@ -29,13 +30,16 @@ class LogDataMemoryChart extends React.Component {
                 lowMemory = value;
             } else if (key === 'threshold') {
                 threshold = value;
-            } else if (key === 'dalvikPss' || key === 'nativePss' || key === 'totalPss' || key === 'otherPss') {
-                pssMemoryMap.set(pssMemoryMap.size, [key, value]);
+            } else if (key === 'nativeFreeMemory' || key === 'nativeMaxMemory' || key === 'nativeTotalMemory') {
+                nativeMemoryMap.set(nativeMemoryMap.size, [key, value]);
+            } else if (key === 'debugNativeFree' || key === 'debugNativeAllocated' || key === 'debugNativeAvailable') {
+                debugMemoryMap.set(debugMemoryMap.size, [key, value]);
             }
         });
 
         let memoryDataSets = [];
-        let pssMemoryDataSets = [];
+        let nativeMemoryDataSets = [];
+        let debugMemoryDataSets = [];
 
         for (let i = 0; i < memoryMap.size; i++) {
             memoryDataSets.push(
@@ -51,16 +55,30 @@ class LogDataMemoryChart extends React.Component {
             );
         }
 
-        for (let i = 0; i < pssMemoryMap.size; i++) {
-            pssMemoryDataSets.push(
+        for (let i = 0; i < nativeMemoryMap.size; i++) {
+            nativeMemoryDataSets.push(
                 {
-                    label: pssMemoryMap.get(i)[0],
+                    label: nativeMemoryMap.get(i)[0],
                     backgroundColor: hexColor[i],
                     borderColor: hexColor[i],
                     borderWidth: 1,
                     hoverBackgroundColor: hexColor[i],
                     hoverBorderColor: hexColor[i],
-                    data: [pssMemoryMap.get(i)[1]]
+                    data: [nativeMemoryMap.get(i)[1]]
+                }
+            );
+        }
+
+        for (let i = 0; i < debugMemoryMap.size; i++) {
+            debugMemoryDataSets.push(
+                {
+                    label: debugMemoryMap.get(i)[0],
+                    backgroundColor: hexColor[i],
+                    borderColor: hexColor[i],
+                    borderWidth: 1,
+                    hoverBackgroundColor: hexColor[i],
+                    hoverBorderColor: hexColor[i],
+                    data: [debugMemoryMap.get(i)[1]]
                 }
             );
         }
@@ -69,9 +87,13 @@ class LogDataMemoryChart extends React.Component {
             // labels: [memoryMap.get(0)[0]],
             datasets: memoryDataSets
         };
-        const pssMemoryInfo = {
-            // labels: [pssMemoryMap.get(0)[0]],
-            datasets: pssMemoryDataSets
+        const nativeMemoryInfo = {
+            // labels: [nativeMemoryMap.get(0)[0]],
+            datasets: nativeMemoryDataSets
+        };
+        const debugMemoryInfo = {
+            // labels: [debugMemoryMap.get(0)[0]],
+            datasets: debugMemoryDataSets
         };
         const memoryInfoOptions = {
             scales: {
@@ -82,36 +104,88 @@ class LogDataMemoryChart extends React.Component {
             },
             title: {
                 display: true,
-                text: 'Memory Information(MB)'
+                text: 'Memory Information(KB)'
             }
         };
-        const pssMemoryInfoOptions = {
+        const nativeMemoryInfoOptions = {
             scales: {
                 xAxes: [{
                     barPercentage: 0.3,
                     categoryPercentage: 1.0
-                }]
+                }],
             },
             title: {
                 display: true,
-                text: 'Proportional Set Size Information(KB)'
+                text: 'Native Heap Memory(KB)'
+            }
+        };
+        const debugMemoryInfoOptions = {
+            scales: {
+                xAxes: [{
+                    barPercentage: 0.3,
+                    categoryPercentage: 1.0
+                }],
+            },
+            title: {
+                display: true,
+                text: 'Debug Native Heap Memory(KB)'
             }
         };
 
         return (
             <div>
-                <div>
-                    <Bar data={memoryInfo} options={memoryInfoOptions} width={50} height={50}/>
-                </div>
-                <div>
-                    <Bar data={pssMemoryInfo} options={pssMemoryInfoOptions} width={50} height={50}/>
-                </div>
+                <button type="button" className="btn btn-primary" data-toggle="modal"
+                        data-target="#memoryModal">
+                    Memory Data
+                    <ChartModalViewer memoryInfo={memoryInfo} memoryInfoOptions={memoryInfoOptions}
+                                      nativeMemoryInfo={nativeMemoryInfo} nativeMemoryInfoOptions={nativeMemoryInfoOptions}
+                                      debugMemoryInfo={debugMemoryInfo} debugMemoryInfoOptions={debugMemoryInfoOptions}/>
+                </button>
                 <div>
                     <p>Memory Percentage : {memoryPercentage.toFixed(2)}</p>
                     <p>Low Memory : {(lowMemory) ? 'true' : 'false'}</p>
                 </div>
             </div>
         );
+    }
+}
+
+class ChartModalViewer extends React.Component {
+    render() {
+        return (
+            <div className="modal fade" id="memoryModal" tabIndex="-1" role="dialog"
+                 aria-labelledby="memoryModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="memoryModalLabel">Data Memory Viewer</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="row">
+                                <div className="col-md col-sm">
+                                    <Bar data={this.props.memoryInfo} options={this.props.memoryInfoOptions}
+                                         width={300} height={300}/>
+                                </div>
+                                <div className="col-md col-sm">
+                                    <Bar data={this.props.nativeMemoryInfo} options={this.props.nativeMemoryInfoOptions}
+                                         width={300} height={300}/>
+                                </div>
+                                <div className="col-md col-sm">
+                                    <Bar data={this.props.debugMemoryInfo} options={this.props.debugMemoryInfoOptions}
+                                         width={300} height={300}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 
