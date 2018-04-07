@@ -17,11 +17,11 @@
   "dependencies": {
     "chart.js": "^2.7.2",
     "jquery": "^3.3.1",
-    "moment": "^2.21.0",
+    "moment": "^2.22.0",
     "query-string": "^5.1.1",
-    "react": "^16.2.0",
+    "react": "^16.3.1",
     "react-chartjs-2": "^2.7.0",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.3.1",
     "react-json-view": "^1.16.1",
     "react-router-dom": "^4.2.2"
   },
