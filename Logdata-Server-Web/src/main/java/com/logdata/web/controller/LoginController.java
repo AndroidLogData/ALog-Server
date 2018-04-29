@@ -36,25 +36,13 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String userRegistration(@RequestParam Map<String, String> body, Model model) {
+    public String userRegistration(@RequestParam Map<String, String> body) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        UserRoles userRoles = new UserRoles();
-        userRoles.setRoleName("USER");
 
-        UserVO newUser = new UserVO(body.get("username"), passwordEncoder.encode(body.get("password")), Collections.singletonList(userRoles), generatedApiKey());
-
-        if (this.restAPIUtility.findUser("/find", body.get("username")) == null) {
-            this.restAPIUtility.postData("/user", "/registration", null, newUser);
+        if (this.restAPIUtility.userRegistration("/registration", body.get("username"), passwordEncoder.encode(body.get("password")))) {
+            return "login";
         } else {
-            model.addAttribute("sameID", true);
             return "registration";
         }
-
-        return "login";
-    }
-
-    private String generatedApiKey() {
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        return uuid;
     }
 }

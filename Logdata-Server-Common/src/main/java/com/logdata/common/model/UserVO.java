@@ -23,6 +23,17 @@ public class UserVO {
         this.apiKey = apiKey;
     }
 
+    public UserVO(String userID, String password, List<UserRoles> userRoles) {
+        this.userID = userID;
+        this.password = password;
+        this.roles = userRoles;
+    }
+
+    public UserVO(String userID, String password) {
+        this.userID = userID;
+        this.password = password;
+    }
+
     public String getUserID() {
         return userID;
     }

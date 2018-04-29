@@ -276,6 +276,33 @@ public class RestAPIUtility {
         return null;
     }
 
+    public boolean userRegistration(String url, String userID, String password) {
+        try {
+            params = new LinkedMultiValueMap<String, String>();
+
+            params.add("username", userID);
+            params.add("password", password);
+
+            URI uri = uriBuilder("/user", url, params);
+
+            UserVO user = new UserVO(userID, password);
+
+            ResponseEntity<Object> response = restTemplate.postForEntity(uri, user, Object.class);
+
+            System.out.println(response.getBody().getClass());
+
+            LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
+
+            System.out.println(map.get("result"));
+
+            return Boolean.parseBoolean(String.valueOf(map.get("result")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     private URI uriBuilder(String path, String url) {
         return UriComponentsBuilder.newInstance()
                 .scheme("http")

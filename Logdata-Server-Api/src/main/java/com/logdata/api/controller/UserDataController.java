@@ -2,6 +2,7 @@ package com.logdata.api.controller;
 
 import com.logdata.api.sevice.UserDataService;
 import com.logdata.common.model.LogVO;
+import com.logdata.common.model.UserRoles;
 import com.logdata.common.model.UserVO;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -30,22 +30,50 @@ public class UserDataController {
         return this.userDataService.findByUserID(name);
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<Object> userRegistration(@RequestBody UserVO data) {
+    @RequestMapping(value = "/registration/{query}", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<Object> userRegistration(@RequestParam Map<String, String> body) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json;charset=UTF-8");
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        UserRoles userRoles = new UserRoles();
+        userRoles.setRoleName("USER");
+
+        UserVO user = this.userDataService.findByUserID(body.get("username"));
+
+        if (user != null) {
+            responseHeaders = new HttpHeaders();
+            result.put("result", false);
+            result.put("message", "already user");
+
+            return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
+        }
 
         this.userDataService.save(new UserVO(
-                data.getUserID(),
-                data.getPassword(),
-                data.getRoles(),
-                data.getApiKey()
-                ));
+                body.get("username"),
+                body.get("password"),
+                Collections.singletonList(userRoles),
+                generatedApiKey()
+        ));
 
         responseHeaders = new HttpHeaders();
-        result.put("result", "Log Data Transfer Success");
+        result.put("result", true);
+        result.put("message", "Registration Success");
 
         return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
+    }
+
+    private String generatedApiKey() {
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+
+        List<UserVO> user = this.userDataService.findAllByApiKey();
+
+        for (int i = 0; i < user.size(); i++) {
+            if (uuid.equals(user.get(i).getApiKey())) {
+                return generatedApiKey();
+            }
+        }
+
+        return uuid;
     }
 }
