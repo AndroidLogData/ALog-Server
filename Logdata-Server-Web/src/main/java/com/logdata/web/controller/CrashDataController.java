@@ -43,7 +43,7 @@ public class CrashDataController {
             return "login";
         }
 
-        CrashVO crashVO = restAPIUtility.getCrashTimeData("/crash/filter/time", getUserApiKey(user.getName()), time, packageName);
+        CrashVO crashVO = restAPIUtility.getChoseCrashTimeData("/crash/filter/time", getUserApiKey(user.getName()), time, packageName);
 
         if (crashVO == null || !(getUserApiKey(user.getName()).equals(crashVO.getApiKey()))) {
             return "nodata";
@@ -85,7 +85,7 @@ public class CrashDataController {
             return "login";
         }
 
-        CrashVO crashVO = restAPIUtility.getCrashTime("/crash/filter/packagename", getUserApiKey(user.getName()), packageName);
+        CrashVO crashVO = restAPIUtility.getCrashData("/crash/filter/packagename", getUserApiKey(user.getName()), packageName);
 
         if (crashVO == null) {
             model.addAttribute("noData", true);

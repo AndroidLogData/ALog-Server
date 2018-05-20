@@ -124,7 +124,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public CrashVO getCrashTimeData(String url, String secretKey, long time, String packageName) {
+    public CrashVO getChoseCrashTimeData(String url, String secretKey, long time, String packageName) {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
@@ -146,7 +146,7 @@ public class RestAPIUtility {
         return null;
     }
 
-    public CrashVO getCrashTime(String url, String secretKey, String packageName) {
+    public CrashVO getCrashData(String url, String secretKey, String packageName) {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
