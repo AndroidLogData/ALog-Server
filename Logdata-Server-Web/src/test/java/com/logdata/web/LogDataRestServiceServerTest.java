@@ -133,7 +133,7 @@ public class LogDataRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null,\"apiKey\":null}]");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null}]");
     }
 
     @Test
@@ -178,7 +178,7 @@ public class LogDataRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null,\"apiKey\":null}]");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null}]");
     }
 
     @Test
@@ -222,7 +222,7 @@ public class LogDataRestServiceServerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null,\"apiKey\":null}]");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null}]");
     }
 
     @Test
@@ -273,14 +273,15 @@ public class LogDataRestServiceServerTest {
         this.server.expect(
                 requestTo(API_BASE_URL + "/user/find/query?name=user"))
                 .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(
-                        "{}",
-                        MediaType.APPLICATION_JSON_UTF8
+                .andRespond(
+                        withSuccess(
+                                "{}",
+                                MediaType.APPLICATION_JSON_UTF8
                         )
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdata/tag/set"))
+                requestTo(API_BASE_URL + "/api/logdata/tag/set/query?packageName=android"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -290,7 +291,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata/tag/set")
+                get("/logdata/tag/set/query?")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -298,7 +299,7 @@ public class LogDataRestServiceServerTest {
                                         return "user";
                                     }
                                 }
-                        )
+                        ).param("packageName", "android")
         )
                 .andDo(print())
                 .andReturn()

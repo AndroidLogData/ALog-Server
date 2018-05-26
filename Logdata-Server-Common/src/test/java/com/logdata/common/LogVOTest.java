@@ -27,7 +27,7 @@ public class LogVOTest {
     @Test
     public void LogDataFindOneTest() {
         LogVO logVO1 = new LogVO();
-        LogVO logVO2 = new LogVO("android", "v", "MainActivity", "Hello", 1L, null, "key");
+        LogVO logVO2 = new LogVO("android", "v", "MainActivity", "Hello", 1L, null);
 
         when(logDataRepository.findOne("1")).thenReturn(logVO1);
         LogVO result1 = logDataRepository.findOne("1");
@@ -37,8 +37,7 @@ public class LogVOTest {
         assertThat(result1.getMessage()).isEqualTo(null);
         assertThat(result1.getTime()).isEqualTo(0L);
         assertThat(result1.getMemoryInfo()).isEqualTo(null);
-        assertThat(result1.getApiKey()).isEqualTo(null);
-        assertThat(result1.toString()).isEqualTo("{\"packageName\":\"null\",\"Level\":\"null\",\"Tag\":\"null\",\"Message\":\"null\",\"Time\":0,\"MemoryInfo\":null,\"ApiKey\":\"null\"}");
+        assertThat(result1.toString()).isEqualTo("{\"packageName\":\"null\",\"Level\":\"null\",\"Tag\":\"null\",\"Message\":\"null\",\"Time\":0,\"MemoryInfo\":null}");
 
         when(logDataRepository.findOne("1")).thenReturn(logVO2);
         LogVO result2 = logDataRepository.findOne("1");
@@ -48,8 +47,7 @@ public class LogVOTest {
         assertThat(result2.getMessage()).isEqualTo(logVO2.getMessage());
         assertThat(result2.getTime()).isEqualTo(logVO2.getTime());
         assertThat(result2.getMemoryInfo()).isEqualTo(logVO2.getMemoryInfo());
-        assertThat(result2.getApiKey()).isEqualTo(logVO2.getApiKey());
-        assertThat(result2.toString()).isEqualTo("{\"packageName\":\"android\",\"Level\":\"v\",\"Tag\":\"MainActivity\",\"Message\":\"Hello\",\"Time\":1,\"MemoryInfo\":null,\"ApiKey\":\"key\"}");
+        assertThat(result2.toString()).isEqualTo("{\"packageName\":\"android\",\"Level\":\"v\",\"Tag\":\"MainActivity\",\"Message\":\"Hello\",\"Time\":1,\"MemoryInfo\":null}");
     }
 
     @Test
@@ -61,7 +59,6 @@ public class LogVOTest {
         logVO.setMessage("Hello, World!");
         logVO.setTime(1L);
         logVO.setMemoryInfo(new HashMap<String, Object>());
-        logVO.setApiKey("key");
 
         when(logDataRepository.save(logVO)).thenReturn(logVO);
         LogVO result = logDataRepository.save(logVO);
@@ -71,6 +68,5 @@ public class LogVOTest {
         assertThat(result.getMessage()).isEqualTo(logVO.getMessage());
         assertThat(result.getTime()).isEqualTo(logVO.getTime());
         assertThat(result.getMemoryInfo()).isEqualTo(logVO.getMemoryInfo());
-        assertThat(result.getApiKey()).isEqualTo(logVO.getApiKey());
     }
 }
