@@ -28,7 +28,7 @@ public class UserDataService {
         return this.userDataRepository.findByUserID(name);
     }
 
-    public List<UserVO> findAllByApiKey() {
-        return this.userDataRepository.findAllByApiKey();
+    public List<UserVO> findAll() {
+        return this.userDataRepository.findAll();
     }
 }

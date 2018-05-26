@@ -1,10 +1,9 @@
 package com.logdata.api.controller;
 
+import com.logdata.api.sevice.PackageNameDataService;
 import com.logdata.api.sevice.UserDataService;
-import com.logdata.common.model.LogVO;
 import com.logdata.common.model.UserRoles;
 import com.logdata.common.model.UserVO;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,10 +17,12 @@ import java.util.*;
 @RequestMapping("/user")
 public class UserDataController {
     private final UserDataService userDataService;
+    private final PackageNameDataService packageNameDataService;
 
     @Autowired
-    public UserDataController(UserDataService userDataService) {
+    public UserDataController(UserDataService userDataService, PackageNameDataService packageNameDataService) {
         this.userDataService = userDataService;
+        this.packageNameDataService = packageNameDataService;
     }
 
     @RequestMapping(value = "/find/{query}", method = RequestMethod.GET, produces = "application/json")
@@ -49,12 +50,16 @@ public class UserDataController {
             return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
         }
 
+        String apiKey = generatedApiKey();
+
         this.userDataService.save(new UserVO(
                 body.get("username"),
                 body.get("password"),
                 Collections.singletonList(userRoles),
-                generatedApiKey()
+                apiKey
         ));
+
+        packageNameDataService.insertUserApiKey(apiKey);
 
         responseHeaders = new HttpHeaders();
         result.put("result", true);
@@ -66,7 +71,7 @@ public class UserDataController {
     private String generatedApiKey() {
         String uuid = UUID.randomUUID().toString().replace("-", "");
 
-        List<UserVO> user = this.userDataService.findAllByApiKey();
+        List<UserVO> user = this.userDataService.findAll();
 
         for (int i = 0; i < user.size(); i++) {
             if (uuid.equals(user.get(i).getApiKey())) {

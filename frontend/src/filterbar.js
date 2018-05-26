@@ -56,8 +56,10 @@ class TagList extends React.Component {
 
     fetchTagData() {
         $.ajax({
-            url: '/logdata/tag/set',
+            url: '/logdata/tag/set/query?',
+            type: "GET",
             dataType: 'json',
+            data: {"packageName": this.props.packageName},
             cache: false,
             success: function (data) {
                 this.setState({logData: data});
@@ -85,7 +87,7 @@ class TagList extends React.Component {
         }
 
         return (
-            <div className="btn-group"  style={{marginRight: 0.5 + '%'}}>
+            <div className="btn-group" style={{marginRight: 0.5 + '%'}}>
                 <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     Tag

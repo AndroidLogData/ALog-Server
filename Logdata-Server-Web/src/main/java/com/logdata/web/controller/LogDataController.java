@@ -59,7 +59,7 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public ArrayList<LogVO> logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {
-        LogVO[] body = restAPIUtility.getPackageNameList("/logdata/filter/packagename", getUserApiKey(user.getName()), packageName);
+        LogVO[] body = restAPIUtility.searchLogDataOfPackageName("/logdata/filter/packagename", getUserApiKey(user.getName()), packageName);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
@@ -75,11 +75,11 @@ public class LogDataController {
         return body;
     }
 
-    @RequestMapping(value = "/logdata/tag/set", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/logdata/tag/set/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    private Set<String> getTagName(Principal user) {
-        Set<String> body = restAPIUtility.getLogDataInfoSet("/logdata/tag/set", getUserApiKey(user.getName()));
+    private Set<String> getTagName(Principal user, @RequestParam(value = "packageName") String packageName) {
+        Set<String> body = restAPIUtility.getLogDataInfoSet("/logdata/tag/set", getUserApiKey(user.getName()), packageName);
 
         return body;
     }

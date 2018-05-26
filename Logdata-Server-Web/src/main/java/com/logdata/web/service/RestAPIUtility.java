@@ -103,7 +103,28 @@ public class RestAPIUtility {
         return null;
     }
 
-    public LogVO[] getPackageNameList(String url, String secretKey, String packageName) {
+    public Set getLogDataInfoSet(String url, String secretKey, String packageName) {
+        try {
+            params = new LinkedMultiValueMap<String, String>();
+
+            params.add("packageName", packageName);
+
+            URI uri = uriBuilder("/api", url, params);
+
+            headers.set("secretKey", secretKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<Set> response = restTemplate.exchange(uri, HttpMethod.GET, entity, Set.class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public LogVO[] searchLogDataOfPackageName(String url, String secretKey, String packageName) {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
@@ -289,11 +310,7 @@ public class RestAPIUtility {
 
             ResponseEntity<Object> response = restTemplate.postForEntity(uri, user, Object.class);
 
-            System.out.println(response.getBody().getClass());
-
             LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
-
-            System.out.println(map.get("result"));
 
             return Boolean.parseBoolean(String.valueOf(map.get("result")));
         } catch (Exception e) {

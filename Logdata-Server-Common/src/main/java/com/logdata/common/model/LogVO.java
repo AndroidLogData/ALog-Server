@@ -15,19 +15,17 @@ public class LogVO {
     private Object message;
     private long time;
     private Map<String, Object> memoryInfo;
-    private String apiKey;
 
     public LogVO() {
     }
 
-    public LogVO(String packageName, String level, String tag, Object message, long time, Map<String, Object> memoryInfo, String apiKey) {
+    public LogVO(String packageName, String level, String tag, Object message, long time, Map<String, Object> memoryInfo) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
         this.message = message;
         this.time = time;
         this.memoryInfo = memoryInfo;
-        this.apiKey = apiKey;
     }
 
     public String getPackageName() {
@@ -78,14 +76,6 @@ public class LogVO {
         this.memoryInfo = memoryInfo;
     }
 
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
     @Override
     public String toString() {
         return "{\"packageName\":\"" + getPackageName() + "\"," +
@@ -93,7 +83,6 @@ public class LogVO {
                 "\"Tag\":\"" + getTag() + "\"," +
                 "\"Message\":\"" + getMessage() + "\"," +
                 "\"Time\":" + getTime() + "," +
-                "\"MemoryInfo\":" + getMemoryInfo() + "," +
-                "\"ApiKey\":\"" + getApiKey() + "\"" + "}";
+                "\"MemoryInfo\":" + getMemoryInfo() + "}";
     }
 }

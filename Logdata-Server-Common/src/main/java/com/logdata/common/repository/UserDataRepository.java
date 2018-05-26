@@ -8,5 +8,4 @@ import java.util.List;
 public interface UserDataRepository extends MongoRepository<UserVO, String> {
     UserVO findByUserID(String name);
     UserVO findByApiKey(String apiKey);
-    List<UserVO> findAllByApiKey();
 }
