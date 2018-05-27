@@ -6,6 +6,7 @@ import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -25,8 +28,14 @@ public class MainController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index() {
-        return "index";
+    public String index(Principal user, Model model) {
+        if (user == null) {
+            return "index";
+        } else {
+            Set<String> packageNameList = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
+            model.addAttribute("packageNameList", packageNameList);
+            return "index";
+        }
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET, produces = "application/json")
