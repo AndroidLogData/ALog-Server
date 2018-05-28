@@ -28,8 +28,8 @@ public class HelpController {
 
     @RequestMapping(value = "/mypage", method = RequestMethod.GET)
     @ResponseBody
-    public HashMap<String, Integer> myPage(@RequestHeader(value = "secretKey") String secretKey) {
-        ArrayList<CrashVO> crashVOArrayList = this.crashDataService.findAllByApiKeyOrderByTimeDesc(secretKey);
+    public HashMap<String, Integer> myPage(@RequestHeader(value = "apiKey") String apiKey) {
+        ArrayList<CrashVO> crashVOArrayList = this.crashDataService.findAllByApiKeyOrderByTimeDesc(apiKey);
         HashMap<String, Integer> crashList = new HashMap<String, Integer>();
 
         for (int i = 0; i < crashVOArrayList.size(); i++) {

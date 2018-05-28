@@ -25,12 +25,25 @@ public class CrashDataController {
         this.utility = utility;
     }
 
+    @RequestMapping(value = "/crash/filter/packageName", method = RequestMethod.GET)
+    @ResponseBody
+    public Set<String> searchCrashVOOfPackageName(@RequestHeader(value = "apiKey") String apiKey) {
+        List<CrashVO> crashList = this.crashDataService.findByApiKey(apiKey);
+        Set<String> packageNameList = new HashSet<String>();
+
+        for (CrashVO crashData : crashList) {
+            packageNameList.add(crashData.getPackageName());
+        }
+
+        return packageNameList;
+    }
+
     @RequestMapping(value = "/crash/filter/time/{time}", method = RequestMethod.GET)
     @ResponseBody
-    public CrashVO crashDataTimeView(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "time") long time, @RequestParam(value = "packageName") String packageName) {
-        CrashVO crashVO = this.crashDataService.findCrashDataByTimeAndApiKeyAndPackageName(time, secretKey, packageName);
+    public CrashVO crashDataTimeView(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "time") long time, @RequestParam(value = "packageName") String packageName) {
+        CrashVO crashVO = this.crashDataService.findCrashDataByTimeAndApiKeyAndPackageName(time, apiKey, packageName);
 
-        if (crashVO == null || !(secretKey.equals(crashVO.getApiKey()))) {
+        if (crashVO == null || !(apiKey.equals(crashVO.getApiKey()))) {
             return null;
         }
 
@@ -39,8 +52,8 @@ public class CrashDataController {
 
     @RequestMapping(value = "/crash/filter/packagename/{packageName}", method = RequestMethod.GET)
     @ResponseBody
-    public CrashVO crashPackageNamePage(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packageName") String packageName) {
-        CrashVO crashVO = this.crashDataService.findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(packageName, secretKey);
+    public CrashVO crashPackageNamePage(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "packageName") String packageName) {
+        CrashVO crashVO = this.crashDataService.findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
 
         if (crashVO == null) {
             return null;
@@ -51,8 +64,8 @@ public class CrashDataController {
 
     @RequestMapping(value = "/crash/packagename/set")
     @ResponseBody
-    public Set<String> getPackageName(@RequestHeader(value = "secretKey") String secretKey) {
-        List<CrashVO> setData = this.crashDataService.findByApiKey(secretKey);
+    public Set<String> getPackageName(@RequestHeader(value = "apiKey") String apiKey) {
+        List<CrashVO> setData = this.crashDataService.findByApiKey(apiKey);
 
         Set<String> packageNameSet = new HashSet<String>();
 
@@ -65,8 +78,8 @@ public class CrashDataController {
 
     @RequestMapping(value = "/crash/packagename/time/{packageName}")
     @ResponseBody
-    public List<CrashTimeVO> getCrashTime(@RequestHeader(value = "secretKey") String secretKey, @RequestParam(value = "packageName") String packageName) {
-        ArrayList<CrashVO> list = this.crashDataService.findByApiKeyAndPackageNameOrderByTimeAsc(secretKey, packageName);
+    public List<CrashTimeVO> getCrashTime(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "packageName") String packageName) {
+        ArrayList<CrashVO> list = this.crashDataService.findByApiKeyAndPackageNameOrderByTimeAsc(apiKey, packageName);
         ArrayList<CrashTimeVO> crashTimeVOs = new ArrayList<CrashTimeVO>();
 
         for (int i = 0; i < list.size(); i++) {
@@ -77,12 +90,12 @@ public class CrashDataController {
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> crashDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody CrashVO data) {
+    public ResponseEntity<Map<String, String>> crashDataSave(@RequestHeader(value = "apiKey") String apiKey, @RequestBody CrashVO data) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json;charset=UTF-8");
         Map<String, String> result = new HashMap<String, String>();
 
-        if (secretKey.equals("")) {
+        if (apiKey.equals("")) {
             responseHeaders = new HttpHeaders();
             result.put("result", "Need API Key");
 
@@ -110,7 +123,7 @@ public class CrashDataController {
                 data.getEnvironment(),
                 map,
                 data.getBuild(),
-                secretKey));
+                apiKey));
 
         responseHeaders = new HttpHeaders();
         result.put("result", "Crash Data Transfer Success");

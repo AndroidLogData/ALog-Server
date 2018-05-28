@@ -31,8 +31,8 @@ public class CrashDataController {
             return "login";
         }
 
-        model.addAttribute("noData", true);
         model.addAttribute("sideMenuItems", getPackageName(user));
+        model.addAttribute("crashDataPackageNameList", crashDataPackageName(user.getName()));
 
         return "crash";
     }
@@ -58,7 +58,6 @@ public class CrashDataController {
             deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
         }
 
-        model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
         model.addAttribute("logcat", utility.logcatSummary(crashVO.getLogcat()));
         model.addAttribute("time", utility.getStringTimeToLong(crashVO.getTime()));
@@ -75,6 +74,7 @@ public class CrashDataController {
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("sideMenuItems", getPackageName(user));
+        model.addAttribute("crashDataPackageNameList", crashDataPackageName(user.getName()));
 
         return "crash";
     }
@@ -101,7 +101,6 @@ public class CrashDataController {
             deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
         }
 
-        model.addAttribute("noData", false);
         model.addAttribute("crash", crashVO);
         model.addAttribute("logcat", utility.logcatSummary(crashVO.getLogcat()));
         model.addAttribute("time", utility.getStringTimeToLong(crashVO.getTime()));
@@ -118,8 +117,14 @@ public class CrashDataController {
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("sideMenuItems", getPackageName(user));
+        model.addAttribute("crashDataPackageNameList", crashDataPackageName(user.getName()));
 
         return "crash";
+    }
+
+    @RequestMapping(value = "/crash", method = RequestMethod.POST)
+    public ResponseEntity<Object> crashDataSave(@RequestHeader(value = "apiKey") String apiKey, @RequestBody CrashVO data) {
+        return restAPIUtility.postData("/api", "/crash", apiKey, data);
     }
 
     private ArrayList getPackageName(Principal user) {
@@ -137,8 +142,7 @@ public class CrashDataController {
         return new ArrayList<CrashTimeVO>(Arrays.asList(list));
     }
 
-    @RequestMapping(value = "/crash", method = RequestMethod.POST)
-    public ResponseEntity<Object> crashDataSave(@RequestHeader(value = "secretKey") String secretKey, @RequestBody CrashVO data) {
-        return restAPIUtility.postData("/api", "/crash", secretKey, data);
+    public Set<String> crashDataPackageName(String name) {
+        return this.restAPIUtility.getCrashDataPackageName("/crash/filter/packageName", getUserApiKey(name));
     }
 }

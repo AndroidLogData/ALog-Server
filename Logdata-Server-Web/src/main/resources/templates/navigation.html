@@ -15,8 +15,7 @@
 
     <div class="collapse navbar-collapse justify-content-md-end" id="navbarsExampleDefault">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/crash">Crash Data</a></li>
-            <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
+            <!--<li class="nav-item"><a class="nav-link" href="/crash">Crash Data</a></li>-->
             <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/login">Login</a></li>
             <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/registration">Registration</a></li>
             <li sec:authorize="hasRole('ROLE_USER')" class="nav-item dropdown">
@@ -35,6 +34,7 @@
                     <a class="dropdown-item" href="/logout" th:text="Logout"/>
                 </div>
             </li>
+            <li class="nav-item"><a class="nav-link" href="/help">Help</a></li>
         </ul>
     </div>
 </nav>

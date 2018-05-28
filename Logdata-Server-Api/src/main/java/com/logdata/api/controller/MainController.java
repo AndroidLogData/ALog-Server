@@ -40,8 +40,8 @@ public class MainController {
     @RequestMapping(value = "/main", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public List<LogDataInfoVO> mainPageDataList(@RequestHeader(value = "secretKey") String secretKey) {
-        ArrayList<String> logData = getPackageNameList(secretKey);
+    public List<LogDataInfoVO> mainPageDataList(@RequestHeader(value = "apiKey") String apiKey) {
+        ArrayList<String> logData = getPackageNameList(apiKey);
         List<LogDataInfoVO> list = new ArrayList<LogDataInfoVO>();
 
         for (String packageName : logData) {
@@ -51,7 +51,7 @@ public class MainController {
             int warningCount = this.logDataService.findByPackageNameAndLevel(packageName, "w").size();
             int errorCount = this.logDataService.findByPackageNameAndLevel(packageName, "e").size();
 
-            CrashVO crashTime = this.crashDataService.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, secretKey);
+            CrashVO crashTime = this.crashDataService.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
             if (crashTime == null) {
                 list.add(new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
             } else {
