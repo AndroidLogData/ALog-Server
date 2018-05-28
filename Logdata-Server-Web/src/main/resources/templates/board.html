@@ -5,7 +5,60 @@
 <body>
 <div th:replace="navigation :: navigation"></div>
 <div th:replace="side_menu :: sidemenu"></div>
-<div id="root"></div>
-<script th:src="@{/react/bundle.js}"></script>
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+            <h1 th:text="${packageName}"/>
+
+            <section class="row text-center placeholders">
+                <div class="col-sm col-md placeholder">
+                    <div class="card border-success">
+                        <div class="card-header">Verb</div>
+                        <div class="card-body text-success">
+                            <h4 class="card-title">Verb Count</h4>
+                            <p class="card-text" th:text="${logDataInfoOfPackageName.getVerb()}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm col-md placeholder">
+                    <div class="card border-info">
+                        <div class="card-header">Info</div>
+                        <div class="card-body text-info">
+                            <h4 class="card-title">Info Count</h4>
+                            <p class="card-text" th:text="${logDataInfoOfPackageName.getInfo()}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm col-md placeholder">
+                    <div class="card border-primary">
+                        <div class="card-header">Debug</div>
+                        <div class="card-body text-primary">
+                            <h4 class="card-title">Debug Count</h4>
+                            <p class="card-text" th:text="${logDataInfoOfPackageName.getDebug()}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm col-md placeholder">
+                    <div class="card border-warning">
+                        <div class="card-header">Warning</div>
+                        <div class="card-body text-warning">
+                            <h4 class="card-title">Warning Count</h4>
+                            <p class="card-text" th:text="${logDataInfoOfPackageName.getWarning()}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm col-md placeholder">
+                    <div class="card border-danger">
+                        <div class="card-header">Error</div>
+                        <div class="card-body text-danger">
+                            <h4 class="card-title">Danger Count</h4>
+                            <p class="card-text" th:text="${logDataInfoOfPackageName.getError()}"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
 </body>
 </html>

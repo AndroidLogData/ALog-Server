@@ -260,6 +260,25 @@ public class RestAPIUtility {
         return null;
     }
 
+    public LogDataInfoVO getLogDataInfoOfPackageName(String url, String apiKey, String packageName) {
+        try {
+            params.add("packageName", packageName);
+
+            URI uri = uriBuilder("/board", url, params);
+
+            headers.set("apiKey", apiKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<LogDataInfoVO> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogDataInfoVO.class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public Object deleteLogData(String url, String apiKey, String packageName) {
         try {
             params.add("packagename", packageName);
