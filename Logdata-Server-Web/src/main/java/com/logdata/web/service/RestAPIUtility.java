@@ -86,14 +86,14 @@ public class RestAPIUtility {
         return null;
     }
 
-    public Set getLogDataInfoSet(String url, String apiKey) {
+    public ArrayList getLogDataInfoSet(String url, String apiKey) {
         try {
             URI uri = uriBuilder("/api", url);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
 
-            ResponseEntity<Set> response = restTemplate.exchange(uri, HttpMethod.GET, entity, Set.class);
+            ResponseEntity<ArrayList> response = restTemplate.exchange(uri, HttpMethod.GET, entity, ArrayList.class);
 
             return response.getBody();
         } catch (Exception e) {

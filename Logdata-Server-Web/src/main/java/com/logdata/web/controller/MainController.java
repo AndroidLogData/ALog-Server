@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -32,10 +29,22 @@ public class MainController {
         if (user == null) {
             return "index";
         } else {
-            Set<String> packageNameList = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
+            ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
             model.addAttribute("packageNameList", packageNameList);
             return "index";
         }
+    }
+
+    @RequestMapping(value = "/main/{query}", method = RequestMethod.GET)
+    public String moveBoard(Principal user, @RequestParam(value = "packageName") String packageName, Model model) {
+        if (user == null) {
+            return "login";
+        }
+
+        ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
+        model.addAttribute("packageNameList", packageNameList);
+        model.addAttribute("packageName", packageName);
+        return "board";
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET, produces = "application/json")

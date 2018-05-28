@@ -10,7 +10,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <SideMenu/>
+                {/*<SideMenu/>*/}
                 <Route exact path="/" component={MainPage}/>
                 <Route path="/logdata/filter/level/:packagename/:level" component={LevelFilter}/>
                 <Route path="/logdata/filter/tag/:packagename/:tag" component={TagFilter}/>

@@ -69,8 +69,8 @@ public class LogDataController {
     @RequestMapping(value = "/logdata/packagename/set", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    private Set<String> getPackageName(Principal user) {
-        Set<String> body = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
+    private ArrayList<String> getPackageName(Principal user) {
+        ArrayList<String> body = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
 
         return body;
     }
