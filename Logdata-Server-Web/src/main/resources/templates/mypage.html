@@ -48,16 +48,7 @@
                         <p class="badge badge-warning" th:text="'Warning : ' + ${item.getWarning()}"/>
                         <p class="badge badge-danger" th:text="'Error : ' + ${item.getError()}"/>
                         <p class="card-text" th:text="'최근 크래쉬 데이터 : ' + ${item.getRecentCrashTime()}"/>
-                        <!--<Link to={{pathname: '/logdata/filter/packagename/' + this.state.logData[i].packageName}}-->
-                        <!--className="btn btn-primary" role="button">Show</Link>-->
-                        <!--<button class="btn btn-primary" th:href="@{http://localhost:8080/logdata/filter/packagename/(${item.getPackageName()}">Show</button>-->
-                        <!--<a class="nav-link"-->
-                        <!--th:href="@{http://52.231.31.239:8080/crash/filter/packagename/query(packageName=${item})}"-->
-                        <!--th:text="${item}"/>-->
-                        <!--<a class="btn btn-danger" role="button" data-method="delete"-->
-                           <!--th:href="@{http://localhost:8080/logdata/query(packagename=${item.getPackageName()})}"-->
-                           <!--th:text="Delete"/>-->
-                        <form th:action="@{/logdata/query(packagename=${item.getPackageName()})}" method="post">
+                        <form th:action="@{/logdata/query(package-name=${item.getPackageName()})}" method="post">
                             <input type="hidden" name="_method" value="DELETE"/>
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                             <button type="submit" class="btn btn-danger">Delete</button>

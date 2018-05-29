@@ -29,13 +29,13 @@ public class HelpController {
         return "help";
     }
 
-    @RequestMapping(value = "/mypage", method = RequestMethod.GET)
+    @RequestMapping(value = "/my-page", method = RequestMethod.GET)
     public String myPage(Principal user, Model model) {
         if (user == null) {
             return "login";
         }
 
-        LinkedHashMap<String, Integer> crashList = restAPIUtility.getCrashList("/mypage", getUserApiKey(user.getName()));
+        LinkedHashMap<String, Integer> crashList = restAPIUtility.getCrashList("/my-page", getUserApiKey(user.getName()));
         ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIUtility.getLogDataInfo("/main", getUserApiKey(user.getName()))));
 
         model.addAttribute("crashList", crashList);
@@ -45,15 +45,15 @@ public class HelpController {
         return "mypage";
     }
 
-    @RequestMapping(value = "/logdata/{query}", method = {RequestMethod.POST, RequestMethod.DELETE})
-    public String logDataDelete(Principal user, @RequestParam(value = "packagename") String packageName, Model model) {
+    @RequestMapping(value = "/log-data/{query}", method = {RequestMethod.POST, RequestMethod.DELETE})
+    public String logDataDelete(Principal user, @RequestParam(value = "package-name") String packageName, Model model) {
         if (user == null) {
             return "login";
         }
 
-        System.out.println(restAPIUtility.deleteLogData("/logdata", getUserApiKey(user.getName()), packageName));
+        System.out.println(restAPIUtility.deleteLogData("/log-data", getUserApiKey(user.getName()), packageName));
 
-        LinkedHashMap<String, Integer> crashList = restAPIUtility.getCrashList("/mypage", getUserApiKey(user.getName()));
+        LinkedHashMap<String, Integer> crashList = restAPIUtility.getCrashList("/my-page", getUserApiKey(user.getName()));
         ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIUtility.getLogDataInfo("/main", getUserApiKey(user.getName()))));
 
         model.addAttribute("crashList", crashList);

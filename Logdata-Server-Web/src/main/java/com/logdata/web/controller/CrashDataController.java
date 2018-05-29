@@ -37,8 +37,8 @@ public class CrashDataController {
         return "crash";
     }
 
-    @RequestMapping(value = "/crash/filter/time/{time}", method = RequestMethod.GET)
-    public String crashDataTimeView(Principal user, @RequestParam(value = "time") long time, @RequestParam(value = "packageName") String packageName, Model model) {
+    @RequestMapping(value = "/crash/filter/time/{query}", method = RequestMethod.GET)
+    public String crashDataTimeView(Principal user, @RequestParam(value = "time") long time, @RequestParam(value = "package-name") String packageName, Model model) {
         if (user == null) {
             return "login";
         }
@@ -79,13 +79,13 @@ public class CrashDataController {
         return "crash";
     }
 
-    @RequestMapping(value = "/crash/filter/packagename/{packageName}", method = RequestMethod.GET)
-    public String crashPackageNamePage(Principal user, Model model, @RequestParam(value = "packageName") String packageName) {
+    @RequestMapping(value = "/crash/filter/package-name/{query}", method = RequestMethod.GET)
+    public String crashPackageNamePage(Principal user, Model model, @RequestParam(value = "package-name") String packageName) {
         if (user == null) {
             return "login";
         }
 
-        CrashVO crashVO = restAPIUtility.getCrashData("/crash/filter/packagename", getUserApiKey(user.getName()), packageName);
+        CrashVO crashVO = restAPIUtility.getCrashData("/crash/filter/package-name", getUserApiKey(user.getName()), packageName);
 
         if (crashVO == null) {
             model.addAttribute("noData", true);
@@ -128,7 +128,7 @@ public class CrashDataController {
     }
 
     private ArrayList getPackageName(Principal user) {
-        return restAPIUtility.getCrashPackageNameList("/crash/packagename/set", getUserApiKey(user.getName()));
+        return restAPIUtility.getCrashPackageNameList("/crash/package-name/set", getUserApiKey(user.getName()));
     }
 
     public String getUserApiKey(String name) {
@@ -137,12 +137,12 @@ public class CrashDataController {
     }
 
     public ArrayList getCrashTime(Principal user, String packageName) {
-        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crash/packagename/time", getUserApiKey(user.getName()), packageName);
+        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crash/package-name/time", getUserApiKey(user.getName()), packageName);
 
         return new ArrayList<CrashTimeVO>(Arrays.asList(list));
     }
 
     public Set<String> crashDataPackageName(String name) {
-        return this.restAPIUtility.getCrashDataPackageName("/crash/filter/packageName", getUserApiKey(name));
+        return this.restAPIUtility.getCrashDataPackageName("/crash/filter/package-name", getUserApiKey(name));
     }
 }

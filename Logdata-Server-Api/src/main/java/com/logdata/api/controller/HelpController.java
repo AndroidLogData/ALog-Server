@@ -26,7 +26,7 @@ public class HelpController {
         this.utility = utility;
     }
 
-    @RequestMapping(value = "/mypage", method = RequestMethod.GET)
+    @RequestMapping(value = "/my-page", method = RequestMethod.GET)
     @ResponseBody
     public HashMap<String, Integer> myPage(@RequestHeader(value = "apiKey") String apiKey) {
         ArrayList<CrashVO> crashVOArrayList = this.crashDataService.findAllByApiKeyOrderByTimeDesc(apiKey);

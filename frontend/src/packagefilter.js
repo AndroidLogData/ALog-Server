@@ -2,7 +2,7 @@ import React from 'react';
 import LogData from './logdata';
 
 const PackageFilter = ({match}) => {
-    let packageFilterUrl = '/logdata/filter/packageName/query?packagename=' + match.params.packagename;
+    let packageFilterUrl = '/log-data/filter/package-name/query?package-name=' + match.params.packageName;
 
     return (
         <div>

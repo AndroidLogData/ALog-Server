@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -23,63 +24,63 @@ public class LogDataController {
         this.restAPIUtility = restAPIUtility;
     }
 
-    @RequestMapping(value = "/logdata", method = RequestMethod.GET)
+    @RequestMapping(value = "/log-data", method = RequestMethod.GET)
     public String logDataView() {
         return "logdata";
     }
 
-    @RequestMapping(value = "/logdata", method = RequestMethod.POST)
+    @RequestMapping(value = "/log-data", method = RequestMethod.POST)
     public ResponseEntity<Object> logDataSave(@RequestHeader(value = "apiKey") String apiKey, @RequestBody LogVO data) {
-        return restAPIUtility.postData("/api", "/logdata", apiKey, data);
+        return restAPIUtility.postData("/api", "/log-data", apiKey, data);
     }
 
-    @RequestMapping(value = "/logdata/filter/level/{query}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/log-data/filter/level/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public ArrayList<LogVO> logDataLevelList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "level") String level) {
-        LogVO[] body = restAPIUtility.getLogDataLevel("/logdata/filter/level", getUserApiKey(user.getName()), packageName, level);
+    public ArrayList<LogVO> logDataLevelList(Principal user, @RequestParam(value = "package-name") String packageName, @RequestParam(value = "level") String level) {
+        LogVO[] body = restAPIUtility.getLogDataLevel("/log-data/filter/level", getUserApiKey(user.getName()), packageName, level);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
         return list;
     }
 
-    @RequestMapping(value = "/logdata/filter/tag/{query}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/log-data/filter/tag/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public ArrayList<LogVO> logDataTagList(Principal user, @RequestParam(value = "packagename") String packageName, @RequestParam(value = "tag") String tag) {
-        LogVO[] body = restAPIUtility.getLogDataTag("/logdata/filter/tag", getUserApiKey(user.getName()), packageName, tag);
+    public ArrayList<LogVO> logDataTagList(Principal user, @RequestParam(value = "package-name") String packageName, @RequestParam(value = "tag") String tag) {
+        LogVO[] body = restAPIUtility.getLogDataTag("/log-data/filter/tag", getUserApiKey(user.getName()), packageName, tag);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
         return list;
     }
 
-    @RequestMapping(value = "/logdata/filter/packageName/{packagename}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/log-data/filter/package-name/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public ArrayList<LogVO> logDataPackageNameList(Principal user, @RequestParam(value = "packagename") String packageName) {
-        LogVO[] body = restAPIUtility.searchLogDataOfPackageName("/logdata/filter/packagename", getUserApiKey(user.getName()), packageName);
+    public ArrayList<LogVO> logDataPackageNameList(Principal user, @RequestParam(value = "package-name") String packageName) {
+        LogVO[] body = restAPIUtility.searchLogDataOfPackageName("/log-data/filter/package-name", getUserApiKey(user.getName()), packageName);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
         return list;
     }
 
-    @RequestMapping(value = "/logdata/packagename/set", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/log-data/package-name/set", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private ArrayList<String> getPackageName(Principal user) {
-        ArrayList<String> body = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
+        ArrayList<String> body = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
 
         return body;
     }
 
-    @RequestMapping(value = "/logdata/tag/set/{query}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/log-data/tag/set/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    private Set<String> getTagName(Principal user, @RequestParam(value = "packageName") String packageName) {
-        Set<String> body = restAPIUtility.getLogDataInfoSet("/logdata/tag/set", getUserApiKey(user.getName()), packageName);
+    private Set<String> getTagName(Principal user, @RequestParam(value = "package-name") String packageName) {
+        Set<String> body = restAPIUtility.getLogDataInfoSet("/log-data/tag/set", getUserApiKey(user.getName()), packageName);
 
         return body;
     }
@@ -89,11 +90,15 @@ public class LogDataController {
         return u.getApiKey();
     }
 
-    @RequestMapping(value = "/logdata/filter/packagename/{packageName}", method = RequestMethod.GET)
-    public String logDataPackageNameView(Principal user) {
+    @RequestMapping(value = "/log-data/filter/package-name/{query}", method = RequestMethod.GET)
+    public String logDataPackageNameView(Principal user, Model model) {
         if (user == null) {
             return "login";
         }
+
+        ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
+
+        model.addAttribute("packageNameList", packageNameList);
         return "logdata";
     }
 }

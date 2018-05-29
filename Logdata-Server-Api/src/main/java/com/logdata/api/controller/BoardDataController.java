@@ -39,7 +39,7 @@ public class BoardDataController {
     @RequestMapping(value = "/detail/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public LogDataInfoVO mainPageDataList(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "packageName") String packageName) {
+    public LogDataInfoVO mainPageDataList(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
         LogDataInfoVO logDataInfo;
 
         int verbCount = this.logDataService.findByPackageNameAndLevel(packageName, "v").size();

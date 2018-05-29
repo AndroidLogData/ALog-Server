@@ -46,7 +46,7 @@ public class RestAPIUtility {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
-            params.add("packagename", packageName);
+            params.add("package-name", packageName);
             params.add("level", level);
 
             URI uri = uriBuilder("/api", url, params);
@@ -68,7 +68,7 @@ public class RestAPIUtility {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
-            params.add("packagename", packageName);
+            params.add("package-name", packageName);
             params.add("tag", tag);
 
             URI uri = uriBuilder("/api", url, params);
@@ -107,7 +107,7 @@ public class RestAPIUtility {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
-            params.add("packageName", packageName);
+            params.add("package-name", packageName);
 
             URI uri = uriBuilder("/api", url, params);
 
@@ -128,7 +128,7 @@ public class RestAPIUtility {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
-            params.add("packagename", packageName);
+            params.add("package-name", packageName);
 
             URI uri = uriBuilder("/api", url, params);
 
@@ -150,7 +150,7 @@ public class RestAPIUtility {
             params = new LinkedMultiValueMap<String, String>();
 
             params.add("time", String.valueOf(time));
-            params.add("packageName", packageName);
+            params.add("package-name", packageName);
 
             URI uri = uriBuilder("/api", url, params);
 
@@ -171,7 +171,7 @@ public class RestAPIUtility {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
-            params.add("packageName", packageName);
+            params.add("package-name", packageName);
 
             URI uri = uriBuilder("/api", url, params);
 
@@ -209,7 +209,7 @@ public class RestAPIUtility {
         try {
             params = new LinkedMultiValueMap<String, String>();
 
-            params.add("packageName", packageName);
+            params.add("package-name", packageName);
 
             URI uri = uriBuilder("/api", url, params);
 
@@ -262,7 +262,7 @@ public class RestAPIUtility {
 
     public LogDataInfoVO getLogDataInfoOfPackageName(String url, String apiKey, String packageName) {
         try {
-            params.add("packageName", packageName);
+            params.add("package-name", packageName);
 
             URI uri = uriBuilder("/board", url, params);
 
@@ -281,7 +281,7 @@ public class RestAPIUtility {
 
     public Object deleteLogData(String url, String apiKey, String packageName) {
         try {
-            params.add("packagename", packageName);
+            params.add("package-name", packageName);
 
             URI uri = uriBuilder("/api", url, params);
 

@@ -8,9 +8,9 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Route path="/logdata/filter/level/:packagename/:level" component={LevelFilter}/>
-                <Route path="/logdata/filter/tag/:packagename/:tag" component={TagFilter}/>
-                <Route path="/logdata/filter/packagename/:packagename" component={PackageFilter}/>
+                <Route path="/log-data/filter/level/:package-name/:level" component={LevelFilter}/>
+                <Route path="/log-data/filter/tag/:package-name/:tag" component={TagFilter}/>
+                <Route path="/log-data/filter/package-name/:packageName" component={PackageFilter}/>
             </div>
         );
     }

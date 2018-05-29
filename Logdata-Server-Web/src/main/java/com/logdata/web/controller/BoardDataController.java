@@ -4,10 +4,11 @@ import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.common.model.UserVO;
 import com.logdata.web.service.RestAPIUtility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -22,13 +23,13 @@ public class BoardDataController {
     }
 
     @RequestMapping(value = "/board/{query}", method = RequestMethod.GET, produces = "application/json")
-    public String logDataInfoOfPackageName(Principal user, @RequestParam(value = "packageName") String packageName, Model model) {
+    public String logDataInfoOfPackageName(Principal user, @RequestParam(value = "package-name") String packageName, Model model) {
         if (user == null) {
             return null;
         }
 
         LogDataInfoVO logDataInfoVO = restAPIUtility.getLogDataInfoOfPackageName("/detail", getUserApiKey(user.getName()), packageName);
-        ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
+        ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
 
         model.addAttribute("logDataInfoOfPackageName", logDataInfoVO);
         model.addAttribute("packageNameList", packageNameList);

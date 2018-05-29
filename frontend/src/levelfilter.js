@@ -2,7 +2,7 @@ import React from 'react';
 import LogData from './logdata';
 
 const LevelFilter = ({match}) => {
-    let levelFilterUrl = '/logdata/filter/level/query?packagename=' + match.params.packagename + '&level=' + match.params.level;
+    let levelFilterUrl = '/log-data/filter/level/query?package-name=' + match.params.packagename + '&level=' + match.params.level;
 
     return (
         <div>

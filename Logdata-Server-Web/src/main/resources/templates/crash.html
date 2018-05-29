@@ -9,11 +9,8 @@
         <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item" th:each="item : ${sideMenuItems}">
-                    <!--<a class="nav-link"-->
-                    <!--th:href="@{http://52.231.31.239:8080/crash/filter/packagename/query(packageName=${item})}"-->
-                    <!--th:text="${item}"/>-->
                     <a class="nav-link"
-                       th:href="@{http://localhost:8080/crash/filter/packagename/query(packageName=${item})}"
+                       th:href="@{/crash/filter/package-name/query(package-name=${item})}"
                        th:text="${item}"/>
                 </li>
             </ul>
@@ -35,7 +32,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" th:each="item : ${crashDataPackageNameList}" th:text="${item}"
-                                   th:href="@{http://localhost:8080/crash/filter/packagename/query(packageName=${item})}"/>
+                                   th:href="@{/crash/filter/package-name/query(package-name=${item})}"/>
                             </div>
                         </div>
                     </div>
@@ -67,11 +64,8 @@
                                          style="height: auto; max-height: 200px; overflow-x: hidden;"
                                          aria-labelledby="dropdown03">
                                         <div th:each="item : ${timeData}">
-                                            <!--<a class="dropdown-item"-->
-                                            <!--th:href="@{http://52.231.31.239:8080/crash/filter/packagename/query(time=${item.getStringTime()}, packageName=${item.getPackageName()})}"-->
-                                            <!--th:text="${item.getStringTime()}"/>-->
                                             <a class="dropdown-item"
-                                               th:href="@{http://localhost:8080/crash/filter/packagename/query(time=${item.getStringTime()}, packageName=${item.getPackageName()})}"
+                                               th:href="@{/crash/filter/package-name/query(time=${item.getStringTime()}, package-name=${item.getPackageName()})}"
                                                th:text="${item.getStringTime()}"/>
                                         </div>
                                     </div>

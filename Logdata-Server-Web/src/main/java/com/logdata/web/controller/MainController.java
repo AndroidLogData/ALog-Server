@@ -29,7 +29,7 @@ public class MainController {
         if (user == null) {
             return "index";
         } else {
-            ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
+            ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
             LogDataInfoVO[] logDataInfoList = restAPIUtility.getLogDataInfo("/detail", getUserApiKey(user.getName()));
 
             model.addAttribute("packageNameList", packageNameList);

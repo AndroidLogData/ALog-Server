@@ -20,13 +20,13 @@
                     <div class="card-block">
                         <h3 class="card-title" th:text="${packageNameItem.getPackageName()}"/>
                         <p class="text-center">Log Level Information</p>
-                        <p class="badge badge-success" th:text="Verb + ':' + ${packageNameItem.getVerb()}"/>
-                        <p class="badge badge-info" th:text="Info + ':' + ${packageNameItem.getInfo()}"/>
-                        <p class="badge badge-primary" th:text="Debug + ':' + ${packageNameItem.getDebug()}"/>
-                        <p class="badge badge-warning" th:text="Warning + ':' + ${packageNameItem.getWarning()}"/>
-                        <p class="badge badge-danger" th:text="Error + ':' + ${packageNameItem.getError()}"/>
+                        <p class="badge badge-success" th:text="Verb + ' : ' + ${packageNameItem.getVerb()}"/>
+                        <p class="badge badge-info" th:text="Info + ' : ' + ${packageNameItem.getInfo()}"/>
+                        <p class="badge badge-primary" th:text="Debug + ' : ' + ${packageNameItem.getDebug()}"/>
+                        <p class="badge badge-warning" th:text="Warning + ' : ' + ${packageNameItem.getWarning()}"/>
+                        <p class="badge badge-danger" th:text="Error + ' : ' + ${packageNameItem.getError()}"/>
                         <p class="card-text">최근 크래쉬 데이터</p>
-                        <a th:href="@{/board/query(packageName=${packageNameItem.getPackageName()})}" class="btn btn-primary" role="button">
+                        <a th:href="@{/board/query(package-name=${packageNameItem.getPackageName()})}" class="btn btn-primary" role="button">
                             Go DashBoard
                         </a>
                     </div>

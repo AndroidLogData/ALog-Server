@@ -25,7 +25,7 @@ public class CrashDataController {
         this.utility = utility;
     }
 
-    @RequestMapping(value = "/crash/filter/packageName", method = RequestMethod.GET)
+    @RequestMapping(value = "/crash/filter/package-name", method = RequestMethod.GET)
     @ResponseBody
     public Set<String> searchCrashVOOfPackageName(@RequestHeader(value = "apiKey") String apiKey) {
         List<CrashVO> crashList = this.crashDataService.findByApiKey(apiKey);
@@ -38,9 +38,9 @@ public class CrashDataController {
         return packageNameList;
     }
 
-    @RequestMapping(value = "/crash/filter/time/{time}", method = RequestMethod.GET)
+    @RequestMapping(value = "/crash/filter/time/{query}", method = RequestMethod.GET)
     @ResponseBody
-    public CrashVO crashDataTimeView(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "time") long time, @RequestParam(value = "packageName") String packageName) {
+    public CrashVO crashDataTimeView(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "time") long time, @RequestParam(value = "package-name") String packageName) {
         CrashVO crashVO = this.crashDataService.findCrashDataByTimeAndApiKeyAndPackageName(time, apiKey, packageName);
 
         if (crashVO == null || !(apiKey.equals(crashVO.getApiKey()))) {
@@ -50,9 +50,9 @@ public class CrashDataController {
         return crashVO;
     }
 
-    @RequestMapping(value = "/crash/filter/packagename/{packageName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/crash/filter/package-name/{query}", method = RequestMethod.GET)
     @ResponseBody
-    public CrashVO crashPackageNamePage(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "packageName") String packageName) {
+    public CrashVO crashPackageNamePage(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
         CrashVO crashVO = this.crashDataService.findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
 
         if (crashVO == null) {
@@ -62,7 +62,7 @@ public class CrashDataController {
         return crashVO;
     }
 
-    @RequestMapping(value = "/crash/packagename/set")
+    @RequestMapping(value = "/crash/package-name/set")
     @ResponseBody
     public Set<String> getPackageName(@RequestHeader(value = "apiKey") String apiKey) {
         List<CrashVO> setData = this.crashDataService.findByApiKey(apiKey);
@@ -76,9 +76,9 @@ public class CrashDataController {
         return packageNameSet;
     }
 
-    @RequestMapping(value = "/crash/packagename/time/{packageName}")
+    @RequestMapping(value = "/crash/package-name/time/{query}")
     @ResponseBody
-    public List<CrashTimeVO> getCrashTime(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "packageName") String packageName) {
+    public List<CrashTimeVO> getCrashTime(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
         ArrayList<CrashVO> list = this.crashDataService.findByApiKeyAndPackageNameOrderByTimeAsc(apiKey, packageName);
         ArrayList<CrashTimeVO> crashTimeVOs = new ArrayList<CrashTimeVO>();
 
