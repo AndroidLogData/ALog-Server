@@ -37,7 +37,7 @@ public class MainController {
         return packageNameList.getPackageNameList();
     }
 
-    @RequestMapping(value = "/main", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/detail", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public List<LogDataInfoVO> mainPageDataList(@RequestHeader(value = "apiKey") String apiKey) {

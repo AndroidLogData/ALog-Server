@@ -30,22 +30,14 @@ public class MainController {
             return "index";
         } else {
             ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
+            LogDataInfoVO[] logDataInfoList = restAPIUtility.getLogDataInfo("/detail", getUserApiKey(user.getName()));
+
             model.addAttribute("packageNameList", packageNameList);
+            model.addAttribute("logDataInfoList", logDataInfoList);
+
             return "index";
         }
     }
-
-//    @RequestMapping(value = "/main/{query}", method = RequestMethod.GET)
-//    public String moveBoard(Principal user, @RequestParam(value = "packageName") String packageName, Model model) {
-//        if (user == null) {
-//            return "login";
-//        }
-//
-//        ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/logdata/packagename/set", getUserApiKey(user.getName()));
-//        model.addAttribute("packageNameList", packageNameList);
-//        model.addAttribute("packageName", packageName);
-//        return "board";
-//    }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)

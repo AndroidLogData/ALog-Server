@@ -94,6 +94,6 @@ public class LogDataController {
         if (user == null) {
             return "login";
         }
-        return "index";
+        return "logdata";
     }
 }

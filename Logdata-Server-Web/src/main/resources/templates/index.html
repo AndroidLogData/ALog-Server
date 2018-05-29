@@ -5,7 +5,35 @@
 <body>
 <div th:replace="navigation :: navigation"></div>
 <div th:replace="side_menu :: sidemenu"></div>
-<div id="root"></div>
-<script th:src="@{/react/bundle.js}"></script>
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+            <h1>Dashboard</h1>
+
+            <div class="jumbotron">
+                <h1>Android Log Data Viewer</h1>
+                <hr class="my-4"/>
+                <p>안드로이드 로그 데이터와 메모리 관리를 위한 페이지</p>
+            </div>
+            <div class="row col-md text-center placeholders">
+                <div th:each="packageNameItem : ${logDataInfoList}" class="card" style="margin-right: 0.5%; margin-bottom: 0.5%;">
+                    <div class="card-block">
+                        <h3 class="card-title" th:text="${packageNameItem.getPackageName()}"/>
+                        <p class="text-center">Log Level Information</p>
+                        <p class="badge badge-success" th:text="Verb + ':' + ${packageNameItem.getVerb()}"/>
+                        <p class="badge badge-info" th:text="Info + ':' + ${packageNameItem.getInfo()}"/>
+                        <p class="badge badge-primary" th:text="Debug + ':' + ${packageNameItem.getDebug()}"/>
+                        <p class="badge badge-warning" th:text="Warning + ':' + ${packageNameItem.getWarning()}"/>
+                        <p class="badge badge-danger" th:text="Error + ':' + ${packageNameItem.getError()}"/>
+                        <p class="card-text">최근 크래쉬 데이터</p>
+                        <a th:href="@{/board/query(packageName=${packageNameItem.getPackageName()})}" class="btn btn-primary" role="button">
+                            Go DashBoard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
 </body>
 </html>

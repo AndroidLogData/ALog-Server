@@ -16,13 +16,13 @@
                                         <!--<a class="dropdown-item" th:text="'Log Data'"-->
                                            <!--th:href="@{http://localhost:8080/crash/filter/packagename/query(packageName=${item})}"/>-->
                                         <a th:if="${packageName} != null" class="nav-link" th:text="'Log Data'"
-                                           th:href="@{http://localhost:8080/logdata/filter/packagename/query(packageName=${packageName})}"/>
+                                           th:href="@{'/logdata/filter/packagename/' + ${packageName}}"/>
                                     </li>
                                     <li class="nav-item">
                                         <!--<a class="dropdown-item" th:text="'Crash Report'"-->
                                            <!--th:href="@{http://localhost:8080/crash/filter/packagename/query(packageName=${item})}"/>-->
                                         <a th:if="${packageName} != null" class="nav-link" th:text="'Crash Report'"
-                                           th:href="@{http://localhost:8080/crash/filter/packagename/query(packageName=${packageName})}"/>
+                                           th:href="@{/crash/filter/packagename/query(packageName=${packageName})}"/>
                                     </li>
                                 </ul>
                             </nav>
