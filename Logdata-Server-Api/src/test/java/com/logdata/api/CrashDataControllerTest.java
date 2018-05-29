@@ -102,7 +102,7 @@ public class CrashDataControllerTest {
     public void crashDataSaveTest() throws Exception {
         MockHttpServletResponse response = mvc.perform(
                 post("/api/crash")
-                        .header("secretKey", "key")
+                        .header("apiKey", "key")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(crashDataJsonString)
         )
@@ -119,9 +119,9 @@ public class CrashDataControllerTest {
     public void crashDataTimeViewFailedTest() throws Exception {
         MockHttpServletResponse response = mvc.perform(
                 get("/api/crash/filter/time/query")
-                        .header("secretKey", "key")
+                        .header("apiKey", "key")
                         .param("time", "1")
-                        .param("packageName", "android")
+                        .param("package-name", "android")
         )
                 .andDo(print())
                 .andReturn()
@@ -135,9 +135,9 @@ public class CrashDataControllerTest {
         when(crashDataService.findCrashDataByTimeAndApiKeyAndPackageName(1L, "key", "android")).thenReturn(newCrashData);
         MockHttpServletResponse response = mvc.perform(
                 get("/api/crash/filter/time/query")
-                        .header("secretKey", "key")
+                        .header("apiKey", "key")
                         .param("time", "1")
-                        .param("packageName", "android")
+                        .param("package-name", "android")
         )
                 .andDo(print())
                 .andReturn()
@@ -151,9 +151,9 @@ public class CrashDataControllerTest {
     @Test
     public void crashPackageNamePageFailedTest() throws Exception {
         MockHttpServletResponse response = mvc.perform(
-                get("/api/crash/filter/packagename/query")
-                        .header("secretKey", "key")
-                        .param("packageName", "android")
+                get("/api/crash/filter/package-name/query")
+                        .header("apiKey", "key")
+                        .param("package-name", "android")
         )
                 .andDo(print())
                 .andReturn()
@@ -166,9 +166,9 @@ public class CrashDataControllerTest {
     public void crashPackageNamePageTest() throws Exception {
         when(crashDataService.findCrashDataByPackageNameAndApiKeyOrderByTimeDesc("android", "key")).thenReturn(newCrashData);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/crash/filter/packagename/query")
-                        .header("secretKey", "key")
-                        .param("packageName", "android")
+                get("/api/crash/filter/package-name/query")
+                        .header("apiKey", "key")
+                        .param("package-name", "android")
         )
                 .andDo(print())
                 .andReturn()
@@ -183,8 +183,8 @@ public class CrashDataControllerTest {
     public void getPackageNamePageTest() throws Exception {
         when(crashDataService.findByApiKey("key")).thenReturn(list);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/crash/packagename/set")
-                        .header("secretKey", "key")
+                get("/api/crash/package-name/set")
+                        .header("apiKey", "key")
         )
                 .andDo(print())
                 .andReturn()
@@ -199,9 +199,9 @@ public class CrashDataControllerTest {
     public void getCrashTimeTest() throws Exception {
         when(crashDataService.findByApiKeyAndPackageNameOrderByTimeAsc("key", "android")).thenReturn(list);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/crash/packagename/time/query")
-                        .header("secretKey", "key")
-                        .param("packageName", "android")
+                get("/api/crash/package-name/time/query")
+                        .header("apiKey", "key")
+                        .param("package-name", "android")
         )
                 .andDo(print())
                 .andReturn()

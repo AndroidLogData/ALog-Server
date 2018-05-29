@@ -60,7 +60,7 @@ public class LogDataRestServiceServerTest {
     @Test
     public void logDataPostTest() throws Exception {
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdata"))
+                requestTo(API_BASE_URL + "/api/log-data"))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(
                         withSuccess(
@@ -70,13 +70,13 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                post("/logdata")
+                post("/log-data")
                         .with(
                                 user("user")
                                         .password("user")
                                         .roles("USER")
                         )
-                        .header("secretKey", "key")
+                        .header("apiKey", "key")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{}")
         )
@@ -103,7 +103,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdata/filter/level/query?packagename=android3&level=v"))
+                requestTo(API_BASE_URL + "/api/log-data/filter/level/query?package-name=android3&level=v"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -113,7 +113,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata/filter/level/query")
+                get("/log-data/filter/level/query")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -122,7 +122,7 @@ public class LogDataRestServiceServerTest {
                                     }
                                 }
                         )
-                        .param("packagename", "android3")
+                        .param("package-name", "android3")
                         .param("level", "v")
         )
                 .andDo(print())
@@ -148,7 +148,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdata/filter/tag/query?packagename=android3&tag=%5BMainActivity::onCreate%5D"))
+                requestTo(API_BASE_URL + "/api/log-data/filter/tag/query?package-name=android3&tag=%5BMainActivity::onCreate%5D"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -158,7 +158,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata/filter/tag/query")
+                get("/log-data/filter/tag/query")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -167,7 +167,7 @@ public class LogDataRestServiceServerTest {
                                     }
                                 }
                         )
-                        .param("packagename", "android3")
+                        .param("package-name", "android3")
                         .param("tag", "[MainActivity::onCreate]")
         )
                 .andDo(print())
@@ -193,7 +193,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdata/filter/packagename/query?packagename=android3"))
+                requestTo(API_BASE_URL + "/api/log-data/filter/package-name/query?package-name=android3"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -203,7 +203,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata/filter/packageName/query?")
+                get("/log-data/filter/package-name/query?")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -212,7 +212,7 @@ public class LogDataRestServiceServerTest {
                                     }
                                 }
                         )
-                        .param("packagename", "android3")
+                        .param("package-name", "android3")
         )
                 .andDo(print())
                 .andReturn()
@@ -237,7 +237,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdata/packagename/set"))
+                requestTo(API_BASE_URL + "/api/log-data/package-name/set"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -247,7 +247,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata/packagename/set")
+                get("/log-data/package-name/set")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -281,7 +281,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/logdata/tag/set/query?packageName=android"))
+                requestTo(API_BASE_URL + "/api/log-data/tag/set/query?package-name=android"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -291,7 +291,7 @@ public class LogDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata/tag/set/query?")
+                get("/log-data/tag/set/query?")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -299,7 +299,7 @@ public class LogDataRestServiceServerTest {
                                         return "user";
                                     }
                                 }
-                        ).param("packageName", "android")
+                        ).param("package-name", "android")
         )
                 .andDo(print())
                 .andReturn()

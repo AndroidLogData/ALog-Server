@@ -66,8 +66,8 @@ public class LogDataControllerTest {
     public void logDataSave() throws Exception {
         when(packageNameDataService.findPackageNameVOByApiKey("key")).thenReturn(packageNameData);
         MockHttpServletResponse response = mvc.perform(
-                post("/api/logdata")
-                        .header("secretKey", "key")
+                post("/api/log-data")
+                        .header("apiKey", "key")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(logDataJsonString)
         )
@@ -83,7 +83,7 @@ public class LogDataControllerTest {
     @Test
     public void logDataSaveNotApiKey() throws Exception {
         MockHttpServletResponse response = mvc.perform(
-                post("/api/logdata")
+                post("/api/log-data")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{}")
         )
@@ -92,7 +92,7 @@ public class LogDataControllerTest {
                 .getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(response.getErrorMessage()).isEqualTo("Missing request header 'secretKey' for method parameter of type String");
+        assertThat(response.getErrorMessage()).isEqualTo("Missing request header 'apiKey' for method parameter of type String");
     }
 
     @Test
@@ -100,9 +100,9 @@ public class LogDataControllerTest {
         when(packageNameDataService.findPackageNameVOByApiKey("key")).thenReturn(packageNameData);
         when(logDataService.findByPackageNameAndLevel("android3", "v", new Sort(Sort.Direction.DESC, "time"))).thenReturn(logDataList);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/logdata/filter/level/query")
-                        .header("secretKey", "key")
-                        .param("packagename", "android3")
+                get("/api/log-data/filter/level/query")
+                        .header("apiKey", "key")
+                        .param("package-name", "android3")
                         .param("level", "v")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
         )
@@ -120,9 +120,9 @@ public class LogDataControllerTest {
         when(packageNameDataService.findPackageNameVOByApiKey("key")).thenReturn(packageNameData);
         when(logDataService.findByPackageNameAndTag("android3", "[MainActivity::onCreate]", new Sort(Sort.Direction.ASC, "time"))).thenReturn(logDataList);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/logdata/filter/tag/query")
-                        .header("secretKey", "key")
-                        .param("packagename", "android3")
+                get("/api/log-data/filter/tag/query")
+                        .header("apiKey", "key")
+                        .param("package-name", "android3")
                         .param("tag", "[MainActivity::onCreate]")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
         )
@@ -139,8 +139,8 @@ public class LogDataControllerTest {
 //    public void getTagTest() throws Exception {
 //        when(logDataService.findByApiKey("key")).thenReturn(logDataList);
 //        MockHttpServletResponse response = mvc.perform(
-//                get("/api/logdata/tag/set")
-//                        .header("secretKey", "key")
+//                get("/api/log-data/tag/set")
+//                        .header("apiKey", "key")
 //                        .contentType(MediaType.APPLICATION_JSON_UTF8)
 //        )
 //                .andDo(print())
@@ -157,8 +157,8 @@ public class LogDataControllerTest {
 //        when(logDataService.findByApiKey("key")).thenReturn(logDataList);
         when(packageNameDataService.findPackageNameVOByApiKey("key")).thenReturn(packageNameData);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/logdata/packagename/set")
-                        .header("secretKey", "key")
+                get("/api/log-data/package-name/set")
+                        .header("apiKey", "key")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andDo(print())
@@ -174,9 +174,9 @@ public class LogDataControllerTest {
     public void logDataPackageNameListTest() throws Exception {
         when(packageNameDataService.findPackageNameVOByApiKey("key")).thenReturn(packageNameData);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/logdata/filter/packagename/query")
-                        .header("secretKey", "key")
-                        .param("packagename", "android3")
+                get("/api/log-data/filter/package-name/query")
+                        .header("apiKey", "key")
+                        .param("package-name", "android3")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andDo(print())
@@ -192,8 +192,8 @@ public class LogDataControllerTest {
     public void allLogDataTest() throws Exception {
         when(logDataService.findAll()).thenReturn(logDataList);
         MockHttpServletResponse response = mvc.perform(
-                get("/api/logdata/list")
-                        .header("secretKey", "key")
+                get("/api/log-data/list")
+                        .header("apiKey", "key")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andDo(print())

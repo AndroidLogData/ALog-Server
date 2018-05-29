@@ -27,7 +27,7 @@ public class LogDataMockMVCTest {
     @Test
     public void logDataGetTest() throws Exception {
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata")
+                get("/log-data")
                         .with(
                                 user("user")
                                         .password("user")
@@ -46,7 +46,7 @@ public class LogDataMockMVCTest {
     @Test
     public void logDataPackageNameViewTest() throws Exception {
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata/filter/packagename/query?")
+                get("/log-data/filter/package-name/query?")
                         .with(
                                 user("user")
                                         .password("user")
@@ -65,7 +65,7 @@ public class LogDataMockMVCTest {
     @Test
     public void logDataPackageNameViewFailedTest() throws Exception {
         MockHttpServletResponse response = mvc.perform(
-                get("/logdata/filter/packagename/query?")
+                get("/log-data/filter/package-name/query?")
 //                        .with(
 //                                user("user")
 //                                        .password("user")

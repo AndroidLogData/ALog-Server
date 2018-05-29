@@ -143,7 +143,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/packagename/set"))
+                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -206,7 +206,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&packageName=com.example.android"))
+                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&package-name=com.example.android"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -216,7 +216,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/packagename/time/query?packageName=com.example.android"))
+                requestTo(API_BASE_URL + "/api/crash/package-name/time/query?package-name=com.example.android"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -226,7 +226,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/packagename/set"))
+                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -246,7 +246,7 @@ public class CrashDataRestServiceServerTest {
                                 }
                         )
                         .param("time", String.valueOf(1L))
-                        .param("packageName", "com.example.android")
+                        .param("package-name", "com.example.android")
         )
                 .andDo(print())
                 .andExpect(view().name("crash"))
@@ -280,7 +280,7 @@ public class CrashDataRestServiceServerTest {
         MockHttpServletResponse response = mvc.perform(
                 get("/crash/filter/time/query")
                         .param("time", String.valueOf(1L))
-                        .param("packageName", "com.example.android")
+                        .param("package-name", "com.example.android")
         )
                 .andDo(print())
                 .andExpect(view().name("login"))
@@ -305,7 +305,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&packageName=com.example.android"))
+                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&package-name=com.example.android"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withNoContent()
@@ -322,7 +322,7 @@ public class CrashDataRestServiceServerTest {
                                 }
                         )
                         .param("time", String.valueOf(1L))
-                        .param("packageName", "com.example.android")
+                        .param("package-name", "com.example.android")
                         .content("")
         )
                 .andDo(print())
@@ -350,7 +350,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/filter/packagename/query?packageName=android3"))
+                requestTo(API_BASE_URL + "/api/crash/filter/package-name/query?package-name=android3"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -360,7 +360,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/packagename/time/query?packageName=android3"))
+                requestTo(API_BASE_URL + "/api/crash/package-name/time/query?package-name=android3"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -370,7 +370,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/packagename/set"))
+                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withSuccess(
@@ -380,7 +380,7 @@ public class CrashDataRestServiceServerTest {
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/crash/filter/packagename/query")
+                get("/crash/filter/package-name/query")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -389,7 +389,7 @@ public class CrashDataRestServiceServerTest {
                                     }
                                 }
                         )
-                        .param("packageName", "android3")
+                        .param("package-name", "android3")
         )
                 .andDo(print())
                 .andExpect(view().name("crash"))
@@ -421,8 +421,8 @@ public class CrashDataRestServiceServerTest {
     @Test
     public void crashPackageNamePageUserNullTest() throws Exception {
         MockHttpServletResponse response = mvc.perform(
-                get("/crash/filter/packagename/query")
-                        .param("packageName", "com.example.android")
+                get("/crash/filter/package-name/query")
+                        .param("package-name", "com.example.android")
         )
                 .andDo(print())
                 .andExpect(view().name("login"))
@@ -447,14 +447,14 @@ public class CrashDataRestServiceServerTest {
                 );
 
         this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/filter/packagename/query?packageName=com.example.android"))
+                requestTo(API_BASE_URL + "/api/crash/filter/package-name/query?package-name=com.example.android"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(
                         withNoContent()
                 );
 
         MockHttpServletResponse response = mvc.perform(
-                get("/crash/filter/packagename/query")
+                get("/crash/filter/package-name/query")
                         .principal(
                                 new Principal() {
                                     @Override
@@ -463,7 +463,7 @@ public class CrashDataRestServiceServerTest {
                                     }
                                 }
                         )
-                        .param("packageName", "com.example.android")
+                        .param("package-name", "com.example.android")
                         .content("")
         )
                 .andDo(print())
@@ -492,7 +492,7 @@ public class CrashDataRestServiceServerTest {
 
         MockHttpServletResponse response = mvc.perform(
                 post("/crash")
-                        .header("secretKey", "key")
+                        .header("apiKey", "key")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{}")
         )
