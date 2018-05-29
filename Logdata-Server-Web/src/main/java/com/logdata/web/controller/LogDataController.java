@@ -38,6 +38,10 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public ArrayList<LogVO> logDataLevelList(Principal user, @RequestParam(value = "package-name") String packageName, @RequestParam(value = "level") String level) {
+        if (user == null) {
+            return null;
+        }
+
         LogVO[] body = restAPIUtility.getLogDataLevel("/log-data/filter/level", getUserApiKey(user.getName()), packageName, level);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
@@ -49,6 +53,10 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public ArrayList<LogVO> logDataTagList(Principal user, @RequestParam(value = "package-name") String packageName, @RequestParam(value = "tag") String tag) {
+        if (user == null) {
+            return null;
+        }
+
         LogVO[] body = restAPIUtility.getLogDataTag("/log-data/filter/tag", getUserApiKey(user.getName()), packageName, tag);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
@@ -60,6 +68,10 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public ArrayList<LogVO> logDataPackageNameList(Principal user, @RequestParam(value = "package-name") String packageName) {
+        if (user == null) {
+            return null;
+        }
+
         LogVO[] body = restAPIUtility.searchLogDataOfPackageName("/log-data/filter/package-name", getUserApiKey(user.getName()), packageName);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
@@ -71,6 +83,10 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private ArrayList<String> getPackageName(Principal user) {
+        if (user == null) {
+            return null;
+        }
+
         ArrayList<String> body = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
 
         return body;
@@ -80,6 +96,10 @@ public class LogDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     private Set<String> getTagName(Principal user, @RequestParam(value = "package-name") String packageName) {
+        if (user == null) {
+            return null;
+        }
+
         Set<String> body = restAPIUtility.getLogDataInfoSet("/log-data/tag/set", getUserApiKey(user.getName()), packageName);
 
         return body;

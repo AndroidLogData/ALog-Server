@@ -8,8 +8,8 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Route path="/log-data/filter/level/:package-name/:level" component={LevelFilter}/>
-                <Route path="/log-data/filter/tag/:package-name/:tag" component={TagFilter}/>
+                <Route path="/log-data/filter/level/:packageName/:level" component={LevelFilter}/>
+                <Route path="/log-data/filter/tag/:packageName/:tag" component={TagFilter}/>
                 <Route path="/log-data/filter/package-name/:packageName" component={PackageFilter}/>
             </div>
         );

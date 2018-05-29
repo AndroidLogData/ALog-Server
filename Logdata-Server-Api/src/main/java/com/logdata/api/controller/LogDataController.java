@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping(value = "/api")
@@ -109,8 +111,19 @@ public class LogDataController {
         PackageNameVO packageNameVO = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
         for (int i = 0; i < packageNameVO.getPackageNameList().size(); i++) {
             if (packageName.equals(packageNameVO.getPackageNameList().get(i))) {
-                List<LogVO> logVOList = this.logDataService.findByPackageNameAndTag(packageName, tag, new Sort(Sort.Direction.DESC, "time"));
-                return logVOList;
+                List<LogVO> logVOList = this.logDataService.findByPackageName(packageName, new Sort(Sort.Direction.DESC, "time"));
+                List<LogVO> result = new ArrayList<>();
+
+                for (LogVO item : logVOList) {
+                    Pattern pattern = Pattern.compile("\\([0-9]*\\)");
+                    Matcher matcher = pattern.matcher(item.getTag());
+                    String str = matcher.replaceFirst("");
+                    if (tag.equals(str)) {
+                        result.add(item);
+                    }
+                }
+
+                return result;
             }
         }
         return null;
@@ -118,7 +131,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/log-data/tag/set/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    private Set<String> getTag(@RequestHeader(value = "apiKey") String apiKey,  @RequestParam(value="package-name") String packageName) {
+    private Set<String> getTag(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
         PackageNameVO packageNameVO = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
 
         for (int i = 0; i < packageNameVO.getPackageNameList().size(); i++) {
@@ -126,7 +139,10 @@ public class LogDataController {
                 List<LogVO> logList = this.logDataService.findByPackageName(packageName);
                 Set<String> tagSet = new HashSet<String>();
                 for (LogVO logData : logList) {
-                    tagSet.add(logData.getTag());
+                    Pattern pattern = Pattern.compile("\\([0-9]*\\)");
+                    Matcher matcher = pattern.matcher(logData.getTag());
+                    String str = matcher.replaceFirst("");
+                    tagSet.add(str);
                 }
                 return tagSet;
             }

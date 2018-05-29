@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class CustomRequestMatcher implements RequestMatcher {
     private Pattern allowedMethods = Pattern.compile("^(HEAD|TRACE|OPTIONS)$");
-    private RegexRequestMatcher unprotectedMatcher = new RegexRequestMatcher("^(/logdata|/crash)$", "POST");
+    private RegexRequestMatcher unprotectedMatcher = new RegexRequestMatcher("^(/log-data|/crash)$", "POST");
 
     @Override
     public boolean matches(HttpServletRequest request) {

@@ -36,7 +36,7 @@ public class HelpController {
         }
 
         LinkedHashMap<String, Integer> crashList = restAPIUtility.getCrashList("/my-page", getUserApiKey(user.getName()));
-        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIUtility.getLogDataInfo("/main", getUserApiKey(user.getName()))));
+        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIUtility.getLogDataInfo("/detail", getUserApiKey(user.getName()))));
 
         model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfo", logDataInfoVO);
