@@ -59,7 +59,7 @@ class TagList extends React.Component {
             url: '/log-data/tag/set/query?',
             type: "GET",
             dataType: 'json',
-            data: {"packageName": this.props.packageName},
+            data: {"package-name": this.props.packageName},
             cache: false,
             success: function (data) {
                 this.setState({logData: data});

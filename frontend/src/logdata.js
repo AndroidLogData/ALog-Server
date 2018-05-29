@@ -579,7 +579,7 @@ class LogData extends React.Component {
             <div className="container-fluid">
                 <div className="row">
                     <main className="col-sm offset-sm-3 col-md offset-md-2 pt-3">
-                        <FilterBar packageName={query.query.packagename}/>
+                        <FilterBar packageName={query.query["package-name"]}/>
                         <div className="row">
                             <LogDataVerb logData={logLevelVerb}/>
                             <LogDataInfo logData={logLevelInfo}/>
