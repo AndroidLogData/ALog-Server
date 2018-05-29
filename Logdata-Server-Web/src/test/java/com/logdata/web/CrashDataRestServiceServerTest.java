@@ -130,51 +130,51 @@ public class CrashDataRestServiceServerTest {
         userDataJsonString = "{\"id\":\"5a893a6441f1180c84d51d91\",\"userID\":\"user\",\"password\":\"$2a$10$IWl.imN.n9/4ltXsR43bl.Zx/2TKANCV4Io99UssMFLFwpD29oZky\",\"apiKey\":\"key\",\"roles\":[{\"roleName\":\"USER\",\"rno\":null}]}";
     }
 
-    @Test
-    public void crashPageTest() throws Exception {
-        this.server.expect(
-                requestTo(API_BASE_URL + "/user/find/query?name=user"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                "{}",
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                "[\"com.example.android\", \"com.example.practice\"]",
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        MockHttpServletResponse response = mvc.perform(
-                get("/crash")
-                        .principal(
-                                new Principal() {
-                                    @Override
-                                    public String getName() {
-                                        return "user";
-                                    }
-                                }
-                        )
-        )
-                .andDo(print())
-                .andExpect(view().name("crash"))
-                .andExpect(model().attribute("noData", true))
-                .andExpect(model().attribute("sideMenuItems", sideMenuItemsList))
-                .andReturn()
-                .getResponse();
-
-        this.server.verify();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
-    }
+//    @Test
+//    public void crashPageTest() throws Exception {
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                "{}",
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                "[\"com.example.android\", \"com.example.practice\"]",
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        MockHttpServletResponse response = mvc.perform(
+//                get("/crash")
+//                        .principal(
+//                                new Principal() {
+//                                    @Override
+//                                    public String getName() {
+//                                        return "user";
+//                                    }
+//                                }
+//                        )
+//        )
+//                .andDo(print())
+//                .andExpect(view().name("crash"))
+//                .andExpect(model().attribute("noData", true))
+//                .andExpect(model().attribute("sideMenuItems", sideMenuItemsList))
+//                .andReturn()
+//                .getResponse();
+//
+//        this.server.verify();
+//
+//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+//        assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
+//    }
 
     @Test
     public void crashPageUserNullTest() throws Exception {
@@ -192,88 +192,88 @@ public class CrashDataRestServiceServerTest {
         assertThat(response.getForwardedUrl()).isEqualTo("templates/login.html");
     }
 
-    @Test
-    public void crashDataTimeViewTest() throws Exception {
-        this.server.expect(
-                ExpectedCount.manyTimes(),
-                requestTo(API_BASE_URL + "/user/find/query?name=user"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                userDataJsonString,
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&package-name=com.example.android"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                crashDataJsonString,
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/package-name/time/query?package-name=com.example.android"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                crashTimeDataJsonString,
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                "[\"com.example.android\", \"com.example.practice\"]",
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        MockHttpServletResponse response = mvc.perform(
-                get("/crash/filter/time/query")
-                        .principal(
-                                new Principal() {
-                                    @Override
-                                    public String getName() {
-                                        return "user";
-                                    }
-                                }
-                        )
-                        .param("time", String.valueOf(1L))
-                        .param("package-name", "com.example.android")
-        )
-                .andDo(print())
-                .andExpect(view().name("crash"))
-                .andExpect(model().attribute("noData", false))
-//                .andExpect(model().attribute("crash", newCrashData))
-                .andExpect(model().attribute("logcat", ""))
-                .andExpect(model().attribute("time", "1970-01-01 00:00:00.001"))
-                .andExpect(model().attribute("realSize", displayContent.get("realSize")))
-                .andExpect(model().attribute("rotation", "ROTATION_0"))
-                .andExpect(model().attribute("bootLoader", "N900SKSU0GPI1"))
-                .andExpect(model().attribute("CPU_ABI", "armeabi-v7a"))
-                .andExpect(model().attribute("CPU_ABI2", "armeabi"))
-                .andExpect(model().attribute("buildDisplay", "LRX21V.N900SKSU0GPI1"))
-                .andExpect(model().attribute("TWRP", "hlteskt"))
-                .andExpect(model().attribute("deviceFeatures", deviceFeatures))
-                .andExpect(model().attribute("model", "SM-N900S"))
-                .andExpect(model().attribute("board", "MSM8974"))
-//                .andExpect(model().attribute("timeData", crashTimeDataJsonString))
-                .andExpect(model().attribute("sideMenuItems", sideMenuItemsList))
-                .andReturn()
-                .getResponse();
-
-        this.server.verify();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
-    }
+//    @Test
+//    public void crashDataTimeViewTest() throws Exception {
+//        this.server.expect(
+//                ExpectedCount.manyTimes(),
+//                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                userDataJsonString,
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/crash/filter/time/query?time=1&package-name=com.example.android"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                crashDataJsonString,
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/crash/package-name/time/query?package-name=com.example.android"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                crashTimeDataJsonString,
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                "[\"com.example.android\", \"com.example.practice\"]",
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        MockHttpServletResponse response = mvc.perform(
+//                get("/crash/filter/time/query")
+//                        .principal(
+//                                new Principal() {
+//                                    @Override
+//                                    public String getName() {
+//                                        return "user";
+//                                    }
+//                                }
+//                        )
+//                        .param("time", String.valueOf(1L))
+//                        .param("package-name", "com.example.android")
+//        )
+//                .andDo(print())
+//                .andExpect(view().name("crash"))
+//                .andExpect(model().attribute("noData", false))
+////                .andExpect(model().attribute("crash", newCrashData))
+//                .andExpect(model().attribute("logcat", ""))
+//                .andExpect(model().attribute("time", "1970-01-01 00:00:00.001"))
+//                .andExpect(model().attribute("realSize", displayContent.get("realSize")))
+//                .andExpect(model().attribute("rotation", "ROTATION_0"))
+//                .andExpect(model().attribute("bootLoader", "N900SKSU0GPI1"))
+//                .andExpect(model().attribute("CPU_ABI", "armeabi-v7a"))
+//                .andExpect(model().attribute("CPU_ABI2", "armeabi"))
+//                .andExpect(model().attribute("buildDisplay", "LRX21V.N900SKSU0GPI1"))
+//                .andExpect(model().attribute("TWRP", "hlteskt"))
+//                .andExpect(model().attribute("deviceFeatures", deviceFeatures))
+//                .andExpect(model().attribute("model", "SM-N900S"))
+//                .andExpect(model().attribute("board", "MSM8974"))
+////                .andExpect(model().attribute("timeData", crashTimeDataJsonString))
+//                .andExpect(model().attribute("sideMenuItems", sideMenuItemsList))
+//                .andReturn()
+//                .getResponse();
+//
+//        this.server.verify();
+//
+//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+//        assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
+//    }
 
     @Test
     public void crashDataTimeViewUserNullTest() throws Exception {
@@ -336,87 +336,87 @@ public class CrashDataRestServiceServerTest {
         assertThat(response.getForwardedUrl()).isEqualTo("templates/nodata.html");
     }
 
-    @Test
-    public void crashPackageNamePageTest() throws Exception {
-        this.server.expect(
-                ExpectedCount.manyTimes(),
-                requestTo(API_BASE_URL + "/user/find/query?name=user"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                userDataJsonString,
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/filter/package-name/query?package-name=android3"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                crashDataJsonString,
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/package-name/time/query?package-name=android3"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                crashTimeDataJsonString,
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                "[\"com.example.android\", \"com.example.practice\"]",
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        MockHttpServletResponse response = mvc.perform(
-                get("/crash/filter/package-name/query")
-                        .principal(
-                                new Principal() {
-                                    @Override
-                                    public String getName() {
-                                        return "user";
-                                    }
-                                }
-                        )
-                        .param("package-name", "android3")
-        )
-                .andDo(print())
-                .andExpect(view().name("crash"))
-                .andExpect(model().attribute("noData", false))
-//                .andExpect(model().attribute("crash", newCrashData))
-                .andExpect(model().attribute("logcat", ""))
-                .andExpect(model().attribute("time", "1970-01-01 00:00:00.001"))
-                .andExpect(model().attribute("realSize", displayContent.get("realSize")))
-                .andExpect(model().attribute("rotation", "ROTATION_0"))
-                .andExpect(model().attribute("bootLoader", "N900SKSU0GPI1"))
-                .andExpect(model().attribute("CPU_ABI", "armeabi-v7a"))
-                .andExpect(model().attribute("CPU_ABI2", "armeabi"))
-                .andExpect(model().attribute("buildDisplay", "LRX21V.N900SKSU0GPI1"))
-                .andExpect(model().attribute("TWRP", "hlteskt"))
-                .andExpect(model().attribute("deviceFeatures", deviceFeatures))
-                .andExpect(model().attribute("model", "SM-N900S"))
-                .andExpect(model().attribute("board", "MSM8974"))
-//                .andExpect(model().attribute("timeData", crashTimeDataJsonString))
-                .andExpect(model().attribute("sideMenuItems", sideMenuItemsList))
-                .andReturn()
-                .getResponse();
-
-        this.server.verify();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
-    }
+//    @Test
+//    public void crashPackageNamePageTest() throws Exception {
+//        this.server.expect(
+//                ExpectedCount.manyTimes(),
+//                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                userDataJsonString,
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/crash/filter/package-name/query?package-name=android3"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                crashDataJsonString,
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/crash/package-name/time/query?package-name=android3"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                crashTimeDataJsonString,
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/crash/package-name/set"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                "[\"com.example.android\", \"com.example.practice\"]",
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        MockHttpServletResponse response = mvc.perform(
+//                get("/crash/filter/package-name/query")
+//                        .principal(
+//                                new Principal() {
+//                                    @Override
+//                                    public String getName() {
+//                                        return "user";
+//                                    }
+//                                }
+//                        )
+//                        .param("package-name", "android3")
+//        )
+//                .andDo(print())
+//                .andExpect(view().name("crash"))
+//                .andExpect(model().attribute("noData", false))
+////                .andExpect(model().attribute("crash", newCrashData))
+//                .andExpect(model().attribute("logcat", ""))
+//                .andExpect(model().attribute("time", "1970-01-01 00:00:00.001"))
+//                .andExpect(model().attribute("realSize", displayContent.get("realSize")))
+//                .andExpect(model().attribute("rotation", "ROTATION_0"))
+//                .andExpect(model().attribute("bootLoader", "N900SKSU0GPI1"))
+//                .andExpect(model().attribute("CPU_ABI", "armeabi-v7a"))
+//                .andExpect(model().attribute("CPU_ABI2", "armeabi"))
+//                .andExpect(model().attribute("buildDisplay", "LRX21V.N900SKSU0GPI1"))
+//                .andExpect(model().attribute("TWRP", "hlteskt"))
+//                .andExpect(model().attribute("deviceFeatures", deviceFeatures))
+//                .andExpect(model().attribute("model", "SM-N900S"))
+//                .andExpect(model().attribute("board", "MSM8974"))
+////                .andExpect(model().attribute("timeData", crashTimeDataJsonString))
+//                .andExpect(model().attribute("sideMenuItems", sideMenuItemsList))
+//                .andReturn()
+//                .getResponse();
+//
+//        this.server.verify();
+//
+//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+//        assertThat(response.getForwardedUrl()).isEqualTo("templates/crash.html");
+//    }
 
     @Test
     public void crashPackageNamePageUserNullTest() throws Exception {

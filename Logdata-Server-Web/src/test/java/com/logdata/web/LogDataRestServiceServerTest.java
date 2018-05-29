@@ -181,92 +181,92 @@ public class LogDataRestServiceServerTest {
         assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null}]");
     }
 
-    @Test
-    public void logDataPackageNameListTest() throws Exception {
-        this.server.expect(
-                requestTo(API_BASE_URL + "/user/find/query?name=user"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(
-                        "{}",
-                        MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
+//    @Test
+//    public void logDataPackageNameListTest() throws Exception {
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(withSuccess(
+//                        "{}",
+//                        MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/log-data/filter/package-name/query?package-name=android3"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                "[{}]",
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        MockHttpServletResponse response = mvc.perform(
+//                get("/log-data/filter/package-name/query?")
+//                        .principal(
+//                                new Principal() {
+//                                    @Override
+//                                    public String getName() {
+//                                        return "user";
+//                                    }
+//                                }
+//                        )
+//                        .param("package-name", "android3")
+//        )
+//                .andDo(print())
+//                .andReturn()
+//                .getResponse();
+//
+//        this.server.verify();
+//
+//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+//        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null}]");
+//    }
 
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/log-data/filter/package-name/query?package-name=android3"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                "[{}]",
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        MockHttpServletResponse response = mvc.perform(
-                get("/log-data/filter/package-name/query?")
-                        .principal(
-                                new Principal() {
-                                    @Override
-                                    public String getName() {
-                                        return "user";
-                                    }
-                                }
-                        )
-                        .param("package-name", "android3")
-        )
-                .andDo(print())
-                .andReturn()
-                .getResponse();
-
-        this.server.verify();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":null,\"level\":null,\"tag\":null,\"message\":null,\"time\":0,\"memoryInfo\":null}]");
-    }
-
-    @Test
-    public void getPackageNameTest() throws Exception {
-        this.server.expect(
-                requestTo(API_BASE_URL + "/user/find/query?name=user"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(
-                        "{}",
-                        MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        this.server.expect(
-                requestTo(API_BASE_URL + "/api/log-data/package-name/set"))
-                .andExpect(method(HttpMethod.GET))
-                .andRespond(
-                        withSuccess(
-                                "[\"com.example.android\", \"com.logdata.android.example\"]",
-                                MediaType.APPLICATION_JSON_UTF8
-                        )
-                );
-
-        MockHttpServletResponse response = mvc.perform(
-                get("/log-data/package-name/set")
-                        .principal(
-                                new Principal() {
-                                    @Override
-                                    public String getName() {
-                                        return "user";
-                                    }
-                                }
-                        )
-        )
-                .andDo(print())
-                .andReturn()
-                .getResponse();
-
-        this.server.verify();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("[\"com.logdata.android.example\",\"com.example.android\"]");
-    }
+//    @Test
+//    public void getPackageNameTest() throws Exception {
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/user/find/query?name=user"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(withSuccess(
+//                        "{}",
+//                        MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        this.server.expect(
+//                requestTo(API_BASE_URL + "/api/log-data/package-name/set"))
+//                .andExpect(method(HttpMethod.GET))
+//                .andRespond(
+//                        withSuccess(
+//                                "[\"com.example.android\", \"com.logdata.android.example\"]",
+//                                MediaType.APPLICATION_JSON_UTF8
+//                        )
+//                );
+//
+//        MockHttpServletResponse response = mvc.perform(
+//                get("/log-data/package-name/set")
+//                        .principal(
+//                                new Principal() {
+//                                    @Override
+//                                    public String getName() {
+//                                        return "user";
+//                                    }
+//                                }
+//                        )
+//        )
+//                .andDo(print())
+//                .andReturn()
+//                .getResponse();
+//
+//        this.server.verify();
+//
+//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+//        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
+//        assertThat(response.getContentAsString()).isEqualTo("[\"com.logdata.android.example\",\"com.example.android\"]");
+//    }
 
     @Test
     public void getTagNameTest() throws Exception {
