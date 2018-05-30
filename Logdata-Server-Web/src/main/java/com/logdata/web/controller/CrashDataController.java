@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.*;
 
@@ -26,19 +27,19 @@ public class CrashDataController {
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.GET)
-    public String crashPage(Principal user, Model model) {
+    public String crashPage(Principal user, Model model, HttpSession session) {
         if (user == null) {
             return "login";
         }
 
         model.addAttribute("sideMenuItems", getPackageName(user));
-        model.addAttribute("crashDataPackageNameList", crashDataPackageName(user.getName()));
+        model.addAttribute("packageName", session.getAttribute("packageName"));
 
         return "crash";
     }
 
     @RequestMapping(value = "/crash/filter/time/{query}", method = RequestMethod.GET)
-    public String crashDataTimeView(Principal user, @RequestParam(value = "time") long time, @RequestParam(value = "package-name") String packageName, Model model) {
+    public String crashDataTimeView(Principal user, @RequestParam(value = "time") long time, @RequestParam(value = "package-name") String packageName, Model model, HttpSession session) {
         if (user == null) {
             return "login";
         }
@@ -74,13 +75,13 @@ public class CrashDataController {
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("sideMenuItems", getPackageName(user));
-        model.addAttribute("crashDataPackageNameList", crashDataPackageName(user.getName()));
+        model.addAttribute("packageName", session.getAttribute("packageName"));
 
         return "crash";
     }
 
     @RequestMapping(value = "/crash/filter/package-name/{query}", method = RequestMethod.GET)
-    public String crashPackageNamePage(Principal user, Model model, @RequestParam(value = "package-name") String packageName) {
+    public String crashPackageNamePage(Principal user, Model model, @RequestParam(value = "package-name") String packageName, HttpSession session) {
         if (user == null) {
             return "login";
         }
@@ -117,7 +118,7 @@ public class CrashDataController {
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("sideMenuItems", getPackageName(user));
-        model.addAttribute("crashDataPackageNameList", crashDataPackageName(user.getName()));
+        model.addAttribute("packageName", session.getAttribute("packageName"));
 
         return "crash";
     }
@@ -140,9 +141,5 @@ public class CrashDataController {
         CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crash/package-name/time", getUserApiKey(user.getName()), packageName);
 
         return new ArrayList<CrashTimeVO>(Arrays.asList(list));
-    }
-
-    public Set<String> crashDataPackageName(String name) {
-        return this.restAPIUtility.getCrashDataPackageName("/crash/filter/package-name", getUserApiKey(name));
     }
 }

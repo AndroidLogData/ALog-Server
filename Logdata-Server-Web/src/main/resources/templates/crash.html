@@ -4,19 +4,7 @@
 </head>
 <body>
 <div th:replace="navigation :: navigation"></div>
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
-            <ul class="nav nav-pills flex-column">
-                <li class="nav-item" th:each="item : ${sideMenuItems}">
-                    <a class="nav-link"
-                       th:href="@{/crash/filter/package-name/query(package-name=${item})}"
-                       th:text="${item}"/>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
+<div th:replace="side_menu :: sidemenu"></div>
 <div class="container-fluid">
     <div class="row">
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
@@ -26,13 +14,19 @@
                     <h3 class="card-header">Filter</h3>
                     <div class="card-block">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                            <button type="button" class="btn btn-secondary dropdown-toggle"
+                                    data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
-                                PackageName
+                                기록
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" th:each="item : ${crashDataPackageNameList}" th:text="${item}"
-                                   th:href="@{/crash/filter/package-name/query(package-name=${item})}"/>
+                            <div class="dropdown-menu dropdown-menu-right justify-content-md-end"
+                                 style="height: auto; max-height: 200px; overflow-x: hidden;"
+                                 aria-labelledby="dropdown03">
+                                <div th:each="item : ${timeData}">
+                                    <a class="dropdown-item"
+                                       th:href="@{/crash/filter/time/query(time=${item.getTime()}, package-name=${item.getPackageName()})}"
+                                       th:text="${item.getStringTime()}"/>
+                                </div>
                             </div>
                         </div>
                     </div>

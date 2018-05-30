@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 
@@ -23,10 +24,12 @@ public class BoardDataController {
     }
 
     @RequestMapping(value = "/board/{query}", method = RequestMethod.GET, produces = "application/json")
-    public String logDataInfoOfPackageName(Principal user, @RequestParam(value = "package-name") String packageName, Model model) {
+    public String logDataInfoOfPackageName(Principal user, @RequestParam(value = "package-name") String packageName, Model model, HttpSession session) {
         if (user == null) {
             return null;
         }
+
+        session.setAttribute("packageName", packageName);
 
         LogDataInfoVO logDataInfoVO = restAPIUtility.getLogDataInfoOfPackageName("/detail", getUserApiKey(user.getName()), packageName);
         ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));

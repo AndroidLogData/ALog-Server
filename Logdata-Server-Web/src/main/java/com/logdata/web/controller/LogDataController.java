@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,14 +112,13 @@ public class LogDataController {
     }
 
     @RequestMapping(value = "/log-data/filter/package-name/{query}", method = RequestMethod.GET)
-    public String logDataPackageNameView(Principal user, Model model) {
+    public String logDataPackageNameView(Principal user, Model model, HttpSession session) {
         if (user == null) {
             return "login";
         }
 
-        ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
+        model.addAttribute("packageName", session.getAttribute("packageName"));
 
-        model.addAttribute("packageNameList", packageNameList);
         return "logdata";
     }
 }
