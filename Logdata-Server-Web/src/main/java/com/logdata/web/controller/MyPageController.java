@@ -2,7 +2,7 @@ package com.logdata.web.controller;
 
 import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.common.model.UserVO;
-import com.logdata.web.service.RestAPIUtility;
+import com.logdata.web.service.RestAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +16,12 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 @Controller
-public class HelpController {
-    private final RestAPIUtility restAPIUtility;
+public class MyPageController {
+    private final RestAPIManager restAPIManager;
 
     @Autowired
-    public HelpController(RestAPIUtility restAPIUtility) {
-        this.restAPIUtility = restAPIUtility;
+    public MyPageController(RestAPIManager restAPIManager) {
+        this.restAPIManager = restAPIManager;
     }
 
     @RequestMapping(value = "/help", method = RequestMethod.GET)
@@ -35,8 +35,8 @@ public class HelpController {
             return "login";
         }
 
-        LinkedHashMap<String, Integer> crashList = restAPIUtility.getCrashList("/my-page", getUserApiKey(user.getName()));
-        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIUtility.getLogDataInfo("/detail", getUserApiKey(user.getName()))));
+        LinkedHashMap<String, Integer> crashList = restAPIManager.getCrashList("/my-page", getUserApiKey(user.getName()));
+        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIManager.getLogDataInfo("/detail", getUserApiKey(user.getName()))));
 
         model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfo", logDataInfoVO);
@@ -51,10 +51,10 @@ public class HelpController {
             return "login";
         }
 
-        System.out.println(restAPIUtility.deleteLogData("/log-data", getUserApiKey(user.getName()), packageName));
+        System.out.println(restAPIManager.deleteLogData("/log-data", getUserApiKey(user.getName()), packageName));
 
-        LinkedHashMap<String, Integer> crashList = restAPIUtility.getCrashList("/my-page", getUserApiKey(user.getName()));
-        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIUtility.getLogDataInfo("/main", getUserApiKey(user.getName()))));
+        LinkedHashMap<String, Integer> crashList = restAPIManager.getCrashList("/my-page", getUserApiKey(user.getName()));
+        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIManager.getLogDataInfo("/main", getUserApiKey(user.getName()))));
 
         model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfo", logDataInfoVO);
@@ -64,7 +64,7 @@ public class HelpController {
     }
 
     public String getUserApiKey(String name) {
-        UserVO u = this.restAPIUtility.findUser("/find", name);
+        UserVO u = this.restAPIManager.findUser("/find", name);
         return u.getApiKey();
     }
 }

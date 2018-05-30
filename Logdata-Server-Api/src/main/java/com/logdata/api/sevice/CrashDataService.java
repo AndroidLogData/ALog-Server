@@ -38,8 +38,12 @@ public class CrashDataService {
         return this.crashDataRepository.findCrashDataByOrderByTimeDescPackageName(packageName);
     }
 
-    public CrashVO findByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey) {
+    public List<CrashVO> findByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey) {
         return this.crashDataRepository.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+    }
+
+    public CrashVO findCrashVOByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey) {
+        return this.crashDataRepository.findCrashVOByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
     }
 
     public ArrayList<CrashVO> findByApiKeyOrderByTimeAsc(String apiKey) {

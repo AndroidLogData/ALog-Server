@@ -2,7 +2,7 @@ package com.logdata.web.controller;
 
 import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.common.model.UserVO;
-import com.logdata.web.service.RestAPIUtility;
+import com.logdata.web.service.RestAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -12,16 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Set;
 
 @Controller
 public class MainController {
-    private final RestAPIUtility restAPIUtility;
+    private final RestAPIManager restAPIManager;
 
     @Autowired
-    public MainController(RestAPIUtility restAPIUtility) {
-        this.restAPIUtility = restAPIUtility;
+    public MainController(RestAPIManager restAPIManager) {
+        this.restAPIManager = restAPIManager;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -29,8 +27,8 @@ public class MainController {
         if (user == null) {
             return "index";
         } else {
-            ArrayList<String> packageNameList = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
-            LogDataInfoVO[] logDataInfoList = restAPIUtility.getLogDataInfo("/detail", getUserApiKey(user.getName()));
+            ArrayList<String> packageNameList = restAPIManager.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
+            LogDataInfoVO[] logDataInfoList = restAPIManager.getLogDataInfo("/detail", getUserApiKey(user.getName()));
 
             model.addAttribute("packageNameList", packageNameList);
             model.addAttribute("logDataInfoList", logDataInfoList);
@@ -47,13 +45,13 @@ public class MainController {
             return null;
         }
 
-        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIUtility.getLogDataInfo("/main", getUserApiKey(user.getName()))));
+        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIManager.getLogDataInfo("/main", getUserApiKey(user.getName()))));
 
         return logDataInfoVO;
     }
 
     public String getUserApiKey(String name) {
-        UserVO u = this.restAPIUtility.findUser("/find", name);
+        UserVO u = this.restAPIManager.findUser("/find", name);
         return u.getApiKey();
     }
 }

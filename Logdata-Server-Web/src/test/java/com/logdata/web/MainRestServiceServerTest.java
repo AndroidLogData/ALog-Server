@@ -3,7 +3,7 @@ package com.logdata.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.web.controller.MainController;
-import com.logdata.web.service.RestAPIUtility;
+import com.logdata.web.service.RestAPIManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@RestClientTest(RestAPIUtility.class)
+@RestClientTest(RestAPIManager.class)
 public class MainRestServiceServerTest {
     @Autowired
     private MockRestServiceServer server;

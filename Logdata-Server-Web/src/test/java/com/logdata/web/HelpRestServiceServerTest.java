@@ -2,8 +2,8 @@ package com.logdata.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logdata.common.model.LogDataInfoVO;
-import com.logdata.web.controller.HelpController;
-import com.logdata.web.service.RestAPIUtility;
+import com.logdata.web.controller.MyPageController;
+import com.logdata.web.service.RestAPIManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,39 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@RestClientTest(RestAPIUtility.class)
+@RestClientTest(RestAPIManager.class)
 public class HelpRestServiceServerTest {
     @Autowired
     private MockRestServiceServer server;
     @Autowired
-    private HelpController helpController;
+    private MyPageController myPageController;
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -62,7 +53,7 @@ public class HelpRestServiceServerTest {
         viewResolver.setSuffix(".html");
 
         mvc = MockMvcBuilders
-                .standaloneSetup(helpController)
+                .standaloneSetup(myPageController)
                 .setViewResolvers(viewResolver)
                 .build();
 

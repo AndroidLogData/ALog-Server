@@ -1,7 +1,7 @@
 package com.logdata.web;
 
 import com.logdata.web.controller.LoginController;
-import com.logdata.web.service.RestAPIUtility;
+import com.logdata.web.service.RestAPIManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@RestClientTest(RestAPIUtility.class)
+@RestClientTest(RestAPIManager.class)
 public class LoginRestServiceServerTest {
     @Autowired
     private MockRestServiceServer server;

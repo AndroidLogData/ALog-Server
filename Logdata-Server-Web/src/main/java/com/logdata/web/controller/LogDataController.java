@@ -2,7 +2,7 @@ package com.logdata.web.controller;
 
 import com.logdata.common.model.LogVO;
 import com.logdata.common.model.UserVO;
-import com.logdata.web.service.RestAPIUtility;
+import com.logdata.web.service.RestAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +18,11 @@ import java.util.Set;
 
 @Controller
 public class LogDataController {
-    private final RestAPIUtility restAPIUtility;
+    private final RestAPIManager restAPIManager;
 
     @Autowired
-    public LogDataController(RestAPIUtility restAPIUtility) {
-        this.restAPIUtility = restAPIUtility;
+    public LogDataController(RestAPIManager restAPIManager) {
+        this.restAPIManager = restAPIManager;
     }
 
     @RequestMapping(value = "/log-data", method = RequestMethod.GET)
@@ -32,7 +32,7 @@ public class LogDataController {
 
     @RequestMapping(value = "/log-data", method = RequestMethod.POST)
     public ResponseEntity<Object> logDataSave(@RequestHeader(value = "apiKey") String apiKey, @RequestBody LogVO data) {
-        return restAPIUtility.postData("/api", "/log-data", apiKey, data);
+        return restAPIManager.postData("/api", "/log-data", apiKey, data);
     }
 
     @RequestMapping(value = "/log-data/filter/level/{query}", method = RequestMethod.GET, produces = "application/json")
@@ -43,7 +43,7 @@ public class LogDataController {
             return null;
         }
 
-        LogVO[] body = restAPIUtility.getLogDataLevel("/log-data/filter/level", getUserApiKey(user.getName()), packageName, level);
+        LogVO[] body = restAPIManager.getLogDataLevel("/log-data/filter/level", getUserApiKey(user.getName()), packageName, level);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
@@ -58,7 +58,7 @@ public class LogDataController {
             return null;
         }
 
-        LogVO[] body = restAPIUtility.getLogDataTag("/log-data/filter/tag", getUserApiKey(user.getName()), packageName, tag);
+        LogVO[] body = restAPIManager.getLogDataTag("/log-data/filter/tag", getUserApiKey(user.getName()), packageName, tag);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
@@ -73,7 +73,7 @@ public class LogDataController {
             return null;
         }
 
-        LogVO[] body = restAPIUtility.searchLogDataOfPackageName("/log-data/filter/package-name", getUserApiKey(user.getName()), packageName);
+        LogVO[] body = restAPIManager.searchLogDataOfPackageName("/log-data/filter/package-name", getUserApiKey(user.getName()), packageName);
 
         ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
 
@@ -88,7 +88,7 @@ public class LogDataController {
             return null;
         }
 
-        ArrayList<String> body = restAPIUtility.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
+        ArrayList<String> body = restAPIManager.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
 
         return body;
     }
@@ -101,13 +101,13 @@ public class LogDataController {
             return null;
         }
 
-        Set<String> body = restAPIUtility.getLogDataInfoSet("/log-data/tag/set", getUserApiKey(user.getName()), packageName);
+        Set<String> body = restAPIManager.getLogDataInfoSet("/log-data/tag/set", getUserApiKey(user.getName()), packageName);
 
         return body;
     }
 
     public String getUserApiKey(String name) {
-        UserVO u = this.restAPIUtility.findUser("/find", name);
+        UserVO u = this.restAPIManager.findUser("/find", name);
         return u.getApiKey();
     }
 

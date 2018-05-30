@@ -13,17 +13,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 @Component
-public class RestAPIUtility {
+public class RestAPIManager {
     private final RestTemplate restTemplate;
     private HttpHeaders headers = new HttpHeaders();
     private HttpEntity<Object> entity = null;
     private MultiValueMap<String, String> params = null;
 
     @Autowired
-    public RestAPIUtility(RestTemplateBuilder builder) {
+    public RestAPIManager(RestTemplateBuilder builder) {
         this.restTemplate = builder.build();
     }
 
@@ -179,6 +180,27 @@ public class RestAPIUtility {
             entity = new HttpEntity<>(headers);
 
             ResponseEntity<CrashVO> response = restTemplate.exchange(uri, HttpMethod.GET, entity, CrashVO.class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public LinkedHashMap getCrashDataList(String url, String apiKey, String packageName) {
+        try {
+            params = new LinkedMultiValueMap<String, String>();
+
+            params.add("package-name", packageName);
+
+            URI uri = uriBuilder("/board", url, params);
+
+            headers.set("apiKey", apiKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<LinkedHashMap> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LinkedHashMap.class);
 
             return response.getBody();
         } catch (Exception e) {

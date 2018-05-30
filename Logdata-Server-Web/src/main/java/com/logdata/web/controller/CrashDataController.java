@@ -4,7 +4,7 @@ import com.logdata.common.model.CrashTimeVO;
 import com.logdata.common.model.CrashVO;
 import com.logdata.common.model.UserVO;
 import com.logdata.common.util.Utility;
-import com.logdata.web.service.RestAPIUtility;
+import com.logdata.web.service.RestAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,12 @@ import java.util.*;
 
 @Controller
 public class CrashDataController {
-    private final RestAPIUtility restAPIUtility;
+    private final RestAPIManager restAPIManager;
     private final Utility utility;
 
     @Autowired
-    public CrashDataController(RestAPIUtility restAPIUtility, Utility utility) {
-        this.restAPIUtility = restAPIUtility;
+    public CrashDataController(RestAPIManager restAPIManager, Utility utility) {
+        this.restAPIManager = restAPIManager;
         this.utility = utility;
     }
 
@@ -44,7 +44,7 @@ public class CrashDataController {
             return "login";
         }
 
-        CrashVO crashVO = restAPIUtility.getChoseCrashTimeData("/crash/filter/time", getUserApiKey(user.getName()), time, packageName);
+        CrashVO crashVO = restAPIManager.getChoseCrashTimeData("/crash/filter/time", getUserApiKey(user.getName()), time, packageName);
 
         if (crashVO == null || !(getUserApiKey(user.getName()).equals(crashVO.getApiKey()))) {
             return "nodata";
@@ -86,7 +86,7 @@ public class CrashDataController {
             return "login";
         }
 
-        CrashVO crashVO = restAPIUtility.getCrashData("/crash/filter/package-name", getUserApiKey(user.getName()), packageName);
+        CrashVO crashVO = restAPIManager.getCrashData("/crash/filter/package-name", getUserApiKey(user.getName()), packageName);
 
         if (crashVO == null) {
             model.addAttribute("noData", true);
@@ -125,20 +125,20 @@ public class CrashDataController {
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
     public ResponseEntity<Object> crashDataSave(@RequestHeader(value = "apiKey") String apiKey, @RequestBody CrashVO data) {
-        return restAPIUtility.postData("/api", "/crash", apiKey, data);
+        return restAPIManager.postData("/api", "/crash", apiKey, data);
     }
 
     private ArrayList getPackageName(Principal user) {
-        return restAPIUtility.getCrashPackageNameList("/crash/package-name/set", getUserApiKey(user.getName()));
+        return restAPIManager.getCrashPackageNameList("/crash/package-name/set", getUserApiKey(user.getName()));
     }
 
     public String getUserApiKey(String name) {
-        UserVO u = this.restAPIUtility.findUser("/find", name);
+        UserVO u = this.restAPIManager.findUser("/find", name);
         return u.getApiKey();
     }
 
     public ArrayList getCrashTime(Principal user, String packageName) {
-        CrashTimeVO[] list = restAPIUtility.getCrashTimeList("/crash/package-name/time", getUserApiKey(user.getName()), packageName);
+        CrashTimeVO[] list = restAPIManager.getCrashTimeList("/crash/package-name/time", getUserApiKey(user.getName()), packageName);
 
         return new ArrayList<CrashTimeVO>(Arrays.asList(list));
     }

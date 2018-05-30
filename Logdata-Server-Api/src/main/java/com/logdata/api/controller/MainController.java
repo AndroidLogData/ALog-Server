@@ -51,7 +51,7 @@ public class MainController {
             int warningCount = this.logDataService.findByPackageNameAndLevel(packageName, "w").size();
             int errorCount = this.logDataService.findByPackageNameAndLevel(packageName, "e").size();
 
-            CrashVO crashTime = this.crashDataService.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+            CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
             if (crashTime == null) {
                 list.add(new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
             } else {

@@ -57,8 +57,67 @@
                     </div>
                 </div>
             </section>
+
+            <div class="card" style="width: 50%; margin-bottom: 1%">
+                <div class="card-header">
+                    <h3>Crash Information</h3>
+                </div>
+                <div id="container" style="width: 75%;">
+                    <canvas id="canvas"/>
+                </div>
+            </div>
         </main>
     </div>
 </div>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var color = Chart.helpers.color;
+    var barChartData = {
+        labels: /*[[${crashList.keySet()}]]*/,
+        datasets: [{
+            label: 'Crash Count',
+            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: /*[[${crashList.values()}]]*/
+        }]
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Crash Information'
+                },
+                scales: {
+                    yAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,132,0.2)"
+                        },
+                        ticks: {
+                            min: 0,
+                            callback: function (value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+    };
+    /*]]>*/
+</script>
 </body>
 </html>

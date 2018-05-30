@@ -16,12 +16,12 @@ import java.util.HashMap;
 
 @Controller
 @RequestMapping("/help")
-public class HelpController {
+public class MyPageController {
     private final CrashDataService crashDataService;
     private final Utility utility;
 
     @Autowired
-    public HelpController(CrashDataService crashDataService, Utility utility) {
+    public MyPageController(CrashDataService crashDataService, Utility utility) {
         this.crashDataService = crashDataService;
         this.utility = utility;
     }

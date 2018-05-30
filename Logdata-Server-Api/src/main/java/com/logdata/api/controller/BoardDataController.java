@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping("/board")
@@ -36,10 +38,10 @@ public class BoardDataController {
         return packageNameList.getPackageNameList();
     }
 
-    @RequestMapping(value = "/detail/{query}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/log-data/detail/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public LogDataInfoVO mainPageDataList(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
+    public LogDataInfoVO boardPageData(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
         LogDataInfoVO logDataInfo;
 
         int verbCount = this.logDataService.findByPackageNameAndLevel(packageName, "v").size();
@@ -48,7 +50,7 @@ public class BoardDataController {
         int warningCount = this.logDataService.findByPackageNameAndLevel(packageName, "w").size();
         int errorCount = this.logDataService.findByPackageNameAndLevel(packageName, "e").size();
 
-        CrashVO crashTime = this.crashDataService.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+        CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
         if (crashTime == null) {
             logDataInfo = new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount);
         } else {
@@ -56,6 +58,27 @@ public class BoardDataController {
         }
 
         return logDataInfo;
+    }
+
+    @RequestMapping(value = "/crash/detail/{query}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public HashMap<String, Integer> boardPageCrashDataList(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
+        List<CrashVO> crashList = this.crashDataService.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+        HashMap<String, Integer> result = new HashMap<String, Integer>();
+
+        for (int i = 0; i < crashList.size(); i++) {
+            String crashName = utility.findCrashName(crashList.get(i).getLogcat());
+
+            if (result.get(crashName) == null) {
+                result.put(crashName, 1);
+            } else {
+                int count = result.get(crashName);
+                result.put(crashName, ++count);
+            }
+        }
+
+        return result;
     }
 }
 
