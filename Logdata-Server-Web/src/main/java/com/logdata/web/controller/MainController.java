@@ -30,9 +30,16 @@ public class MainController {
             LogDataInfoVO[] logDataInfoList = restAPIManager.getLogDataInfo(getUserApiKey(user.getName()));
 
             model.addAttribute("logDataInfoList", logDataInfoList);
+            model.addAttribute("packageNameList", getPackageName(user.getName()));
 
             return "index";
         }
+    }
+
+    private ArrayList<String> getPackageName(String name) {
+        ArrayList<String> body = restAPIManager.getLogDataOfPackageName(getUserApiKey(name));
+
+        return body;
     }
 
     public String getUserApiKey(String name) {

@@ -7,6 +7,27 @@ import $ from 'jquery';
 class FilterBar extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            apiKey: ""
+        };
+
+        this.fetchTagData();
+    }
+
+    fetchTagData() {
+        $.ajax({
+            url: "/login/user",
+            type: "GET",
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                this.setState({apiKey: data["apiKey"]})
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
     }
 
     render() {
@@ -33,8 +54,7 @@ class FilterBar extends React.Component {
                                       to={{pathname: '/log-data/filter/level/' + this.props.packageName + '/e'}}>e</Link>
                             </div>
                         </div>
-                        <TagList packageName={this.props.packageName}/>
-                        {/*<PackageNameList packageName={this.props.packageName}/>*/}
+                        <TagList packageName={this.props.packageName} apiKey={this.state.apiKey}/>
                     </div>
                 </div>
                 <br/>
@@ -56,13 +76,26 @@ class TagList extends React.Component {
 
     fetchTagData() {
         $.ajax({
-            url: '/log-data/tag/set/query?',
+            url: "/login/user",
             type: "GET",
-            dataType: 'json',
-            data: {"package-name": this.props.packageName},
+            dataType: "json",
             cache: false,
             success: function (data) {
-                this.setState({logData: data});
+                $.ajax({
+                    url: 'http://localhost:8081/api/log-data/tag/set/query?',
+                    headers: {"apiKey": data["apiKey"]},
+                    type: "GET",
+                    dataType: 'json',
+                    contentType: "application/json",
+                    data: {"package-name": this.props.packageName},
+                    cache: false,
+                    success: function (data) {
+                        this.setState({logData: data});
+                    }.bind(this),
+                    error: function (xhr, status, err) {
+                        console.error(this.props.url, status, err.toString());
+                    }.bind(this)
+                });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -99,60 +132,5 @@ class TagList extends React.Component {
         );
     }
 }
-
-// class PackageNameList extends React.Component {
-//     constructor(props) {
-//         super(props);
-//
-//         this.state = {
-//             logData: []
-//         };
-//
-//         this.fetchPackageNameData();
-//     }
-//
-//     fetchPackageNameData() {
-//         $.ajax({
-//             url: '/log-data/package-name/set',
-//             dataType: 'json',
-//             cache: false,
-//             success: function (data) {
-//                 this.setState({logData: data});
-//             }.bind(this),
-//             error: function (xhr, status, err) {
-//                 console.error(this.props.url, status, err.toString());
-//             }.bind(this)
-//         });
-//     }
-//
-//     shouldComponentUpdate(nextProps, nextState) {
-//         this.fetchPackageNameData();
-//         return nextState.length !== this.state.logData.length;
-//     }
-//
-//     render() {
-//         let i;
-//         let packageNameNodes = [];
-//
-//         for (i = 0; i < this.state.logData.length; i++) {
-//             packageNameNodes.push(
-//                 <Link className="dropdown-item"
-//                       to={{pathname: '/log-data/filter/package-name/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
-//             );
-//         }
-//
-//         return (
-//             <div className="btn-group">
-//                 <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-//                         aria-haspopup="true" aria-expanded="false">
-//                     PackageName
-//                 </button>
-//                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-//                     {packageNameNodes}
-//                 </div>
-//             </div>
-//         );
-//     }
-// }
 
 export default FilterBar;

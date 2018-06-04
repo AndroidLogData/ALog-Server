@@ -33,6 +33,7 @@ public class CrashDataController {
         }
 
         model.addAttribute("packageName", session.getAttribute("packageName"));
+        model.addAttribute("packageNameList", getPackageName(user.getName()));
 
         return "crash";
     }
@@ -74,6 +75,7 @@ public class CrashDataController {
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("packageName", session.getAttribute("packageName"));
+        model.addAttribute("packageNameList", getPackageName(user.getName()));
 
         return "crash";
     }
@@ -116,6 +118,7 @@ public class CrashDataController {
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("packageName", session.getAttribute("packageName"));
+        model.addAttribute("packageNameList", getPackageName(user.getName()));
 
         return "crash";
     }
@@ -123,6 +126,12 @@ public class CrashDataController {
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
     public ResponseEntity<Object> crashDataSave(@RequestHeader(value = "apiKey") String apiKey, @RequestBody CrashVO data) {
         return restAPIManager.sendCrashData(apiKey, data);
+    }
+
+    private ArrayList<String> getPackageName(String name) {
+        ArrayList<String> body = restAPIManager.getLogDataOfPackageName(getUserApiKey(name));
+
+        return body;
     }
 
     public String getUserApiKey(String name) {

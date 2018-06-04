@@ -12,9 +12,19 @@ import java.util.List;
 public class SecurityUser extends User {
     private static final String ROLE_PREFIX = "ROLE_";
     private static final long serialVersionUID = 1L;
+    private String name;
 
     public SecurityUser(UserVO user) {
         super(user.getUserID(), user.getPassword(), makeGrantedAuthority(user.getRoles()));
+        name = user.getUserID();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     private static List<GrantedAuthority> makeGrantedAuthority(List<UserRoles> roles){

@@ -1,5 +1,6 @@
 package com.logdata.web.controller;
 
+import com.logdata.common.model.UserVO;
 import com.logdata.web.service.RestAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -7,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -38,5 +41,11 @@ public class LoginController {
         } else {
             return "registration";
         }
+    }
+
+    @RequestMapping(value = "/login/user", method = RequestMethod.GET)
+    @ResponseBody
+    public UserVO findLoginUser(Principal user) {
+        return this.restAPIManager.findUser(user.getName());
     }
 }

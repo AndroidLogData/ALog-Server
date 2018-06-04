@@ -41,6 +41,7 @@ public class MyPageController {
         model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfo", logDataInfoVO);
         model.addAttribute("apikey", getUserApiKey(user.getName()));
+        model.addAttribute("packageNameList", getPackageName(user.getName()));
 
         return "mypage";
     }
@@ -59,8 +60,15 @@ public class MyPageController {
         model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfo", logDataInfoVO);
         model.addAttribute("apikey", getUserApiKey(user.getName()));
+        model.addAttribute("packageNameList", getPackageName(user.getName()));
 
         return "mypage";
+    }
+
+    private ArrayList<String> getPackageName(String name) {
+        ArrayList<String> body = restAPIManager.getLogDataOfPackageName(getUserApiKey(name));
+
+        return body;
     }
 
     public String getUserApiKey(String name) {

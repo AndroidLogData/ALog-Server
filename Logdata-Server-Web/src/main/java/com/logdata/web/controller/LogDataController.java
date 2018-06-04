@@ -80,24 +80,8 @@ public class LogDataController {
         return list;
     }
 
-    @RequestMapping(value = "/log-data/package-name/set", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
     private ArrayList<String> getPackageName(String name) {
         ArrayList<String> body = restAPIManager.getLogDataOfPackageName(getUserApiKey(name));
-
-        return body;
-    }
-
-    @RequestMapping(value = "/log-data/tag/set/{query}", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    private Set<String> getTagName(Principal user, @RequestParam(value = "package-name") String packageName) {
-        if (user == null) {
-            return null;
-        }
-
-        Set<String> body = restAPIManager.getLogDataOfTag(getUserApiKey(user.getName()), packageName);
 
         return body;
     }

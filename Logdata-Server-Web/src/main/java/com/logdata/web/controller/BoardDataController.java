@@ -38,8 +38,15 @@ public class BoardDataController {
         model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfoOfPackageName", logDataInfoVO);
         model.addAttribute("packageName", packageName);
+        model.addAttribute("packageNameList", getPackageName(user.getName()));
 
         return "board";
+    }
+
+    private ArrayList<String> getPackageName(String name) {
+        ArrayList<String> body = restAPIManager.getLogDataOfPackageName(getUserApiKey(name));
+
+        return body;
     }
 
     public String getUserApiKey(String name) {
