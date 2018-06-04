@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserVO user = this.restAPIManager.findUser("/find", username);
+        UserVO user = this.restAPIManager.findUser(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("등록된 유저가 아닙니다.");

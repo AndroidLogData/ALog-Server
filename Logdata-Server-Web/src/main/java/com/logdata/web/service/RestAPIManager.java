@@ -19,18 +19,20 @@ import java.util.Set;
 @Component
 public class RestAPIManager {
     private final RestTemplate restTemplate;
-    private HttpHeaders headers = new HttpHeaders();
-    private HttpEntity<Object> entity = null;
-    private MultiValueMap<String, String> params = null;
+    private HttpHeaders headers;
+    private HttpEntity<Object> entity;
+    private MultiValueMap<String, String> params;
 
     @Autowired
     public RestAPIManager(RestTemplateBuilder builder) {
         this.restTemplate = builder.build();
+        headers = new HttpHeaders();
+        params = new LinkedMultiValueMap<String, String>();
     }
 
-    public ResponseEntity<Object> postData(String path, String url, String apiKey, Object data) {
+    public ResponseEntity<Object> sendLogData(String apiKey, Object data) {
         try {
-            URI uri = uriBuilder(path, url);
+            URI uri = uriBuilder("/api", "/log-data");
 
             headers.set("apiKey", apiKey);
             headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -43,14 +45,28 @@ public class RestAPIManager {
         return null;
     }
 
-    public LogVO[] getLogDataLevel(String url, String apiKey, String packageName, String level) {
+    public ResponseEntity<Object> sendCrashData(String apiKey, Object data) {
         try {
-            params = new LinkedMultiValueMap<String, String>();
+            URI uri = uriBuilder("/api", "/crash");
 
+            headers.set("apiKey", apiKey);
+            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+            entity = new HttpEntity<>(data, headers);
+            return restTemplate.postForEntity(uri, entity, Object.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public LogVO[] searchLogDataOfLevel(String apiKey, String packageName, String level) {
+        try {
+            params.clear();
             params.add("package-name", packageName);
             params.add("level", level);
 
-            URI uri = uriBuilder("/api", url, params);
+            URI uri = uriBuilder("/api", "/log-data/filter/level", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -65,14 +81,13 @@ public class RestAPIManager {
         return null;
     }
 
-    public LogVO[] getLogDataTag(String url, String apiKey, String packageName, String tag) {
+    public LogVO[] searchLogDataOfTag(String apiKey, String packageName, String tag) {
         try {
-            params = new LinkedMultiValueMap<String, String>();
-
+            params.clear();
             params.add("package-name", packageName);
             params.add("tag", tag);
 
-            URI uri = uriBuilder("/api", url, params);
+            URI uri = uriBuilder("/api", "/log-data/filter/tag", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -87,9 +102,29 @@ public class RestAPIManager {
         return null;
     }
 
-    public ArrayList getLogDataInfoSet(String url, String apiKey) {
+    public LogVO[] searchLogDataOfPackageName(String apiKey, String packageName) {
         try {
-            URI uri = uriBuilder("/api", url);
+            params.clear();
+            params.add("package-name", packageName);
+
+            URI uri = uriBuilder("/api", "/log-data/filter/package-name", params);
+
+            headers.set("apiKey", apiKey);
+            entity = new HttpEntity<>(headers);
+
+            ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
+
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public ArrayList getLogDataOfPackageName(String apiKey) {
+        try {
+            URI uri = uriBuilder("/api", "/log-data/package-name/set");
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -104,13 +139,12 @@ public class RestAPIManager {
         return null;
     }
 
-    public Set getLogDataInfoSet(String url, String apiKey, String packageName) {
+    public Set getLogDataOfTag(String apiKey, String packageName) {
         try {
-            params = new LinkedMultiValueMap<String, String>();
-
+            params.clear();
             params.add("package-name", packageName);
 
-            URI uri = uriBuilder("/api", url, params);
+            URI uri = uriBuilder("/api", "/log-data/tag/set", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -125,35 +159,13 @@ public class RestAPIManager {
         return null;
     }
 
-    public LogVO[] searchLogDataOfPackageName(String url, String apiKey, String packageName) {
+    public CrashVO getChoseCrashTimeData(String apiKey, long time, String packageName) {
         try {
-            params = new LinkedMultiValueMap<String, String>();
-
-            params.add("package-name", packageName);
-
-            URI uri = uriBuilder("/api", url, params);
-
-            headers.set("apiKey", apiKey);
-            entity = new HttpEntity<>(headers);
-
-            ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
-
-            return response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public CrashVO getChoseCrashTimeData(String url, String apiKey, long time, String packageName) {
-        try {
-            params = new LinkedMultiValueMap<String, String>();
-
+            params.clear();
             params.add("time", String.valueOf(time));
             params.add("package-name", packageName);
 
-            URI uri = uriBuilder("/api", url, params);
+            URI uri = uriBuilder("/api", "/crash/filter/time", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -168,13 +180,12 @@ public class RestAPIManager {
         return null;
     }
 
-    public CrashVO getCrashData(String url, String apiKey, String packageName) {
+    public CrashVO getCrashData(String apiKey, String packageName) {
         try {
-            params = new LinkedMultiValueMap<String, String>();
-
+            params.clear();
             params.add("package-name", packageName);
 
-            URI uri = uriBuilder("/api", url, params);
+            URI uri = uriBuilder("/api", "/crash/filter/package-name", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -189,13 +200,12 @@ public class RestAPIManager {
         return null;
     }
 
-    public LinkedHashMap getCrashDataList(String url, String apiKey, String packageName) {
+    public LinkedHashMap getCrashDataList(String apiKey, String packageName) {
         try {
-            params = new LinkedMultiValueMap<String, String>();
-
+            params.clear();
             params.add("package-name", packageName);
 
-            URI uri = uriBuilder("/board", url, params);
+            URI uri = uriBuilder("/board", "/crash/detail", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -210,30 +220,12 @@ public class RestAPIManager {
         return null;
     }
 
-    public ArrayList getCrashPackageNameList(String url, String apiKey) {
+    public CrashTimeVO[] getCrashTimeList(String apiKey, String packageName) {
         try {
-            URI uri = uriBuilder("/api", url);
-
-            headers.set("apiKey", apiKey);
-            entity = new HttpEntity<>(headers);
-
-            ResponseEntity<ArrayList> response = restTemplate.exchange(uri, HttpMethod.GET, entity, ArrayList.class);
-
-            return response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public CrashTimeVO[] getCrashTimeList(String url, String apiKey, String packageName) {
-        try {
-            params = new LinkedMultiValueMap<String, String>();
-
+            params.clear();
             params.add("package-name", packageName);
 
-            URI uri = uriBuilder("/api", url, params);
+            URI uri = uriBuilder("/api", "/crash/package-name/time", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -248,9 +240,9 @@ public class RestAPIManager {
         return null;
     }
 
-    public LinkedHashMap<String, Integer> getCrashList(String url, String apiKey) {
+    public LinkedHashMap<String, Integer> getCrashList(String apiKey) {
         try {
-            URI uri = uriBuilder("/help", url);
+            URI uri = uriBuilder("/help", "/my-page");
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -265,9 +257,9 @@ public class RestAPIManager {
         return null;
     }
 
-    public LogDataInfoVO[] getLogDataInfo(String url, String apiKey) {
+    public LogDataInfoVO[] getLogDataInfo(String apiKey) {
         try {
-            URI uri = uriBuilder("/main", url);
+            URI uri = uriBuilder("/main", "/detail");
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -282,11 +274,12 @@ public class RestAPIManager {
         return null;
     }
 
-    public LogDataInfoVO getLogDataInfoOfPackageName(String url, String apiKey, String packageName) {
+    public LogDataInfoVO getLogDataInfoOfPackageName(String apiKey, String packageName) {
         try {
+            params.clear();
             params.add("package-name", packageName);
 
-            URI uri = uriBuilder("/board", url, params);
+            URI uri = uriBuilder("/board", "/log-data/detail", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -301,11 +294,12 @@ public class RestAPIManager {
         return null;
     }
 
-    public Object deleteLogData(String url, String apiKey, String packageName) {
+    public Object deleteLogData(String apiKey, String packageName) {
         try {
+            params.clear();
             params.add("package-name", packageName);
 
-            URI uri = uriBuilder("/api", url, params);
+            URI uri = uriBuilder("/api", "/log-data", params);
 
             headers.set("apiKey", apiKey);
             entity = new HttpEntity<>(headers);
@@ -320,13 +314,12 @@ public class RestAPIManager {
         return null;
     }
 
-    public UserVO findUser(String url, String name) {
+    public UserVO findUser(String name) {
         try {
-            params = new LinkedMultiValueMap<String, String>();
-
+            params.clear();
             params.add("name", name);
 
-            URI uri = uriBuilder("/user", url, params);
+            URI uri = uriBuilder("/user", "/find", params);
 
             ResponseEntity<UserVO> response = restTemplate.getForEntity(uri, UserVO.class);
 
@@ -338,14 +331,13 @@ public class RestAPIManager {
         return null;
     }
 
-    public boolean userRegistration(String url, String userID, String password) {
+    public boolean userRegistration(String userID, String password) {
         try {
-            params = new LinkedMultiValueMap<String, String>();
-
+            params.clear();
             params.add("username", userID);
             params.add("password", password);
 
-            URI uri = uriBuilder("/user", url, params);
+            URI uri = uriBuilder("/user", "/registration", params);
 
             UserVO user = new UserVO(userID, password);
 
@@ -359,23 +351,6 @@ public class RestAPIManager {
         }
 
         return false;
-    }
-
-    public Set<String> getCrashDataPackageName(String url, String apiKey) {
-        try {
-            URI uri = uriBuilder("/api", url);
-
-            headers.set("apiKey", apiKey);
-            entity = new HttpEntity<>(headers);
-
-            ResponseEntity<Set> response = restTemplate.exchange(uri, HttpMethod.GET, entity, Set.class);
-
-            return response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     private URI uriBuilder(String path, String url) {

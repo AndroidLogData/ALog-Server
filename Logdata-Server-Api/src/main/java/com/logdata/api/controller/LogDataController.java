@@ -129,6 +129,7 @@ public class LogDataController {
         return null;
     }
 
+    @CrossOrigin(origins = "localhost:8080")
     @RequestMapping(value = "/log-data/tag/set/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     private Set<String> getTag(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {

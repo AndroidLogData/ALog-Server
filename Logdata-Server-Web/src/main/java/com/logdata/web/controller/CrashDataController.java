@@ -32,7 +32,6 @@ public class CrashDataController {
             return "login";
         }
 
-        model.addAttribute("sideMenuItems", getPackageName(user));
         model.addAttribute("packageName", session.getAttribute("packageName"));
 
         return "crash";
@@ -44,7 +43,7 @@ public class CrashDataController {
             return "login";
         }
 
-        CrashVO crashVO = restAPIManager.getChoseCrashTimeData("/crash/filter/time", getUserApiKey(user.getName()), time, packageName);
+        CrashVO crashVO = restAPIManager.getChoseCrashTimeData(getUserApiKey(user.getName()), time, packageName);
 
         if (crashVO == null || !(getUserApiKey(user.getName()).equals(crashVO.getApiKey()))) {
             return "nodata";
@@ -74,7 +73,6 @@ public class CrashDataController {
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user, packageName));
-        model.addAttribute("sideMenuItems", getPackageName(user));
         model.addAttribute("packageName", session.getAttribute("packageName"));
 
         return "crash";
@@ -86,7 +84,7 @@ public class CrashDataController {
             return "login";
         }
 
-        CrashVO crashVO = restAPIManager.getCrashData("/crash/filter/package-name", getUserApiKey(user.getName()), packageName);
+        CrashVO crashVO = restAPIManager.getCrashData(getUserApiKey(user.getName()), packageName);
 
         if (crashVO == null) {
             model.addAttribute("noData", true);
@@ -117,7 +115,6 @@ public class CrashDataController {
         model.addAttribute("board", crashVO.getBuild().get("BOARD"));
         model.addAttribute("deviceFeatures", deviceFeatures);
         model.addAttribute("timeData", getCrashTime(user, packageName));
-        model.addAttribute("sideMenuItems", getPackageName(user));
         model.addAttribute("packageName", session.getAttribute("packageName"));
 
         return "crash";
@@ -125,20 +122,16 @@ public class CrashDataController {
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
     public ResponseEntity<Object> crashDataSave(@RequestHeader(value = "apiKey") String apiKey, @RequestBody CrashVO data) {
-        return restAPIManager.postData("/api", "/crash", apiKey, data);
-    }
-
-    private ArrayList getPackageName(Principal user) {
-        return restAPIManager.getCrashPackageNameList("/crash/package-name/set", getUserApiKey(user.getName()));
+        return restAPIManager.sendCrashData(apiKey, data);
     }
 
     public String getUserApiKey(String name) {
-        UserVO u = this.restAPIManager.findUser("/find", name);
+        UserVO u = this.restAPIManager.findUser(name);
         return u.getApiKey();
     }
 
     public ArrayList getCrashTime(Principal user, String packageName) {
-        CrashTimeVO[] list = restAPIManager.getCrashTimeList("/crash/package-name/time", getUserApiKey(user.getName()), packageName);
+        CrashTimeVO[] list = restAPIManager.getCrashTimeList(getUserApiKey(user.getName()), packageName);
 
         return new ArrayList<CrashTimeVO>(Arrays.asList(list));
     }

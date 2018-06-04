@@ -32,20 +32,18 @@ public class BoardDataController {
 
         session.setAttribute("packageName", packageName);
 
-        LogDataInfoVO logDataInfoVO = restAPIManager.getLogDataInfoOfPackageName("/log-data/detail", getUserApiKey(user.getName()), packageName);
-        ArrayList<String> packageNameList = restAPIManager.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
-        LinkedHashMap<String, Integer> crashList = restAPIManager.getCrashDataList("/crash/detail", getUserApiKey(user.getName()), session.getAttribute("packageName").toString());
+        LogDataInfoVO logDataInfoVO = restAPIManager.getLogDataInfoOfPackageName(getUserApiKey(user.getName()), packageName);
+        LinkedHashMap<String, Integer> crashList = restAPIManager.getCrashDataList(getUserApiKey(user.getName()), session.getAttribute("packageName").toString());
 
         model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfoOfPackageName", logDataInfoVO);
-        model.addAttribute("packageNameList", packageNameList);
         model.addAttribute("packageName", packageName);
 
         return "board";
     }
 
     public String getUserApiKey(String name) {
-        UserVO u = this.restAPIManager.findUser("/find", name);
+        UserVO u = this.restAPIManager.findUser(name);
         return u.getApiKey();
     }
 }

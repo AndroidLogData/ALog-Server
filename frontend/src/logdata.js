@@ -220,8 +220,6 @@ class LogDataVerb extends React.Component {
         let i, count = 0;
         let logDataNodes = [];
 
-        console.log(this.props.logData);
-
         for (i = 0; i < this.props.logData.length; i++) {
             count++;
 

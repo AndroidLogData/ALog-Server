@@ -27,31 +27,16 @@ public class MainController {
         if (user == null) {
             return "index";
         } else {
-            ArrayList<String> packageNameList = restAPIManager.getLogDataInfoSet("/log-data/package-name/set", getUserApiKey(user.getName()));
-            LogDataInfoVO[] logDataInfoList = restAPIManager.getLogDataInfo("/detail", getUserApiKey(user.getName()));
+            LogDataInfoVO[] logDataInfoList = restAPIManager.getLogDataInfo(getUserApiKey(user.getName()));
 
-            model.addAttribute("packageNameList", packageNameList);
             model.addAttribute("logDataInfoList", logDataInfoList);
 
             return "index";
         }
     }
 
-    @RequestMapping(value = "/main", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    public ArrayList<LogDataInfoVO> mainPageDataList(Principal user) {
-        if (user == null) {
-            return null;
-        }
-
-        ArrayList<LogDataInfoVO> logDataInfoVO = new ArrayList<>(Arrays.asList(restAPIManager.getLogDataInfo("/main", getUserApiKey(user.getName()))));
-
-        return logDataInfoVO;
-    }
-
     public String getUserApiKey(String name) {
-        UserVO u = this.restAPIManager.findUser("/find", name);
+        UserVO u = this.restAPIManager.findUser(name);
         return u.getApiKey();
     }
 }

@@ -33,7 +33,7 @@ public class LoginController {
     public String userRegistration(@RequestParam Map<String, String> body) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        if (this.restAPIManager.userRegistration("/registration", body.get("username"), passwordEncoder.encode(body.get("password")))) {
+        if (this.restAPIManager.userRegistration(body.get("username"), passwordEncoder.encode(body.get("password")))) {
             return "login";
         } else {
             return "registration";
