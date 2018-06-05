@@ -35,51 +35,6 @@ public class LogDataController {
         return restAPIManager.sendLogData(apiKey, data);
     }
 
-    @RequestMapping(value = "/log-data/filter/level/{query}", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    public ArrayList<LogVO> logDataLevelList(Principal user, @RequestParam(value = "package-name") String packageName, @RequestParam(value = "level") String level) {
-        if (user == null) {
-            return null;
-        }
-
-        LogVO[] body = restAPIManager.searchLogDataOfLevel(getUserApiKey(user.getName()), packageName, level);
-
-        ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
-
-        return list;
-    }
-
-    @RequestMapping(value = "/log-data/filter/tag/{query}", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    public ArrayList<LogVO> logDataTagList(Principal user, @RequestParam(value = "package-name") String packageName, @RequestParam(value = "tag") String tag) {
-        if (user == null) {
-            return null;
-        }
-
-        LogVO[] body = restAPIManager.searchLogDataOfTag(getUserApiKey(user.getName()), packageName, tag);
-
-        ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
-
-        return list;
-    }
-
-    @RequestMapping(value = "/log-data/filter/package-name/{query}", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    public ArrayList<LogVO> logDataPackageNameList(Principal user, @RequestParam(value = "package-name") String packageName) {
-        if (user == null) {
-            return null;
-        }
-
-        LogVO[] body = restAPIManager.searchLogDataOfPackageName(getUserApiKey(user.getName()), packageName);
-
-        ArrayList<LogVO> list = new ArrayList<LogVO>(Arrays.asList(body));
-
-        return list;
-    }
-
     private ArrayList<String> getPackageName(String name) {
         ArrayList<String> body = restAPIManager.getLogDataOfPackageName(getUserApiKey(name));
 
@@ -91,7 +46,8 @@ public class LogDataController {
         return u.getApiKey();
     }
 
-    @RequestMapping(value = "/log-data/filter/package-name/{query}", method = RequestMethod.GET)
+//    @RequestMapping(value = "/log-data/filter/package-name/{query}", method = RequestMethod.GET)
+@RequestMapping(value = "/log-data/filter/**", method = RequestMethod.GET)
     public String logDataPackageNameView(Principal user, Model model, HttpSession session) {
         if (user == null) {
             return "login";

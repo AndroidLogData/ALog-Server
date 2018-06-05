@@ -1,5 +1,6 @@
 import React from 'react';
 import LogData from './logdata';
+import UserData from "./userData";
 
 class LevelFilter extends React.Component {
     constructor(props) {
@@ -7,7 +8,7 @@ class LevelFilter extends React.Component {
     }
 
     render() {
-        let levelFilterUrl = '/log-data/filter/level/query?package-name=' + this.props.match.params.packageName + '&level=' + this.props.match.params.level;
+        let levelFilterUrl = 'http://localhost:8081/api/log-data/filter/level/query?package-name=' + this.props.match.params.packageName + '&level=' + this.props.match.params.level;
 
         return (
             <div>

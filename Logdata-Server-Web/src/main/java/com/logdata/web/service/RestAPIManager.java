@@ -60,68 +60,6 @@ public class RestAPIManager {
         return null;
     }
 
-    public LogVO[] searchLogDataOfLevel(String apiKey, String packageName, String level) {
-        try {
-            params.clear();
-            params.add("package-name", packageName);
-            params.add("level", level);
-
-            URI uri = uriBuilder("/api", "/log-data/filter/level", params);
-
-            headers.set("apiKey", apiKey);
-            entity = new HttpEntity<>(headers);
-
-            ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
-
-            return response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public LogVO[] searchLogDataOfTag(String apiKey, String packageName, String tag) {
-        try {
-            params.clear();
-            params.add("package-name", packageName);
-            params.add("tag", tag);
-
-            URI uri = uriBuilder("/api", "/log-data/filter/tag", params);
-
-            headers.set("apiKey", apiKey);
-            entity = new HttpEntity<>(headers);
-
-            ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
-
-            return response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public LogVO[] searchLogDataOfPackageName(String apiKey, String packageName) {
-        try {
-            params.clear();
-            params.add("package-name", packageName);
-
-            URI uri = uriBuilder("/api", "/log-data/filter/package-name", params);
-
-            headers.set("apiKey", apiKey);
-            entity = new HttpEntity<>(headers);
-
-            ResponseEntity<LogVO[]> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LogVO[].class);
-
-            return response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     public ArrayList getLogDataOfPackageName(String apiKey) {
         try {
             URI uri = uriBuilder("/api", "/log-data/package-name/set");
@@ -130,26 +68,6 @@ public class RestAPIManager {
             entity = new HttpEntity<>(headers);
 
             ResponseEntity<ArrayList> response = restTemplate.exchange(uri, HttpMethod.GET, entity, ArrayList.class);
-
-            return response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public Set getLogDataOfTag(String apiKey, String packageName) {
-        try {
-            params.clear();
-            params.add("package-name", packageName);
-
-            URI uri = uriBuilder("/api", "/log-data/tag/set", params);
-
-            headers.set("apiKey", apiKey);
-            entity = new HttpEntity<>(headers);
-
-            ResponseEntity<Set> response = restTemplate.exchange(uri, HttpMethod.GET, entity, Set.class);
 
             return response.getBody();
         } catch (Exception e) {

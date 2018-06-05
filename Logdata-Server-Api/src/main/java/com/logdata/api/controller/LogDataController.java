@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Controller
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/api")
 public class LogDataController {
     private final LogDataService logDataService;
@@ -129,7 +130,6 @@ public class LogDataController {
         return null;
     }
 
-    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/log-data/tag/set/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     private Set<String> getTag(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {

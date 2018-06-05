@@ -3,6 +3,7 @@ import {
     Link
 } from 'react-router-dom';
 import $ from 'jquery';
+import UserData from "./userData";
 
 class FilterBar extends React.Component {
     constructor(props) {
@@ -57,26 +58,15 @@ class TagList extends React.Component {
 
     fetchTagData() {
         $.ajax({
-            url: "/login/user",
+            url: 'http://localhost:8081/api/log-data/tag/set/query?',
+            headers: {"apiKey": new UserData().apiKey},
             type: "GET",
-            dataType: "json",
+            dataType: 'json',
+            contentType: "application/json",
+            data: {"package-name": this.props.packageName},
             cache: false,
             success: function (data) {
-                $.ajax({
-                    url: 'http://localhost:8081/api/log-data/tag/set/query?',
-                    headers: {"apiKey": data["apiKey"]},
-                    type: "GET",
-                    dataType: 'json',
-                    contentType: "application/json",
-                    data: {"package-name": this.props.packageName},
-                    cache: false,
-                    success: function (data) {
-                        this.setState({tagData: data});
-                    }.bind(this),
-                    error: function (xhr, status, err) {
-                        console.error(this.props.url, status, err.toString());
-                    }.bind(this)
-                });
+                this.setState({tagData: data});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());

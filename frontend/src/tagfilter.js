@@ -1,5 +1,6 @@
 import React from 'react';
 import LogData from './logdata';
+import UserData from "./userData";
 
 class TagFilter extends React.Component {
     constructor(props) {
@@ -7,7 +8,7 @@ class TagFilter extends React.Component {
     }
 
     render() {
-        let tagFilterUrl = '/log-data/filter/tag/query?package-name=' + this.props.match.params.packageName + '&tag=' + this.props.match.params.tag;
+        let tagFilterUrl = 'http://localhost:8081/api/log-data/filter/tag/query?package-name=' + this.props.match.params.packageName + '&tag=' + this.props.match.params.tag;
 
         return (
             <div>

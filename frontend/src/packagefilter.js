@@ -1,5 +1,6 @@
 import React from 'react';
 import LogData from './logdata';
+import UserData from "./userData";
 
 class PackageFilter extends React.Component {
     constructor(props) {
@@ -7,7 +8,7 @@ class PackageFilter extends React.Component {
     }
 
     render() {
-        let packageFilterUrl = '/log-data/filter/package-name/query?package-name=' + this.props.match.params.packageName;
+        let packageFilterUrl = 'http://localhost:8081/api/log-data/filter/package-name/query?package-name=' + this.props.match.params.packageName;
 
         return (
             <div>

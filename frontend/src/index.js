@@ -4,7 +4,9 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import App from './app';
 import registerServiceWorker from './registerServiceWorker';
 import {AppContainer} from 'react-hot-loader';
+import UserData from "./userData";
 
+new UserData();
 const rootElement = document.getElementById('root');
 ReactDOM.render(
     <AppContainer>

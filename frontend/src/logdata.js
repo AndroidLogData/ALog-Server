@@ -5,6 +5,7 @@ import {Bar} from 'react-chartjs-2';
 import queryString from 'query-string';
 import moment from 'moment';
 import ReactJson from 'react-json-view'
+import UserData from "./userData";
 
 class LogDataMemoryChart extends React.Component {
     constructor(props) {
@@ -533,6 +534,7 @@ class LogData extends React.Component {
     fetchLogData() {
         $.ajax({
             url: this.props.url,
+            headers: {"apiKey": new UserData().apiKey},
             dataType: 'json',
             cache: false,
             success: function (data) {
