@@ -528,8 +528,6 @@ class LogData extends React.Component {
         this.state = {
             logData: []
         };
-
-        this.fetchLogData();
     }
 
     fetchLogData() {
@@ -548,7 +546,11 @@ class LogData extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         this.fetchLogData();
-        return nextState.length !== this.state.logData.length;
+        return nextState.logData.length !== this.state.logData.length;
+    }
+
+    componentDidMount() {
+        this.fetchLogData();
     }
 
     render() {

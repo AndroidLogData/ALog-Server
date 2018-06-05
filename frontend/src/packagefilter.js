@@ -1,14 +1,20 @@
 import React from 'react';
 import LogData from './logdata';
 
-const PackageFilter = ({match}) => {
-    let packageFilterUrl = '/log-data/filter/package-name/query?package-name=' + match.params.packageName;
+class PackageFilter extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <div>
-            <LogData url={packageFilterUrl}/>
-        </div>
-    );
-};
+    render() {
+        let packageFilterUrl = '/log-data/filter/package-name/query?package-name=' + this.props.match.params.packageName;
+
+        return (
+            <div>
+                <LogData url={packageFilterUrl}/>
+            </div>
+        );
+    }
+}
 
 export default PackageFilter;

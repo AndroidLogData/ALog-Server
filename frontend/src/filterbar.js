@@ -11,23 +11,6 @@ class FilterBar extends React.Component {
         this.state = {
             apiKey: ""
         };
-
-        this.fetchTagData();
-    }
-
-    fetchTagData() {
-        $.ajax({
-            url: "/login/user",
-            type: "GET",
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                this.setState({apiKey: data["apiKey"]})
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
     }
 
     render() {
@@ -68,10 +51,8 @@ class TagList extends React.Component {
         super(props);
 
         this.state = {
-            logData: []
+            tagData: []
         };
-
-        this.fetchTagData();
     }
 
     fetchTagData() {
@@ -90,7 +71,7 @@ class TagList extends React.Component {
                     data: {"package-name": this.props.packageName},
                     cache: false,
                     success: function (data) {
-                        this.setState({logData: data});
+                        this.setState({tagData: data});
                     }.bind(this),
                     error: function (xhr, status, err) {
                         console.error(this.props.url, status, err.toString());
@@ -105,17 +86,21 @@ class TagList extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         this.fetchTagData();
-        return nextState.length !== this.state.logData.length;
+        return nextState.tagData.length !== this.state.tagData.length;
+    }
+
+    componentDidMount() {
+        this.fetchTagData();
     }
 
     render() {
         let i;
         let tagNodes = [];
 
-        for (i = 0; i < this.state.logData.length; i++) {
+        for (i = 0; i < this.state.tagData.length; i++) {
             tagNodes.push(
                 <Link className="dropdown-item"
-                      to={{pathname: '/log-data/filter/tag/' + this.props.packageName + '/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
+                      to={{pathname: '/log-data/filter/tag/' + this.props.packageName + '/' + this.state.tagData[i]}}>{this.state.tagData[i]}</Link>
             );
         }
 
