@@ -46,6 +46,7 @@ public class LoginController {
     @RequestMapping(value = "/login/user", method = RequestMethod.GET)
     @ResponseBody
     public UserVO findLoginUser(Principal user) {
-        return this.restAPIManager.findUser(user.getName());
+        UserVO u = this.restAPIManager.findUser(user.getName());
+        return new UserVO(u.getUserID(), "", u.getRoles(), u.getApiKey());
     }
 }

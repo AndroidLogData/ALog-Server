@@ -241,17 +241,17 @@ class LogDataVerb extends React.Component {
                             <div className="tab-pane active" id={"verb-logdata" + i}>
                                 <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                 <p>Tag : {this.props.logData[i].tag}</p>
-                                <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                <p>{(typeof(this.props.logData[i].message) === 'object') ?
                                     <div>
-                                        <button type="button" className="btn btn-primary" data-toggle="modal"
-                                                data-target="#jsonModal">
-                                            JSON Data
-                                        </button>
+                                        Message : <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                          data-target="#jsonModal">
+                                        JSON Data
+                                    </button>
                                         <MessageJsonModal message={this.props.logData[i].message}/>
                                     </div> :
-                                    this.props.logData[i].message.toString()}</p>
+                                    "Message : " + this.props.logData[i].message.toString()}</p>
                             </div>
-                            <div className="tab-pane fade in" id={"verb-memory" + i}>
+                            <div className="tab-pane fade in" id={"verb-memory" + i} style={{textAlign: "center"}}>
                                 {(this.props.logData[i].memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
@@ -302,17 +302,17 @@ class LogDataInfo extends React.Component {
                             <div className="tab-pane active" id={"info-logdata" + i}>
                                 <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                 <p>Tag : {this.props.logData[i].tag}</p>
-                                <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                <p>{(typeof(this.props.logData[i].message) === 'object') ?
                                     <div>
-                                        <button type="button" className="btn btn-primary" data-toggle="modal"
-                                                data-target="#jsonModal">
-                                            JSON Data
-                                        </button>
+                                        Message : <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                          data-target="#jsonModal">
+                                        JSON Data
+                                    </button>
                                         <MessageJsonModal message={this.props.logData[i].message}/>
                                     </div> :
-                                    this.props.logData[i].message.toString()}</p>
+                                    "Message : " + this.props.logData[i].message.toString()}</p>
                             </div>
-                            <div className="tab-pane fade in" id={"info-memory" + i}>
+                            <div className="tab-pane fade in" id={"info-memory" + i} style={{textAlign: "center"}}>
                                 {(this.props.logData[i].memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
@@ -363,17 +363,17 @@ class LogDataDebug extends React.Component {
                             <div className="tab-pane active" id={"debug-logdata" + i}>
                                 <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                 <p>Tag : {this.props.logData[i].tag}</p>
-                                <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                <p>{(typeof(this.props.logData[i].message) === 'object') ?
                                     <div>
-                                        <button type="button" className="btn btn-primary" data-toggle="modal"
-                                                data-target="#jsonModal">
-                                            JSON Data
-                                        </button>
+                                        Message : <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                          data-target="#jsonModal">
+                                        JSON Data
+                                    </button>
                                         <MessageJsonModal message={this.props.logData[i].message}/>
                                     </div> :
-                                    this.props.logData[i].message.toString()}</p>
+                                    "Message : " + this.props.logData[i].message.toString()}</p>
                             </div>
-                            <div className="tab-pane fade in" id={"debug-memory" + i}>
+                            <div className="tab-pane fade in" id={"debug-memory" + i} style={{textAlign: "center"}}>
                                 {(this.props.logData[i].memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
@@ -425,17 +425,17 @@ class LogDataWarning extends React.Component {
                             <div className="tab-pane active" id={"warning-logdata" + i}>
                                 <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                 <p>Tag : {this.props.logData[i].tag}</p>
-                                <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                <p>{(typeof(this.props.logData[i].message) === 'object') ?
                                     <div>
-                                        <button type="button" className="btn btn-primary" data-toggle="modal"
-                                                data-target="#jsonModal">
-                                            JSON Data
-                                        </button>
+                                        Message : <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                          data-target="#jsonModal">
+                                        JSON Data
+                                    </button>
                                         <MessageJsonModal message={this.props.logData[i].message}/>
                                     </div> :
-                                    this.props.logData[i].message.toString()}</p>
+                                    "Message : " + this.props.logData[i].message.toString()}</p>
                             </div>
-                            <div className="tab-pane fade in" id={"warning-memory" + i}>
+                            <div className="tab-pane fade in" id={"warning-memory" + i} style={{textAlign: "center"}}>
                                 {(this.props.logData[i].memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}
@@ -486,17 +486,17 @@ class LogDataError extends React.Component {
                             <div className="tab-pane active" id={"error-logdata" + i}>
                                 <p>Time : {moment(this.props.logData[i].time).format('YYYY-MM-DD HH:mm:ss.SSS')}</p>
                                 <p>Tag : {this.props.logData[i].tag}</p>
-                                <p>Message : {(typeof(this.props.logData[i].message) === 'object') ?
+                                <p>{(typeof(this.props.logData[i].message) === 'object') ?
                                     <div>
-                                        <button type="button" className="btn btn-primary" data-toggle="modal"
-                                                data-target="#jsonModal">
-                                            JSON Data
-                                        </button>
+                                        Message : <button type="button" className="btn btn-primary" data-toggle="modal"
+                                                          data-target="#jsonModal">
+                                        JSON Data
+                                    </button>
                                         <MessageJsonModal message={this.props.logData[i].message}/>
                                     </div> :
-                                    this.props.logData[i].message.toString()}</p>
+                                    "Message : " + this.props.logData[i].message.toString()}</p>
                             </div>
-                            <div className="tab-pane fade in" id={"error-memory" + i}>
+                            <div className="tab-pane fade in" id={"error-memory" + i} style={{textAlign: "center"}}>
                                 {(this.props.logData[i].memoryInfo == null) ?
                                     <h1>Debug Mode를 true로 해주세요</h1> :
                                     <LogDataMemoryChart memoryInfo={this.props.logData[i].memoryInfo}/>}

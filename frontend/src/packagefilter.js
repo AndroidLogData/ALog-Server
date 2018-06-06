@@ -1,6 +1,5 @@
 import React from 'react';
 import LogData from './logdata';
-import UserData from "./userData";
 
 class PackageFilter extends React.Component {
     constructor(props) {
