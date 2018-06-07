@@ -46,7 +46,7 @@ public class CrashDataController {
 
         CrashVO crashVO = restAPIManager.getChoseCrashTimeData(getUserApiKey(user.getName()), time, packageName);
 
-        if (crashVO == null || !(getUserApiKey(user.getName()).equals(crashVO.getApiKey()))) {
+        if (crashVO == null) {
             return "nodata";
         }
 

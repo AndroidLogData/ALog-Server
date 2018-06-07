@@ -1,8 +1,10 @@
 package com.logdata.api.controller;
 
 import com.logdata.api.sevice.CrashDataService;
+import com.logdata.api.sevice.PackageNameDataService;
 import com.logdata.common.model.CrashTimeVO;
 import com.logdata.common.model.CrashVO;
+import com.logdata.common.model.PackageNameVO;
 import com.logdata.common.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,88 +19,83 @@ import java.util.*;
 @RequestMapping("/api")
 public class CrashDataController {
     private final CrashDataService crashDataService;
+    private final PackageNameDataService packageNameDataService;
     private final Utility utility;
 
     @Autowired
-    public CrashDataController(CrashDataService crashDataService, Utility utility) {
+    public CrashDataController(CrashDataService crashDataService, PackageNameDataService packageNameDataService, Utility utility) {
         this.crashDataService = crashDataService;
+        this.packageNameDataService = packageNameDataService;
         this.utility = utility;
     }
 
-    @RequestMapping(value = "/crash/filter/package-name", method = RequestMethod.GET)
+    @RequestMapping(value = "/crash/package-name/list", method = RequestMethod.GET)
     @ResponseBody
-    public Set<String> searchCrashVOOfPackageName(@RequestHeader(value = "apiKey") String apiKey) {
-        List<CrashVO> crashList = this.crashDataService.findByApiKey(apiKey);
-        Set<String> packageNameList = new HashSet<String>();
-
-        for (CrashVO crashData : crashList) {
-            packageNameList.add(crashData.getPackageName());
-        }
-
-        return packageNameList;
+    public ArrayList<String> searchCrashVOOfPackageName(@RequestHeader(value = "apiKey") String apiKey) {
+        return this.packageNameDataService.findPackageNameVOByApiKey(apiKey).getPackageNameList();
     }
 
     @RequestMapping(value = "/crash/filter/time/{query}", method = RequestMethod.GET)
     @ResponseBody
     public CrashVO crashDataTimeView(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "time") long time, @RequestParam(value = "package-name") String packageName) {
-        CrashVO crashVO = this.crashDataService.findCrashDataByTimeAndApiKeyAndPackageName(time, apiKey, packageName);
+        PackageNameVO packageNameList = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
 
-        if (crashVO == null || !(apiKey.equals(crashVO.getApiKey()))) {
-            return null;
+        for (String item : packageNameList.getPackageNameList()) {
+            if (item.equals(packageName)) {
+                return this.crashDataService.findCrashVOByPackageNameAndTime(packageName, time);
+            }
         }
 
-        return crashVO;
+        return null;
     }
 
     @RequestMapping(value = "/crash/filter/package-name/{query}", method = RequestMethod.GET)
     @ResponseBody
     public CrashVO crashPackageNamePage(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
-        CrashVO crashVO = this.crashDataService.findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+        PackageNameVO packageNameVO = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
 
-        if (crashVO == null) {
-            return null;
+        for (String item : packageNameVO.getPackageNameList()) {
+            if (item.equals(packageName)) {
+                return this.crashDataService.findCrashVOByPackageNameOrderByTimeDesc(item);
+            }
         }
 
-        return crashVO;
+        return null;
     }
 
     @RequestMapping(value = "/crash/filter/package-name/list/{query}", method = RequestMethod.GET)
     @ResponseBody
-    public List<CrashVO> crashPackageNameList(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
-        List<CrashVO> crashList = this.crashDataService.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+    public List<CrashVO> crashListOfPackageName(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
+        PackageNameVO packageNameList = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
 
-        if (crashList == null) {
-            return null;
+        for (String item : packageNameList.getPackageNameList()) {
+            if (item.equals(packageName)) {
+                return this.crashDataService.findByPackageNameOrderByTimeDesc(packageName);
+            }
         }
 
-        return crashList;
-    }
-
-    @RequestMapping(value = "/crash/package-name/set")
-    @ResponseBody
-    public Set<String> getPackageName(@RequestHeader(value = "apiKey") String apiKey) {
-        List<CrashVO> setData = this.crashDataService.findByApiKey(apiKey);
-
-        Set<String> packageNameSet = new HashSet<String>();
-
-        for (CrashVO data : setData) {
-            packageNameSet.add(data.getPackageName());
-        }
-
-        return packageNameSet;
+        return null;
     }
 
     @RequestMapping(value = "/crash/package-name/time/{query}")
     @ResponseBody
     public List<CrashTimeVO> getCrashTime(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
-        ArrayList<CrashVO> list = this.crashDataService.findByApiKeyAndPackageNameOrderByTimeAsc(apiKey, packageName);
+        PackageNameVO packageNameList = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
         ArrayList<CrashTimeVO> crashTimeVOs = new ArrayList<CrashTimeVO>();
 
-        for (int i = 0; i < list.size(); i++) {
-            crashTimeVOs.add(new CrashTimeVO(list.get(i).getTime(), packageName, utility.getStringTimeToLong(list.get(i).getTime())));
+        for (String item : packageNameList.getPackageNameList()) {
+            if (item.equals(packageName)) {
+                List<CrashVO> crashList = this.crashDataService.findByPackageNameOrderByTimeAsc(item);
+
+                for (CrashVO crashData : crashList) {
+                    crashTimeVOs.add(new CrashTimeVO(crashData.getTime(), packageName, utility.getStringTimeToLong(crashData.getTime())));
+                }
+
+                return crashTimeVOs;
+            }
         }
 
-        return crashTimeVOs;
+        return null;
     }
 
     @RequestMapping(value = "/crash", method = RequestMethod.POST)
@@ -134,8 +131,7 @@ public class CrashDataController {
                 data.getDisplay(),
                 data.getEnvironment(),
                 map,
-                data.getBuild(),
-                apiKey));
+                data.getBuild()));
 
         responseHeaders = new HttpHeaders();
         result.put("result", "Crash Data Transfer Success");

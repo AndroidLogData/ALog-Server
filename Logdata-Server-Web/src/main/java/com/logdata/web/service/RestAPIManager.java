@@ -158,23 +158,6 @@ public class RestAPIManager {
         return null;
     }
 
-    public LinkedHashMap<String, Integer> getCrashList(String apiKey) {
-        try {
-            URI uri = uriBuilder("/help", "/my-page");
-
-            headers.set("apiKey", apiKey);
-            entity = new HttpEntity<>(headers);
-
-            ResponseEntity<LinkedHashMap> response = restTemplate.exchange(uri, HttpMethod.GET, entity, LinkedHashMap.class);
-
-            return response.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     public LogDataInfoVO[] getLogDataInfo(String apiKey) {
         try {
             URI uri = uriBuilder("/main", "/detail");

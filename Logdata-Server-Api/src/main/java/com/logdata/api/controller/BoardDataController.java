@@ -21,21 +21,13 @@ import java.util.List;
 public class BoardDataController {
     private final LogDataService logDataService;
     private final CrashDataService crashDataService;
-    private final PackageNameDataService packageNameDataService;
     private final Utility utility;
 
     @Autowired
-    public BoardDataController(LogDataService logDataService, CrashDataService crashDataService, PackageNameDataService packageNameDataService, Utility utility) {
+    public BoardDataController(LogDataService logDataService, CrashDataService crashDataService, Utility utility) {
         this.logDataService = logDataService;
         this.crashDataService = crashDataService;
-        this.packageNameDataService = packageNameDataService;
         this.utility = utility;
-    }
-
-    private ArrayList<String> getPackageNameList(String apiKey) {
-        PackageNameVO packageNameList = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
-
-        return packageNameList.getPackageNameList();
     }
 
     @RequestMapping(value = "/log-data/detail/{query}", method = RequestMethod.GET, produces = "application/json")
@@ -50,7 +42,7 @@ public class BoardDataController {
         int warningCount = this.logDataService.findByPackageNameAndLevel(packageName, "w").size();
         int errorCount = this.logDataService.findByPackageNameAndLevel(packageName, "e").size();
 
-        CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+        CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameOrderByTimeDesc(packageName);
         if (crashTime == null) {
             logDataInfo = new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount);
         } else {
@@ -64,7 +56,7 @@ public class BoardDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public HashMap<String, Integer> boardPageCrashDataList(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
-        List<CrashVO> crashList = this.crashDataService.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+        List<CrashVO> crashList = this.crashDataService.findByPackageNameOrderByTimeDesc(packageName);
         HashMap<String, Integer> result = new HashMap<String, Integer>();
 
         for (int i = 0; i < crashList.size(); i++) {

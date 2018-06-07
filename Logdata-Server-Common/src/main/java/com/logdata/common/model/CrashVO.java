@@ -22,14 +22,13 @@ public class CrashVO {
     private Map<String, Object> environment;
     private Map<String, Object> deviceFeatures;
     private Map<String, Object> build;
-    private String apiKey;
 
     public CrashVO() {}
 
     public CrashVO(String packageName, long time, String androidVersion, String appVersionCode, String appVersionName,
                    long availableMemorySize, String brand, String logcat, String deviceID,
                    Map<String, Object> display, Map<String, Object> environment, Map<String, Object> deviceFeatures,
-                   Map<String, Object> build, String apiKey) {
+                   Map<String, Object> build) {
         this.packageName = packageName;
         this.time = time;
         this.androidVersion = androidVersion;
@@ -43,7 +42,6 @@ public class CrashVO {
         this.environment = environment;
         this.deviceFeatures = deviceFeatures;
         this.build = build;
-        this.apiKey = apiKey;
     }
 
     public String getPackageName() {
@@ -150,14 +148,6 @@ public class CrashVO {
         this.build = build;
     }
 
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
     @Override
     public String toString() {
         return "{\"packageName\":\"" + getPackageName() + "\"," +
@@ -172,7 +162,6 @@ public class CrashVO {
                 "\"display\":" + getDisplay() + "," +
                 "\"environment\":" + getEnvironment() + "," +
                 "\"deviceFeatures\":" + getDeviceFeatures() + "," +
-                "\"build\":" + getBuild() + "," +
-                "\"apiKey\":\"" + getApiKey() + "\"" + "}";
+                "\"build\":" + getBuild() + "}";
     }
 }

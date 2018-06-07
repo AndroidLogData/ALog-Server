@@ -25,24 +25,4 @@ public class MyPageController {
         this.crashDataService = crashDataService;
         this.utility = utility;
     }
-
-    @RequestMapping(value = "/my-page", method = RequestMethod.GET)
-    @ResponseBody
-    public HashMap<String, Integer> myPage(@RequestHeader(value = "apiKey") String apiKey) {
-        ArrayList<CrashVO> crashVOArrayList = this.crashDataService.findAllByApiKeyOrderByTimeDesc(apiKey);
-        HashMap<String, Integer> crashList = new HashMap<String, Integer>();
-
-        for (int i = 0; i < crashVOArrayList.size(); i++) {
-            String packageName = utility.findCrashName(crashVOArrayList.get(i).getLogcat());
-
-            if (crashList.get(packageName) == null) {
-                crashList.put(packageName, 1);
-            } else {
-                int count = crashList.get(packageName);
-                crashList.put(packageName, ++count);
-            }
-        }
-
-        return crashList;
-    }
 }

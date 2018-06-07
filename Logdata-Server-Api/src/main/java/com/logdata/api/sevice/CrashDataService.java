@@ -18,51 +18,23 @@ public class CrashDataService {
         this.crashDataRepository = crashDataRepository;
     }
 
-    public CrashVO findOne(String id) {
-        return this.crashDataRepository.findOne(id);
-    }
-
-    public CrashVO findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey) {
-        return this.crashDataRepository.findCrashDataByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
-    }
-
-    public CrashVO findCrashDataByTimeAndApiKey(DateTime time, String apiKey) {
-        return this.crashDataRepository.findCrashDataByTimeAndApiKey(time, apiKey);
-    }
-
-    public CrashVO findCrashDataByTimeAndApiKeyAndPackageName(long time, String apiKey, String packageName) {
-        return this.crashDataRepository.findCrashDataByTimeAndApiKeyAndPackageName(time, apiKey, packageName);
-    }
-
-    public CrashVO findCrashDataByOrderByTimeDescPackageName(String packageName) {
-        return this.crashDataRepository.findCrashDataByOrderByTimeDescPackageName(packageName);
-    }
-
-    public List<CrashVO> findByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey) {
-        return this.crashDataRepository.findByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
-    }
-
-    public CrashVO findCrashVOByPackageNameAndApiKeyOrderByTimeDesc(String packageName, String apiKey) {
-        return this.crashDataRepository.findCrashVOByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
-    }
-
-    public ArrayList<CrashVO> findByApiKeyOrderByTimeAsc(String apiKey) {
-        return this.crashDataRepository.findByApiKeyOrderByTimeAsc(apiKey);
-    }
-
-    public ArrayList<CrashVO> findByApiKeyAndPackageNameOrderByTimeAsc(String apiKey, String packageName) {
-        return this.crashDataRepository.findByApiKeyAndPackageNameOrderByTimeAsc(apiKey, packageName);
-    }
-
-    public List<CrashVO> findByApiKey(String apiKey) {
-        return this.crashDataRepository.findByApiKey(apiKey);
-    }
-
-    public ArrayList<CrashVO> findAllByApiKeyOrderByTimeDesc(String apiKey) {
-        return this.crashDataRepository.findAllByApiKeyOrderByTimeDesc(apiKey);
-    }
-
     public void save(CrashVO crashVO) {
         this.crashDataRepository.save(crashVO);
+    }
+
+    public CrashVO findCrashVOByPackageNameOrderByTimeDesc(String packageName) {
+        return this.crashDataRepository.findCrashVOByPackageNameOrderByTimeDesc(packageName);
+    }
+
+    public CrashVO findCrashVOByPackageNameAndTime(String packageName, long time) {
+        return this.crashDataRepository.findCrashVOByPackageNameAndTime(packageName, time);
+    }
+
+    public List<CrashVO> findByPackageNameOrderByTimeAsc(String packageName) {
+        return this.crashDataRepository.findByPackageNameOrderByTimeAsc(packageName);
+    }
+
+    public List<CrashVO> findByPackageNameOrderByTimeDesc(String packageName) {
+        return this.crashDataRepository.findByPackageNameOrderByTimeDesc(packageName);
     }
 }

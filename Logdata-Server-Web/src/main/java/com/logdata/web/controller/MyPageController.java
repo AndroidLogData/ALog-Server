@@ -35,10 +35,8 @@ public class MyPageController {
             return "login";
         }
 
-        LinkedHashMap<String, Integer> crashList = restAPIManager.getCrashList(getUserApiKey(user.getName()));
         LogDataInfoVO[] logDataInfoVO = restAPIManager.getLogDataInfo(getUserApiKey(user.getName()));
 
-        model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfo", logDataInfoVO);
         model.addAttribute("apikey", getUserApiKey(user.getName()));
         model.addAttribute("packageNameList", getPackageName(user.getName()));
@@ -52,12 +50,8 @@ public class MyPageController {
             return "login";
         }
 
-        System.out.println(restAPIManager.deleteLogData(getUserApiKey(user.getName()), packageName));
-
-        LinkedHashMap<String, Integer> crashList = restAPIManager.getCrashList(getUserApiKey(user.getName()));
         LogDataInfoVO[] logDataInfoVO = restAPIManager.getLogDataInfo(getUserApiKey(user.getName()));
 
-        model.addAttribute("crashList", crashList);
         model.addAttribute("logDataInfo", logDataInfoVO);
         model.addAttribute("apikey", getUserApiKey(user.getName()));
         model.addAttribute("packageNameList", getPackageName(user.getName()));

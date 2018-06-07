@@ -32,9 +32,7 @@ public class MainController {
     }
 
     private ArrayList<String> getPackageNameList(String apiKey) {
-        PackageNameVO packageNameList = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
-
-        return packageNameList.getPackageNameList();
+        return this.packageNameDataService.findPackageNameVOByApiKey(apiKey).getPackageNameList();
     }
 
     @RequestMapping(value = "/detail", method = RequestMethod.GET, produces = "application/json")
@@ -51,7 +49,7 @@ public class MainController {
             int warningCount = this.logDataService.findByPackageNameAndLevel(packageName, "w").size();
             int errorCount = this.logDataService.findByPackageNameAndLevel(packageName, "e").size();
 
-            CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameAndApiKeyOrderByTimeDesc(packageName, apiKey);
+            CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameOrderByTimeDesc(packageName);
             if (crashTime == null) {
                 list.add(new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount));
             } else {
