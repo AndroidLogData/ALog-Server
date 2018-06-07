@@ -53,30 +53,6 @@ public class LogDataService {
         return this.logDataRepository.findByPackageName(packageName);
     }
 
-//    public List<LogVO> findByApiKey(String apiKey, Sort sort) {
-//        return this.logDataRepository.findByApiKey(apiKey, sort);
-//    }
-//
-//    public List<LogVO> findByPackageNameAndApiKey(String packageName, String apiKey, Sort sort) {
-//        return this.logDataRepository.findByPackageNameAndApiKey(packageName, apiKey, sort);
-//    }
-//
-//    public List<LogVO> findByPackageNameAndApiKey(String packageName, String apiKey) {
-//        return this.logDataRepository.findByPackageNameAndApiKey(packageName, apiKey);
-//    }
-//
-//    public List<LogVO> findByApiKeyAndTag(String apiKey, String tag) {
-//        return this.logDataRepository.findByApiKeyAndTag(apiKey, tag);
-//    }
-//
-//    public List<LogVO> findByPackageName(String packageName) {
-//        return this.logDataRepository.findByPackageName(packageName);
-//    }
-//
-//    public List<LogVO> findByApiKey(String apiKey) {
-//        return this.logDataRepository.findByApiKey(apiKey);
-//    }
-//
     public List<LogVO> findByPackageNameAndLevel(String packageName, String level) {
         return this.logDataRepository.findByPackageNameAndLevel(packageName, level);
     }

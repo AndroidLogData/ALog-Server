@@ -6,10 +6,6 @@ import UserData from "./userData";
 class FilterBar extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            apiKey: ""
-        };
     }
 
     render() {
@@ -36,7 +32,7 @@ class FilterBar extends React.Component {
                                       to={{pathname: '/log-data/filter/level/' + this.props.packageName + '/e'}}>e</Link>
                             </div>
                         </div>
-                        <TagList packageName={this.props.packageName} apiKey={this.state.apiKey}/>
+                        <TagList packageName={this.props.packageName}/>
                     </div>
                 </div>
                 <br/>

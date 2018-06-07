@@ -5,8 +5,6 @@ import com.logdata.common.repository.PackageNameDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class PackageNameDataService {
     private final PackageNameDataRepository packageNameDataRepository;
@@ -14,11 +12,6 @@ public class PackageNameDataService {
     @Autowired
     public PackageNameDataService(PackageNameDataRepository packageNameDataRepository) {
         this.packageNameDataRepository = packageNameDataRepository;
-    }
-
-    public List<PackageNameVO> findByApiKey(String apiKey) {
-//        return packageNameDataRepository.findByApiKey(apiKey);
-        return null;
     }
 
     public void insertPackageName(String apiKey, String packageName) {

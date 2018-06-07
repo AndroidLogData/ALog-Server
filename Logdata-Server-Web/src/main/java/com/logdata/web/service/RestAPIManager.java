@@ -1,6 +1,9 @@
 package com.logdata.web.service;
 
-import com.logdata.common.model.*;
+import com.logdata.common.model.CrashTimeVO;
+import com.logdata.common.model.CrashVO;
+import com.logdata.common.model.LogDataInfoVO;
+import com.logdata.common.model.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
@@ -13,8 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
 
 @Component
 public class RestAPIManager {

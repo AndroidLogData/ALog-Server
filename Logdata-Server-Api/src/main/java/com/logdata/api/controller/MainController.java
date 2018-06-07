@@ -5,7 +5,6 @@ import com.logdata.api.sevice.LogDataService;
 import com.logdata.api.sevice.PackageNameDataService;
 import com.logdata.common.model.CrashVO;
 import com.logdata.common.model.LogDataInfoVO;
-import com.logdata.common.model.PackageNameVO;
 import com.logdata.common.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

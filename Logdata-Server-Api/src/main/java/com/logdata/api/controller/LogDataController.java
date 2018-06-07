@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Controller
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping(value = "/api")
 public class LogDataController {
     private final LogDataService logDataService;
@@ -98,8 +98,7 @@ public class LogDataController {
         PackageNameVO packageNameVO = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
         for (int i = 0; i < packageNameVO.getPackageNameList().size(); i++) {
             if (packageName.equals(packageNameVO.getPackageNameList().get(i))) {
-                List<LogVO> logVOList = this.logDataService.findByPackageNameAndLevel(packageName, level, new Sort(Sort.Direction.DESC, "time"));
-                return logVOList;
+                return this.logDataService.findByPackageNameAndLevel(packageName, level, new Sort(Sort.Direction.DESC, "time"));
             }
         }
         return null;
@@ -155,9 +154,7 @@ public class LogDataController {
     @RequestMapping(value = "/log-data/package-name/set", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     private ArrayList<String> getPackageName(@RequestHeader(value = "apiKey") String apiKey) {
-        PackageNameVO packageNameList = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
-
-        return packageNameList.getPackageNameList();
+        return this.packageNameDataService.findPackageNameVOByApiKey(apiKey).getPackageNameList();
     }
 
     @RequestMapping(value = "/log-data/filter/package-name/{query}", method = RequestMethod.GET)
@@ -167,9 +164,7 @@ public class LogDataController {
         if (packageNameVO == null) {
             return null;
         }
-        List<LogVO> logVOList = this.logDataService.findByPackageName(packageName, new Sort(Sort.Direction.DESC, "time"));
-
-        return logVOList;
+        return this.logDataService.findByPackageName(packageName, new Sort(Sort.Direction.DESC, "time"));
     }
 
     @RequestMapping(value = "/log-data/list", method = RequestMethod.GET)

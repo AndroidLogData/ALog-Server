@@ -2,17 +2,14 @@ package com.logdata.api.controller;
 
 import com.logdata.api.sevice.CrashDataService;
 import com.logdata.api.sevice.LogDataService;
-import com.logdata.api.sevice.PackageNameDataService;
 import com.logdata.common.model.CrashVO;
 import com.logdata.common.model.LogDataInfoVO;
-import com.logdata.common.model.PackageNameVO;
 import com.logdata.common.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,8 +56,8 @@ public class BoardDataController {
         List<CrashVO> crashList = this.crashDataService.findByPackageNameOrderByTimeDesc(packageName);
         HashMap<String, Integer> result = new HashMap<String, Integer>();
 
-        for (int i = 0; i < crashList.size(); i++) {
-            String crashName = utility.findCrashName(crashList.get(i).getLogcat());
+        for (CrashVO aCrashList : crashList) {
+            String crashName = utility.findCrashName(aCrashList.getLogcat());
 
             if (result.get(crashName) == null) {
                 result.put(crashName, 1);

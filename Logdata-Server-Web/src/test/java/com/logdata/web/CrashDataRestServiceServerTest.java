@@ -122,8 +122,7 @@ public class CrashDataRestServiceServerTest {
                 display,
                 null,
                 deviceFeatures,
-                build,
-                "key");
+                build);
 
         crashDataJsonString = objectMapper.writeValueAsString(newCrashData);
 

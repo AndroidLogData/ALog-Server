@@ -20,10 +20,6 @@ public class UserDataService {
         this.userDataRepository.save(userVO);
     }
 
-    public UserVO findByApiKey(String apiKey) {
-        return this.userDataRepository.findByApiKey(apiKey);
-    }
-
     public UserVO findByUserID(String name) {
         return this.userDataRepository.findByUserID(name);
     }
