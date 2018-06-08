@@ -1,6 +1,5 @@
 package com.logdata.web.config;
 
-import com.logdata.web.handler.CustomLoginSuccessHandler;
 import com.logdata.web.handler.CustomRequestMatcher;
 import com.logdata.web.handler.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
@@ -43,8 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .successHandler(new CustomLoginSuccessHandler("/"))
-                .loginProcessingUrl("/login")
+                .successHandler(loginSuccessHandler())
                 .failureUrl("/login")
                 .and()
                 .logout()
@@ -54,6 +54,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement()
                 .maximumSessions(1);
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler loginSuccessHandler() {
+        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
+        handler.setUseReferer(false);
+        return handler;
     }
 
     @Bean

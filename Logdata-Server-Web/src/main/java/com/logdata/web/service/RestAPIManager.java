@@ -1,5 +1,6 @@
 package com.logdata.web.service;
 
+import com.logdata.common.logger.Logger;
 import com.logdata.common.model.CrashTimeVO;
 import com.logdata.common.model.CrashVO;
 import com.logdata.common.model.LogDataInfoVO;

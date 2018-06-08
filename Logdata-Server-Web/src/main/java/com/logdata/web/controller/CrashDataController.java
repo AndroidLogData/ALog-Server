@@ -26,18 +26,6 @@ public class CrashDataController {
         this.utility = utility;
     }
 
-    @RequestMapping(value = "/crash", method = RequestMethod.GET)
-    public String crashPage(Principal user, Model model, HttpSession session) {
-        if (user == null) {
-            return "login";
-        }
-
-        model.addAttribute("packageName", session.getAttribute("packageName"));
-        model.addAttribute("packageNameList", getPackageName(user.getName()));
-
-        return "crash";
-    }
-
     @RequestMapping(value = "/crash/filter/time/{query}", method = RequestMethod.GET)
     public String crashDataTimeView(Principal user, @RequestParam(value = "time") long time, @RequestParam(value = "package-name") String packageName, Model model, HttpSession session) {
         if (user == null) {
@@ -46,34 +34,33 @@ public class CrashDataController {
 
         CrashVO crashVO = restAPIManager.getChoseCrashTimeData(getUserApiKey(user.getName()), time, packageName);
 
-        if (crashVO == null) {
-            return "nodata";
+        if (crashVO != null) {
+            Object display = crashVO.getDisplay().get("0");
+
+            Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
+            Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
+
+            for (String s : deviceFeaturesKey) {
+                deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
+            }
+
+            model.addAttribute("crash", crashVO);
+            model.addAttribute("logcat", utility.logcatSummary(crashVO.getLogcat()));
+            model.addAttribute("time", utility.getStringTimeToLong(crashVO.getTime()));
+            model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
+            model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
+            model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
+            model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
+            model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
+            model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
+            model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
+            model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
+            model.addAttribute("model", crashVO.getBuild().get("MODEL"));
+            model.addAttribute("board", crashVO.getBuild().get("BOARD"));
+            model.addAttribute("deviceFeatures", deviceFeatures);
+            model.addAttribute("timeData", getCrashTime(user, packageName));
         }
 
-        Object display = crashVO.getDisplay().get("0");
-
-        Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
-        Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
-
-        for (String s : deviceFeaturesKey) {
-            deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
-        }
-
-        model.addAttribute("crash", crashVO);
-        model.addAttribute("logcat", utility.logcatSummary(crashVO.getLogcat()));
-        model.addAttribute("time", utility.getStringTimeToLong(crashVO.getTime()));
-        model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
-        model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
-        model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
-        model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
-        model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
-        model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
-        model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
-        model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
-        model.addAttribute("model", crashVO.getBuild().get("MODEL"));
-        model.addAttribute("board", crashVO.getBuild().get("BOARD"));
-        model.addAttribute("deviceFeatures", deviceFeatures);
-        model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("packageName", session.getAttribute("packageName"));
         model.addAttribute("packageNameList", getPackageName(user.getName()));
 
@@ -88,35 +75,33 @@ public class CrashDataController {
 
         CrashVO crashVO = restAPIManager.getCrashData(getUserApiKey(user.getName()), packageName);
 
-        if (crashVO == null) {
-            model.addAttribute("noData", true);
-            return "crash";
+        if (crashVO != null) {
+            Object display = crashVO.getDisplay().get("0");
+
+            Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
+            Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
+
+            for (String s : deviceFeaturesKey) {
+                deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
+            }
+
+            model.addAttribute("crash", crashVO);
+            model.addAttribute("logcat", utility.logcatSummary(crashVO.getLogcat()));
+            model.addAttribute("time", utility.getStringTimeToLong(crashVO.getTime()));
+            model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
+            model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
+            model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
+            model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
+            model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
+            model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
+            model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
+            model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
+            model.addAttribute("model", crashVO.getBuild().get("MODEL"));
+            model.addAttribute("board", crashVO.getBuild().get("BOARD"));
+            model.addAttribute("deviceFeatures", deviceFeatures);
+            model.addAttribute("timeData", getCrashTime(user, packageName));
         }
 
-        Object display = crashVO.getDisplay().get("0");
-
-        Map<String, Object> deviceFeatures = new LinkedHashMap<String, Object>();
-        Set<String> deviceFeaturesKey = crashVO.getDeviceFeatures().keySet();
-
-        for (String s : deviceFeaturesKey) {
-            deviceFeatures.put(s.replace("-", "."), crashVO.getDeviceFeatures().get(s));
-        }
-
-        model.addAttribute("crash", crashVO);
-        model.addAttribute("logcat", utility.logcatSummary(crashVO.getLogcat()));
-        model.addAttribute("time", utility.getStringTimeToLong(crashVO.getTime()));
-        model.addAttribute("realSize", ((LinkedHashMap<String, Object>) display).get("realSize"));
-        model.addAttribute("rotation", ((LinkedHashMap<String, Object>) display).get("rotation"));
-        model.addAttribute("bootLoader", crashVO.getBuild().get("BOOTLOADER"));
-        model.addAttribute("buildBrand", crashVO.getBuild().get("BRAND"));
-        model.addAttribute("CPU_ABI", crashVO.getBuild().get("CPU_ABI"));
-        model.addAttribute("CPU_ABI2", crashVO.getBuild().get("CPU_ABI2"));
-        model.addAttribute("buildDisplay", crashVO.getBuild().get("DISPLAY"));
-        model.addAttribute("TWRP", crashVO.getBuild().get("DEVICE"));
-        model.addAttribute("model", crashVO.getBuild().get("MODEL"));
-        model.addAttribute("board", crashVO.getBuild().get("BOARD"));
-        model.addAttribute("deviceFeatures", deviceFeatures);
-        model.addAttribute("timeData", getCrashTime(user, packageName));
         model.addAttribute("packageName", session.getAttribute("packageName"));
         model.addAttribute("packageNameList", getPackageName(user.getName()));
 

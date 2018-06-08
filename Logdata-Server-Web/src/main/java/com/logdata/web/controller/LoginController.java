@@ -1,5 +1,6 @@
 package com.logdata.web.controller;
 
+import com.logdata.common.logger.Logger;
 import com.logdata.common.model.UserVO;
 import com.logdata.web.service.RestAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
