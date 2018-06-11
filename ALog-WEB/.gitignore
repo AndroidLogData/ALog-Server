@@ -25,3 +25,6 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### react ###
+src/main/resources/static/react/*
