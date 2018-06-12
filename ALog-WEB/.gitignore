@@ -27,4 +27,4 @@
 /.nb-gradle/
 
 ### react ###
-src/main/resources/static/react/*
+/src/main/resources/static/react/

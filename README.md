@@ -2,30 +2,15 @@
 
 |  | Current Status |
 |--------|--------|
-| Travis-CI | [![Build Status](https://travis-ci.org/AndroidLogData/Logdata-Server-Spring.svg?branch=develop)](https://travis-ci.org/AndroidLogData/Logdata-Server-Spring) |
-| CircleCI | [![CircleCI](https://circleci.com/gh/AndroidLogData/Logdata-Server-Spring/tree/develop.svg?style=svg)](https://circleci.com/gh/AndroidLogData/Logdata-Server-Spring/tree/develop) |
-| Coveralls | [![Coverage Status](https://coveralls.io/repos/github/AndroidLogData/Logdata-Server-Spring/badge.svg?branch=develop)](https://coveralls.io/github/AndroidLogData/Logdata-Server-Spring?branch=develop) |
+| Travis-CI | [![Build Status](https://travis-ci.org/AndroidLogData/ALog-Server.svg?branch=develop)](https://travis-ci.org/AndroidLogData/ALog-Server) |
+| CircleCI | [![CircleCI](https://circleci.com/gh/AndroidLogData/ALog-Server/tree/develop.svg?style=svg)](https://circleci.com/gh/AndroidLogData/ALog-Server/tree/develop) |
+| Coveralls | [![Coverage Status](https://coveralls.io/repos/github/AndroidLogData/ALog-Server/badge.svg?branch=feature%2Fdashboard)](https://coveralls.io/github/AndroidLogData/ALog-Server?branch=feature%2Fdashboard) |
 
 안드로이드 로그 데이터를 관리하기 위한 서버
 
 ## Installation
 ```script
 ./build-script.sh
-#!/bin/bash
-
-
-#cd frontend
-
-#sudo npm update
-
-#sudo npm install
-
-#sudo npm run build
-
-#cd ..
-
-#sudo gradle clean build
-
 ```
 
 * install npm module and gradle build in the script file

@@ -36,9 +36,7 @@ public class LogDataController {
     }
 
     private ArrayList<String> getPackageName(String name) {
-        ArrayList<String> body = restAPIManager.getLogDataOfPackageName(getUserApiKey(name));
-
-        return body;
+        return restAPIManager.getLogDataOfPackageName(getUserApiKey(name));
     }
 
     public String getUserApiKey(String name) {
