@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.2.RELEASE'
+        springBootVersion = '1.5.10.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -20,6 +20,7 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'jacoco'
     apply plugin: 'com.github.kt3k.coveralls'
+    apply plugin: 'io.spring.dependency-management'
 
     group = 'com.logdata'
     version = '0.0.1-SNAPSHOT'
@@ -47,12 +48,6 @@ subprojects {
         testCompile('org.springframework.boot:spring-boot-starter-test')
         testCompile('org.springframework.security:spring-security-test')
         testCompile('org.springframework.security:spring-security-test:5.0.1.RELEASE')
-    }
-}
-
-allprojects {
-    task wrapper(type: Wrapper) {
-        gradleVersion = '4.5.1'
     }
 }
 
