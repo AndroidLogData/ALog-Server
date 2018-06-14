@@ -35,4 +35,8 @@ public class CrashDataService {
     public List<CrashVO> findByPackageNameOrderByTimeDesc(String packageName) {
         return this.crashDataRepository.findByPackageNameOrderByTimeDesc(packageName);
     }
+
+    public void delete(String packageName) {
+        this.crashDataRepository.deleteCrashVOByPackageName(packageName);
+    }
 }

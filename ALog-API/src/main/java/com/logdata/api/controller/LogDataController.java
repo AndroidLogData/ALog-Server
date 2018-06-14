@@ -1,5 +1,6 @@
 package com.logdata.api.controller;
 
+import com.logdata.api.sevice.CrashDataService;
 import com.logdata.api.sevice.LogDataService;
 import com.logdata.api.sevice.PackageNameDataService;
 import com.logdata.common.logger.Logger;
@@ -26,11 +27,13 @@ import java.util.regex.Pattern;
 public class LogDataController {
     private final LogDataService logDataService;
     private final PackageNameDataService packageNameDataService;
+    private final CrashDataService crashDataService;
 
     @Autowired
-    public LogDataController(LogDataService logDataService, PackageNameDataService packageNameDataService) {
+    public LogDataController(LogDataService logDataService, PackageNameDataService packageNameDataService, CrashDataService crashDataService) {
         this.logDataService = logDataService;
         this.packageNameDataService = packageNameDataService;
+        this.crashDataService = crashDataService;
     }
 
     /**
@@ -104,6 +107,7 @@ public class LogDataController {
         for (String item : packageNameVO.getPackageNameList()) {
             if (item.equals(packageName)) {
                 this.logDataService.delete(item);
+                this.crashDataService.delete(item);
                 packageNameVO.getPackageNameList().remove(item);
                 this.packageNameDataService.save(packageNameVO);
                 Logger.i("delete log data success");
