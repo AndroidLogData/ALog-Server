@@ -1,5 +1,6 @@
 package com.logdata.web.controller;
 
+import com.logdata.common.logger.Logger;
 import com.logdata.common.model.LogDataInfoVO;
 import com.logdata.common.model.UserVO;
 import com.logdata.web.service.RestAPIManager;
@@ -47,6 +48,8 @@ public class MyPageController {
         if (user == null) {
             return "login";
         }
+
+        this.restAPIManager.deleteLogData(getUserApiKey(user.getName()), packageName);
 
         LogDataInfoVO[] logDataInfoVO = restAPIManager.getLogDataInfo(getUserApiKey(user.getName()));
 

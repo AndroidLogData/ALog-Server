@@ -1,7 +1,7 @@
 package com.logdata.api.sevice;
 
-import com.logdata.common.model.PackageNameVO;
 import com.logdata.api.repository.PackageNameDataRepository;
+import com.logdata.common.model.PackageNameVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +26,9 @@ public class PackageNameDataService {
 
     public PackageNameVO findPackageNameVOByApiKey(String apiKey) {
         return packageNameDataRepository.findPackageNameVOByApiKey(apiKey);
+    }
+
+    public void save(PackageNameVO packageNameVO) {
+        this.packageNameDataRepository.save(packageNameVO);
     }
 }

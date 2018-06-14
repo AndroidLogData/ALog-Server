@@ -48,7 +48,7 @@
                         <p class="badge badge-warning" th:text="'Warning : ' + ${item.getWarning()}"/>
                         <p class="badge badge-danger" th:text="'Error : ' + ${item.getError()}"/>
                         <p class="card-text" th:text="'최근 크래쉬 데이터 : ' + ${item.getRecentCrashTime()}"/>
-                        <form th:action="@{/logdata/query(package-name=${item.getPackageName()})}" method="post">
+                        <form th:action="@{/log-data/query(package-name=${item.getPackageName()})}" method="post">
                             <input type="hidden" name="_method" value="DELETE"/>
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                             <button type="submit" class="btn btn-danger">Delete</button>

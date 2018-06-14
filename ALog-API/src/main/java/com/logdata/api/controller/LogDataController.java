@@ -104,14 +104,21 @@ public class LogDataController {
         for (String item : packageNameVO.getPackageNameList()) {
             if (item.equals(packageName)) {
                 this.logDataService.delete(item);
+                packageNameVO.getPackageNameList().remove(item);
+                this.packageNameDataService.save(packageNameVO);
                 Logger.i("delete log data success");
+
+                responseHeaders = new HttpHeaders();
+                result.put("result", "Log Data Delete Success");
+
+                return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
             }
         }
 
         responseHeaders = new HttpHeaders();
-        result.put("result", "Log Data Delete Success");
+        result.put("result", "Log Data Delete Fail");
 
-        return new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(result, responseHeaders, HttpStatus.BAD_REQUEST);
     }
 
     /**
