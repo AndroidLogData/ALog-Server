@@ -5,6 +5,7 @@ import com.logdata.web.service.RestAPIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,18 +28,25 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping(value = "/login/{query}", method = RequestMethod.GET)
+    public String loginFail(Model model) {
+        model.addAttribute("error", true);
+        return "login";
+    }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String userRegistration() {
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String userRegistration(@RequestParam Map<String, String> body) {
+    public String userRegistration(@RequestParam Map<String, String> body, Model model) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         if (this.restAPIManager.userRegistration(body.get("username"), passwordEncoder.encode(body.get("password")))) {
             return "login";
         } else {
+            model.addAttribute("alreadyUser", true);
             return "registration";
         }
     }

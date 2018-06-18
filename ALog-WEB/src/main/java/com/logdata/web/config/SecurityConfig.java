@@ -2,6 +2,7 @@ package com.logdata.web.config;
 
 import com.logdata.web.handler.CustomRequestMatcher;
 import com.logdata.web.handler.CustomUserDetailsService;
+import com.logdata.web.handler.LoginFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +21,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService customUserDetailsService;
+    private final LoginFailureHandler loginFailureHandler;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService, LoginFailureHandler loginFailureHandler) {
         this.customUserDetailsService = customUserDetailsService;
+        this.loginFailureHandler = loginFailureHandler;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .successHandler(loginSuccessHandler())
-                .failureUrl("/login")
+                .failureHandler(loginFailureHandler)
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
