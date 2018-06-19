@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const PATHS = {
-    build: path.resolve(__dirname, '..', 'Logdata-Server-Web', 'src', 'main', 'resources', 'static', 'react')
+    build: path.resolve(__dirname, '..', 'ALog-WEB', 'src', 'main', 'resources', 'static', 'react')
 };
 
 module.exports = {

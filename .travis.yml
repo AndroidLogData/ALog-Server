@@ -23,17 +23,17 @@ cache:
 jobs:
   include:
     - stage: build
-      script: ./gradlew Logdata-Server-Api:clean build
+      script: ./gradlew ALog-API:clean build
       after_success:
-        - ./gradlew Logdata-Server-Api:jacocoTestReport coveralls
+        - ./gradlew ALog-API:jacocoTestReport coveralls
     -
-      script: ./gradlew Logdata-Server-Common:clean build
+      script: ./gradlew ALog-Common:clean build
       after_success:
-        - ./gradlew Logdata-Server-Common:jacocoTestReport coveralls
+        - ./gradlew ALog-Common:jacocoTestReport coveralls
     -
-      script: ./gradlew Logdata-Server-Web:clean build
+      script: ./gradlew ALog-WEB:clean build
       after_success:
-        - ./gradlew Logdata-Server-Web:jacocoTestReport coveralls
+        - ./gradlew ALog-WEB:jacocoTestReport coveralls
 
 # CI 실행 완료시 메일로 알람
 notifications:

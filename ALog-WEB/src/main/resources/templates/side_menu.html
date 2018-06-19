@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="head :: headfile">
+</head>
+<body>
+<div th:replace="navigation :: navigation"></div>
+<div th:fragment="sidemenu">
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+                <ul class="nav nav-pills flex-column">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+                                <ul class="nav nav-pills flex-column">
+                                    <li class="nav-item">
+                                        <a th:if="${packageName} != null" class="nav-link" th:text="'Log Data'"
+                                           th:href="@{'/log-data/filter/package-name/' + ${packageName}}"/>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a th:if="${packageName} != null" class="nav-link" th:text="'Crash Report'"
+                                           th:href="@{/crash/filter/package-name/query(package-name=${packageName})}"/>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

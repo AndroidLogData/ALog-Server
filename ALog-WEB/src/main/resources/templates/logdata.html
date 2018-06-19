@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="head :: headfile">
+</head>
+<body>
+<div th:replace="navigation :: navigation"></div>
+<div th:replace="side_menu :: sidemenu"></div>
+<div id="root"></div>
+<script th:src="@{/react/bundle.js}"></script>
+</body>
+</html>

@@ -1,8 +1,7 @@
 import React from 'react';
-import {
-    Link
-} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import $ from 'jquery';
+import UserData from "./userData";
 
 class FilterBar extends React.Component {
     constructor(props) {
@@ -22,19 +21,18 @@ class FilterBar extends React.Component {
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/v'}}>v</Link>
+                                      to={{pathname: '/log-data/filter/level/' + this.props.packageName + '/v'}}>v</Link>
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/i'}}>i</Link>
+                                      to={{pathname: '/log-data/filter/level/' + this.props.packageName + '/i'}}>i</Link>
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/d'}}>d</Link>
+                                      to={{pathname: '/log-data/filter/level/' + this.props.packageName + '/d'}}>d</Link>
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/w'}}>w</Link>
+                                      to={{pathname: '/log-data/filter/level/' + this.props.packageName + '/w'}}>w</Link>
                                 <Link className="dropdown-item"
-                                      to={{pathname: '/logdata/filter/level/' + this.props.packageName + '/e'}}>e</Link>
+                                      to={{pathname: '/log-data/filter/level/' + this.props.packageName + '/e'}}>e</Link>
                             </div>
                         </div>
                         <TagList packageName={this.props.packageName}/>
-                        <PackageNameList packageName={this.props.packageName}/>
                     </div>
                 </div>
                 <br/>
@@ -48,19 +46,21 @@ class TagList extends React.Component {
         super(props);
 
         this.state = {
-            logData: []
+            tagData: []
         };
-
-        this.fetchTagData();
     }
 
     fetchTagData() {
         $.ajax({
-            url: '/logdata/tag/set',
+            url: 'http://localhost:8081/api/log-data/tag/set/query?',
+            headers: {"apiKey": new UserData().apiKey},
+            type: "GET",
             dataType: 'json',
+            contentType: "application/json",
+            data: {"package-name": this.props.packageName},
             cache: false,
             success: function (data) {
-                this.setState({logData: data});
+                this.setState({tagData: data});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -70,83 +70,32 @@ class TagList extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         this.fetchTagData();
-        return nextState.length !== this.state.logData.length;
+        return nextState.tagData.length !== this.state.tagData.length;
+    }
+
+    componentDidMount() {
+        this.fetchTagData();
     }
 
     render() {
         let i;
         let tagNodes = [];
 
-        for (i = 0; i < this.state.logData.length; i++) {
+        for (i = 0; i < this.state.tagData.length; i++) {
             tagNodes.push(
                 <Link className="dropdown-item"
-                      to={{pathname: '/logdata/filter/tag/' + this.props.packageName + '/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
+                      to={{pathname: '/log-data/filter/tag/' + this.props.packageName + '/' + this.state.tagData[i]}}>{this.state.tagData[i]}</Link>
             );
         }
 
         return (
-            <div className="btn-group"  style={{marginRight: 0.5 + '%'}}>
+            <div className="btn-group" style={{marginRight: 0.5 + '%'}}>
                 <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     Tag
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {tagNodes}
-                </div>
-            </div>
-        );
-    }
-}
-
-class PackageNameList extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            logData: []
-        };
-
-        this.fetchPackageNameData();
-    }
-
-    fetchPackageNameData() {
-        $.ajax({
-            url: '/logdata/packagename/set',
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({logData: data});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        this.fetchPackageNameData();
-        return nextState.length !== this.state.logData.length;
-    }
-
-    render() {
-        let i;
-        let packageNameNodes = [];
-
-        for (i = 0; i < this.state.logData.length; i++) {
-            packageNameNodes.push(
-                <Link className="dropdown-item"
-                      to={{pathname: '/logdata/filter/packagename/' + this.state.logData[i]}}>{this.state.logData[i]}</Link>
-            );
-        }
-
-        return (
-            <div className="btn-group">
-                <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    PackageName
-                </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {packageNameNodes}
                 </div>
             </div>
         );

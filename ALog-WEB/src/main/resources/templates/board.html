@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="head :: headfile">
+</head>
+<body>
+<div th:replace="navigation :: navigation"></div>
+<div th:replace="side_menu :: sidemenu"></div>
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+            <h1 th:text="${packageName}"/>
+
+            <div class="row" style="margin-bottom: 1%">
+                <div class="col-sm col-md">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Log Information</h3>
+                        </div>
+                        <div id="container1" style="width: 75%;">
+                            <canvas id="logInfo"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm col-md">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Crash Information</h3>
+                        </div>
+                        <div id="container2" style="width: 75%;">
+                            <canvas id="crashInfo"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    let logDataColor = Chart.helpers.color;
+    let logChartData = {
+        labels: /*[[${logDataInfoOfPackageName.logCount.keySet()}]]*/,
+        datasets: [{
+            label: 'Count',
+            backgroundColor: logDataColor(window.chartColors.red).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: /*[[${logDataInfoOfPackageName.logCount.values()}]]*/
+        }]
+    };
+
+    let crashDataColor = Chart.helpers.color;
+    let crashChartData = {
+        labels: /*[[${crashList.keySet()}]]*/,
+        datasets: [{
+            label: 'Count',
+            backgroundColor: crashDataColor(window.chartColors.red).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: /*[[${crashList.values()}]]*/
+        }]
+    };
+
+    window.onload = function () {
+        let ctx1 = document.getElementById("logInfo").getContext("2d");
+        window.myBar = new Chart(ctx1, {
+            type: 'bar',
+            data: logChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Log Information'
+                },
+                scales: {
+                    yAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,132,0.2)"
+                        },
+                        ticks: {
+                            min: 0,
+                            callback: function (value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+
+        let ctx2 = document.getElementById("crashInfo").getContext("2d");
+        window.myBar = new Chart(ctx2, {
+            type: 'bar',
+            data: crashChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Crash Information'
+                },
+                scales: {
+                    yAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,132,0.2)"
+                        },
+                        ticks: {
+                            min: 0,
+                            callback: function (value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+    };
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="head :: headfile">
+</head>
+<body>
+<div th:replace="navigation :: navigation"></div>
+<div th:replace="side_menu :: sidemenu"></div>
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+                <div class="card" style="margin-bottom: 1%;">
+                    <h3 class="card-header">Filter</h3>
+                    <div class="card-block">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                기록
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right justify-content-md-end"
+                                 style="height: auto; max-height: 200px; overflow-x: hidden;"
+                                 aria-labelledby="dropdown03">
+                                <div th:each="item : ${timeData}">
+                                    <a class="dropdown-item"
+                                       th:href="@{/crash/filter/time/query(time=${item.getTime()}, package-name=${item.getPackageName()})}"
+                                       th:text="${item.getStringTime()}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${crash} != null" class="card">
+                    <h5 class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#crashdata" role="tab">Android
+                                    Information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#deviceFeatures" role="tab">Device
+                                    Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#logcat" role="tab">Logcat</a>
+                            </li>
+                        </ul>
+                    </h5>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div id="crashdata" class="tab-pane active">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Value</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Crash Time</td>
+                                            <td th:text="${time}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Android Version</td>
+                                            <td th:text="${crash.getAndroidVersion()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>APP Version Code</td>
+                                            <td th:text="${crash.getAppVersionCode()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>APP Version Name</td>
+                                            <td th:text="${crash.getAppVersionName()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Available Memory Size</td>
+                                            <td th:text="${crash.getAvailableMemorySize()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Brand</td>
+                                            <td th:text="${crash.getBrand()}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Display Size</td>
+                                            <td th:text="${realSize[0]} + ' X ' + ${realSize[1]}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rotation</td>
+                                            <td th:text="${rotation}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>BootLoader</td>
+                                            <td th:text="${bootLoader}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Build Brand</td>
+                                            <td th:text="${buildBrand}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CPU_ABI</td>
+                                            <td th:text="${CPU_ABI}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CPU_ABI2</td>
+                                            <td th:text="${CPU_ABI2}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Display Firmware</td>
+                                            <td th:text="${buildDisplay}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>TWRP</td>
+                                            <td th:text="${TWRP}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Model</td>
+                                            <td th:text="${model}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>MainBoard</td>
+                                            <td th:text="${board}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="deviceFeatures" class="tab-pane fade">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Value</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Device Features</td>
+                                            <td>
+                                                <p th:each="item : ${deviceFeatures}" th:text="${item}"></p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="logcat" class="tab-pane fade">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Value</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Logcat</td>
+                                            <td>
+                                                <pre th:text="${logcat}"></pre>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

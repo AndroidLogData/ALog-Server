@@ -1,19 +1,20 @@
-# Android Log Data Server
+﻿# Android Log Data Server
 
 |  | Current Status |
 |--------|--------|
-| Travis-CI | [![Build Status](https://travis-ci.org/AndroidLogData/Logdata-Server-Spring.svg?branch=develop)](https://travis-ci.org/AndroidLogData/Logdata-Server-Spring) |
-| CircleCI | [![CircleCI](https://circleci.com/gh/AndroidLogData/Logdata-Server-Spring/tree/develop.svg?style=svg)](https://circleci.com/gh/AndroidLogData/Logdata-Server-Spring/tree/develop) |
-| Coveralls | [![Coverage Status](https://coveralls.io/repos/github/AndroidLogData/Logdata-Server-Spring/badge.svg?branch=develop)](https://coveralls.io/github/AndroidLogData/Logdata-Server-Spring?branch=develop) |
+| Travis-CI | [![Build Status](https://travis-ci.org/AndroidLogData/ALog-Server.svg?branch=develop)](https://travis-ci.org/AndroidLogData/ALog-Server) |
+| CircleCI | [![CircleCI](https://circleci.com/gh/AndroidLogData/ALog-Server/tree/develop.svg?style=svg)](https://circleci.com/gh/AndroidLogData/ALog-Server/tree/develop) |
+| Coveralls | [![Coverage Status](https://coveralls.io/repos/github/AndroidLogData/ALog-Server/badge.svg?branch=feature%2Fdashboard)](https://coveralls.io/github/AndroidLogData/ALog-Server?branch=feature%2Fdashboard) |
 
 안드로이드 로그 데이터를 관리하기 위한 서버
 
 ## Installation
-```text
-cd frontend
-npm install
+```script
+./build-script.sh
 ```
-* npm 모듈을 다운받는다
+
+* install npm module and gradle build in the script file
+* created ```backend/src/main/resources/static/react/bundle.js```
 
 ### 개발용 서버
 ```text
@@ -28,17 +29,6 @@ gradle bootRun
 * webpack-dev-server와 spring-boot서버를 동시 구동해야하기 때문에 터미널이 두개가 필요함
 * localhost:3000에 접속하면 개발용 서버에 접속할 수 있다.
 * react-hot-loader가 적용되어 있음
-
-### 배포용 빌드
-```text
-cd frontend
-npm run build
-cd ..
-cd backend
-gradle bootRun
-```
-
-* ```backend/src/main/resources/static/react/bundle.js```가 생성됨
 
 ### 서버 실행
 ```gradle

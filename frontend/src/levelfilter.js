@@ -1,14 +1,20 @@
 import React from 'react';
 import LogData from './logdata';
 
-const LevelFilter = ({match}) => {
-    let levelFilterUrl = '/logdata/filter/level/query?packagename=' + match.params.packagename + '&level=' + match.params.level;
+class LevelFilter extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <div>
-            <LogData url={levelFilterUrl}/>
-        </div>
-    );
-};
+    render() {
+        let levelFilterUrl = 'http://localhost:8081/api/log-data/filter/level/query?package-name=' + this.props.match.params.packageName + '&level=' + this.props.match.params.level;
+
+        return (
+            <div>
+                <LogData url={levelFilterUrl}/>
+            </div>
+        );
+    }
+}
 
 export default LevelFilter;

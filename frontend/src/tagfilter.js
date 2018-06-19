@@ -1,14 +1,20 @@
 import React from 'react';
 import LogData from './logdata';
 
-const TagFilter = ({match}) => {
-    let tagFilterUrl = '/logdata/filter/tag/query?packagename=' + match.params.packagename + '&tag=' + match.params.tag;
+class TagFilter extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <div>
-            <LogData url={tagFilterUrl}/>
-        </div>
-    );
-};
+    render() {
+        let tagFilterUrl = 'http://localhost:8081/api/log-data/filter/tag/query?package-name=' + this.props.match.params.packageName + '&tag=' + this.props.match.params.tag;
+
+        return (
+            <div>
+                <LogData url={tagFilterUrl}/>
+            </div>
+        );
+    }
+}
 
 export default TagFilter;

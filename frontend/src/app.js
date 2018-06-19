@@ -3,18 +3,21 @@ import LevelFilter from "./levelfilter";
 import TagFilter from "./tagfilter";
 import PackageFilter from "./packagefilter";
 import {Route} from 'react-router-dom';
-import SideMenu from './sidemenu';
-import MainPage from './main';
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <div>
-                <SideMenu/>
-                <Route exact path="/" component={MainPage}/>
-                <Route path="/logdata/filter/level/:packagename/:level" component={LevelFilter}/>
-                <Route path="/logdata/filter/tag/:packagename/:tag" component={TagFilter}/>
-                <Route path="/logdata/filter/packagename/:packagename" component={PackageFilter}/>
+                <Route path="/log-data/filter/level/:packageName/:level"
+                       component={LevelFilter}/>
+                <Route path="/log-data/filter/tag/:packageName/:tag"
+                       component={TagFilter}/>
+                <Route path="/log-data/filter/package-name/:packageName"
+                       component={PackageFilter}/>
             </div>
         );
     }
