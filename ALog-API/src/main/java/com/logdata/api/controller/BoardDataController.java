@@ -2,8 +2,10 @@ package com.logdata.api.controller;
 
 import com.logdata.api.sevice.CrashDataService;
 import com.logdata.api.sevice.LogDataService;
+import com.logdata.api.sevice.PackageNameDataService;
 import com.logdata.common.model.CrashVO;
 import com.logdata.common.model.LogDataInfoVO;
+import com.logdata.common.model.PackageNameVO;
 import com.logdata.common.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,33 +20,59 @@ import java.util.List;
 public class BoardDataController {
     private final LogDataService logDataService;
     private final CrashDataService crashDataService;
+    private final PackageNameDataService packageNameDataService;
 
     @Autowired
-    public BoardDataController(LogDataService logDataService, CrashDataService crashDataService) {
+    public BoardDataController(LogDataService logDataService, CrashDataService crashDataService, PackageNameDataService packageNameDataService) {
         this.logDataService = logDataService;
         this.crashDataService = crashDataService;
+        this.packageNameDataService = packageNameDataService;
     }
 
     @RequestMapping(value = "/log-data/detail/{query}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public LogDataInfoVO boardPageData(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
-        LogDataInfoVO logDataInfo;
+        PackageNameVO packageNameVO = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
 
-        int verbCount = this.logDataService.findByPackageNameAndLevel(packageName, "v").size();
-        int infoCount = this.logDataService.findByPackageNameAndLevel(packageName, "i").size();
-        int debugCount = this.logDataService.findByPackageNameAndLevel(packageName, "d").size();
-        int warningCount = this.logDataService.findByPackageNameAndLevel(packageName, "w").size();
-        int errorCount = this.logDataService.findByPackageNameAndLevel(packageName, "e").size();
+        for (String item : packageNameVO.getPackageNameList()) {
+            if (item.equals(packageName)) {
+                LogDataInfoVO logDataInfo;
+                HashMap<String, Integer> logCount = new HashMap<String, Integer>();
 
-        CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameOrderByTimeDesc(packageName);
-        if (crashTime == null) {
-            logDataInfo = new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount);
-        } else {
-            logDataInfo = new LogDataInfoVO(packageName, Utility.getStringTimeToLong(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount);
+                logCount.put("v", this.logDataService.findByPackageNameAndLevel(packageName, "v").size());
+                logCount.put("i", this.logDataService.findByPackageNameAndLevel(packageName, "i").size());
+                logCount.put("d", this.logDataService.findByPackageNameAndLevel(packageName, "d").size());
+                logCount.put("w", this.logDataService.findByPackageNameAndLevel(packageName, "w").size());
+                logCount.put("e", this.logDataService.findByPackageNameAndLevel(packageName, "e").size());
+
+                CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameOrderByTimeDesc(packageName);
+                if (crashTime == null) {
+                    logDataInfo = new LogDataInfoVO(packageName, null, logCount);
+                } else {
+                    logDataInfo = new LogDataInfoVO(packageName, Utility.getStringTimeToLong(crashTime.getTime()), logCount);
+                }
+
+                return logDataInfo;
+
+//                int verbCount = this.logDataService.findByPackageNameAndLevel(packageName, "v").size();
+//                int infoCount = this.logDataService.findByPackageNameAndLevel(packageName, "i").size();
+//                int debugCount = this.logDataService.findByPackageNameAndLevel(packageName, "d").size();
+//                int warningCount = this.logDataService.findByPackageNameAndLevel(packageName, "w").size();
+//                int errorCount = this.logDataService.findByPackageNameAndLevel(packageName, "e").size();
+//
+//                CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameOrderByTimeDesc(packageName);
+//                if (crashTime == null) {
+//                    logDataInfo = new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount);
+//                } else {
+//                    logDataInfo = new LogDataInfoVO(packageName, Utility.getStringTimeToLong(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount);
+//                }
+//
+//                return logDataInfo;
+            }
         }
 
-        return logDataInfo;
+        return null;
     }
 
     @RequestMapping(value = "/crash/detail/{query}", method = RequestMethod.GET, produces = "application/json")

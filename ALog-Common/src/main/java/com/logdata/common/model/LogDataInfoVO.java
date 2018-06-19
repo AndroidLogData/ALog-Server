@@ -1,5 +1,7 @@
 package com.logdata.common.model;
 
+import java.util.HashMap;
+
 public class LogDataInfoVO {
     private String packageName;
     private String recentCrashTime;
@@ -8,6 +10,7 @@ public class LogDataInfoVO {
     private int debug;
     private int warning;
     private int error;
+    private HashMap<String, Integer> logCount;
 
     public LogDataInfoVO() {}
 
@@ -19,6 +22,12 @@ public class LogDataInfoVO {
         this.debug = debug;
         this.warning = warning;
         this.error = error;
+    }
+
+    public LogDataInfoVO(String packageName, String recentCrashTime, HashMap<String, Integer> logCount) {
+        this.packageName = packageName;
+        this.recentCrashTime = recentCrashTime;
+        this.logCount = logCount;
     }
 
     public String getPackageName() {
@@ -75,6 +84,14 @@ public class LogDataInfoVO {
 
     public void setError(int error) {
         this.error = error;
+    }
+
+    public HashMap<String, Integer> getLogCount() {
+        return logCount;
+    }
+
+    public void setLogCount(HashMap<String, Integer> logCount) {
+        this.logCount = logCount;
     }
 
     @Override

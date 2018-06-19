@@ -10,60 +10,27 @@
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
             <h1 th:text="${packageName}"/>
 
-            <section class="row text-center placeholders">
-                <div class="col-sm col-md placeholder">
-                    <div class="card border-success">
-                        <div class="card-header">Verb</div>
-                        <div class="card-body text-success">
-                            <h4 class="card-title">Verb Count</h4>
-                            <p class="card-text" th:text="${logDataInfoOfPackageName.getVerb()}"/>
+            <div class="row" style="margin-bottom: 1%">
+                <div class="col-sm col-md">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Log Information</h3>
+                        </div>
+                        <div id="container1" style="width: 75%;">
+                            <canvas id="logInfo"/>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm col-md placeholder">
-                    <div class="card border-info">
-                        <div class="card-header">Info</div>
-                        <div class="card-body text-info">
-                            <h4 class="card-title">Info Count</h4>
-                            <p class="card-text" th:text="${logDataInfoOfPackageName.getInfo()}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm col-md placeholder">
-                    <div class="card border-primary">
-                        <div class="card-header">Debug</div>
-                        <div class="card-body text-primary">
-                            <h4 class="card-title">Debug Count</h4>
-                            <p class="card-text" th:text="${logDataInfoOfPackageName.getDebug()}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm col-md placeholder">
-                    <div class="card border-warning">
-                        <div class="card-header">Warning</div>
-                        <div class="card-body text-warning">
-                            <h4 class="card-title">Warning Count</h4>
-                            <p class="card-text" th:text="${logDataInfoOfPackageName.getWarning()}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm col-md placeholder">
-                    <div class="card border-danger">
-                        <div class="card-header">Error</div>
-                        <div class="card-body text-danger">
-                            <h4 class="card-title">Danger Count</h4>
-                            <p class="card-text" th:text="${logDataInfoOfPackageName.getError()}"/>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <div class="card" style="width: 50%; margin-bottom: 1%">
-                <div class="card-header">
-                    <h3>Crash Information</h3>
-                </div>
-                <div id="container" style="width: 75%;">
-                    <canvas id="canvas"/>
+                <div class="col-sm col-md">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Crash Information</h3>
+                        </div>
+                        <div id="container2" style="width: 75%;">
+                            <canvas id="crashInfo"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -71,12 +38,24 @@
 </div>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var color = Chart.helpers.color;
-    var barChartData = {
+    let logDataColor = Chart.helpers.color;
+    let logChartData = {
+        labels: /*[[${logDataInfoOfPackageName.logCount.keySet()}]]*/,
+        datasets: [{
+            label: 'Count',
+            backgroundColor: logDataColor(window.chartColors.red).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: /*[[${logDataInfoOfPackageName.logCount.values()}]]*/
+        }]
+    };
+
+    let crashDataColor = Chart.helpers.color;
+    let crashChartData = {
         labels: /*[[${crashList.keySet()}]]*/,
         datasets: [{
-            label: 'Crash Count',
-            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+            label: 'Count',
+            backgroundColor: crashDataColor(window.chartColors.red).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,
             data: /*[[${crashList.values()}]]*/
@@ -84,10 +63,43 @@
     };
 
     window.onload = function () {
-        var ctx = document.getElementById("canvas").getContext("2d");
-        window.myBar = new Chart(ctx, {
+        let ctx1 = document.getElementById("logInfo").getContext("2d");
+        window.myBar = new Chart(ctx1, {
             type: 'bar',
-            data: barChartData,
+            data: logChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Log Information'
+                },
+                scales: {
+                    yAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,132,0.2)"
+                        },
+                        ticks: {
+                            min: 0,
+                            callback: function (value, index, values) {
+                                if (Math.floor(value) === value) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+
+        let ctx2 = document.getElementById("crashInfo").getContext("2d");
+        window.myBar = new Chart(ctx2, {
+            type: 'bar',
+            data: crashChartData,
             options: {
                 responsive: true,
                 legend: {
