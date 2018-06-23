@@ -38,24 +38,24 @@
 </div>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    let logDataColor = Chart.helpers.color;
+    let color = Chart.helpers.color;
+
     let logChartData = {
         labels: /*[[${logDataInfoOfPackageName.logCount.keySet()}]]*/,
         datasets: [{
-            label: 'Count',
-            backgroundColor: logDataColor(window.chartColors.red).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.red,
+            label: "Count",
+            backgroundColor: [window.chartColors.blue, window.chartColors.red, window.chartColors.green, window.chartColors.yellow, window.chartColors.grey],
+            borderColor: [window.chartColors.blue, window.chartColors.red, window.chartColors.green, window.chartColors.yellow, window.chartColors.grey],
             borderWidth: 1,
             data: /*[[${logDataInfoOfPackageName.logCount.values()}]]*/
         }]
     };
 
-    let crashDataColor = Chart.helpers.color;
     let crashChartData = {
         labels: /*[[${crashList.keySet()}]]*/,
         datasets: [{
             label: 'Count',
-            backgroundColor: crashDataColor(window.chartColors.red).alpha(0.5).rgbString(),
+            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,
             data: /*[[${crashList.values()}]]*/
@@ -70,10 +70,11 @@
             options: {
                 responsive: true,
                 legend: {
-                    position: 'top',
+                    display: false,
+                    position: 'right',
                 },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Log Information'
                 },
                 scales: {
@@ -103,10 +104,11 @@
             options: {
                 responsive: true,
                 legend: {
+                    display: false,
                     position: 'top',
                 },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Crash Information'
                 },
                 scales: {
