@@ -44,8 +44,20 @@
         labels: /*[[${logDataInfoOfPackageName.logCount.keySet()}]]*/,
         datasets: [{
             label: "Count",
-            backgroundColor: [window.chartColors.blue, window.chartColors.red, window.chartColors.green, window.chartColors.yellow, window.chartColors.grey],
-            borderColor: [window.chartColors.blue, window.chartColors.red, window.chartColors.green, window.chartColors.yellow, window.chartColors.grey],
+            backgroundColor: [
+                color(window.chartColors.blue).alpha(0.5).rgbString(),
+                color(window.chartColors.red).alpha(0.5).rgbString(),
+                color(window.chartColors.green).alpha(0.5).rgbString(),
+                color(window.chartColors.yellow).alpha(0.5).rgbString(),
+                color(window.chartColors.grey).alpha(0.5).rgbString()
+            ],
+            borderColor: [
+                color(window.chartColors.blue).alpha(0.5).rgbString(),
+                color(window.chartColors.red).alpha(0.5).rgbString(),
+                color(window.chartColors.green).alpha(0.5).rgbString(),
+                color(window.chartColors.yellow).alpha(0.5).rgbString(),
+                color(window.chartColors.grey).alpha(0.5).rgbString()
+            ],
             borderWidth: 1,
             data: /*[[${logDataInfoOfPackageName.logCount.values()}]]*/
         }]
@@ -56,7 +68,7 @@
         datasets: [{
             label: 'Count',
             backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.red,
+            borderColor: color(window.chartColors.red).alpha(0.5).rgbString(),
             borderWidth: 1,
             data: /*[[${crashList.values()}]]*/
         }]
