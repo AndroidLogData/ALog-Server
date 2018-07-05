@@ -54,21 +54,6 @@ public class BoardDataController {
                 }
 
                 return logDataInfo;
-
-//                int verbCount = this.logDataService.findByPackageNameAndLevel(packageName, "v").size();
-//                int infoCount = this.logDataService.findByPackageNameAndLevel(packageName, "i").size();
-//                int debugCount = this.logDataService.findByPackageNameAndLevel(packageName, "d").size();
-//                int warningCount = this.logDataService.findByPackageNameAndLevel(packageName, "w").size();
-//                int errorCount = this.logDataService.findByPackageNameAndLevel(packageName, "e").size();
-//
-//                CrashVO crashTime = this.crashDataService.findCrashVOByPackageNameOrderByTimeDesc(packageName);
-//                if (crashTime == null) {
-//                    logDataInfo = new LogDataInfoVO(packageName, null, verbCount, infoCount, debugCount, warningCount, errorCount);
-//                } else {
-//                    logDataInfo = new LogDataInfoVO(packageName, Utility.getStringTimeToLong(crashTime.getTime()), verbCount, infoCount, debugCount, warningCount, errorCount);
-//                }
-//
-//                return logDataInfo;
             }
         }
 
@@ -79,21 +64,28 @@ public class BoardDataController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public HashMap<String, Integer> boardPageCrashDataList(@RequestHeader(value = "apiKey") String apiKey, @RequestParam(value = "package-name") String packageName) {
-        List<CrashVO> crashList = this.crashDataService.findByPackageNameOrderByTimeDesc(packageName);
-        HashMap<String, Integer> result = new HashMap<String, Integer>();
+        PackageNameVO packageNameVO = this.packageNameDataService.findPackageNameVOByApiKey(apiKey);
 
-        for (CrashVO aCrashList : crashList) {
-            String crashName = Utility.findCrashName(aCrashList.getLogcat());
+        for (String item : packageNameVO.getPackageNameList()) {
+            if (item.equals(packageName)) {
+                List<CrashVO> crashList = this.crashDataService.findByPackageNameOrderByTimeDesc(item);
+                HashMap<String, Integer> result = new HashMap<String, Integer>();
 
-            if (result.get(crashName) == null) {
-                result.put(crashName, 1);
-            } else {
-                int count = result.get(crashName);
-                result.put(crashName, ++count);
+                for (CrashVO aCrashList : crashList) {
+                    String crashName = Utility.findCrashName(aCrashList.getLogcat());
+
+                    if (result.get(crashName) == null) {
+                        result.put(crashName, 1);
+                    } else {
+                        int count = result.get(crashName);
+                        result.put(crashName, ++count);
+                    }
+                }
+
+                return result;
             }
         }
-
-        return result;
+        return null;
     }
 }
 
