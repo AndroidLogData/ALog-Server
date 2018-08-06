@@ -10,17 +10,19 @@ public class LogVO {
     private Object message;
     private long time;
     private Map<String, Object> memoryInfo;
+    private Map<String, Object> deviceInfo;
 
     public LogVO() {
     }
 
-    public LogVO(String packageName, String level, String tag, Object message, long time, Map<String, Object> memoryInfo) {
+    public LogVO(String packageName, String level, String tag, Object message, long time, Map<String, Object> memoryInfo, Map<String, Object> deviceInfo) {
         this.packageName = packageName;
         this.level = level;
         this.tag = tag;
         this.message = message;
         this.time = time;
         this.memoryInfo = memoryInfo;
+        this.deviceInfo = deviceInfo;
     }
 
     public String getPackageName() {
@@ -71,6 +73,14 @@ public class LogVO {
         this.memoryInfo = memoryInfo;
     }
 
+    public Map<String, Object> getDeviceInfo() {
+        return deviceInfo;
+    }
+
+    public void setDeviceInfo(Map<String, Object> deviceInfo) {
+        this.deviceInfo = deviceInfo;
+    }
+
     @Override
     public String toString() {
         return "{\"packageName\":\"" + getPackageName() + "\"," +
@@ -78,6 +88,7 @@ public class LogVO {
                 "\"Tag\":\"" + getTag() + "\"," +
                 "\"Message\":\"" + getMessage() + "\"," +
                 "\"Time\":" + getTime() + "," +
-                "\"MemoryInfo\":" + getMemoryInfo() + "}";
+                "\"MemoryInfo\":" + getMemoryInfo() +
+                "\"DeviceInfo\":" + getDeviceInfo() + "}";
     }
 }

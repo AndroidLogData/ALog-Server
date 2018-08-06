@@ -47,7 +47,7 @@ public class LogDataControllerTest {
 
     @Before
     public void setUp() throws JsonProcessingException {
-        LogVO logData = new LogVO("android3", "v", "MainActivity", "Hello", 1L, null);
+        LogVO logData = new LogVO("android3", "v", "MainActivity", "Hello", 1L, null, null);
         logDataList = new ArrayList<>();
         logDataList.add(logData);
 
@@ -201,6 +201,6 @@ public class LogDataControllerTest {
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":\"android3\",\"level\":\"v\",\"tag\":\"MainActivity\",\"message\":\"Hello\",\"time\":1,\"memoryInfo\":null}]");
+        assertThat(response.getContentAsString()).isEqualTo("[{\"packageName\":\"android3\",\"level\":\"v\",\"tag\":\"MainActivity\",\"message\":\"Hello\",\"time\":1,\"memoryInfo\":null, \"deviceInfo\":null}]");
     }
 }

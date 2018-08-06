@@ -62,7 +62,8 @@ public class LogDataController {
                         data.getTag(),
                         data.getMessage(),
                         data.getTime(),
-                        data.getMemoryInfo()
+                        data.getMemoryInfo(),
+                        data.getDeviceInfo()
                 )
         );
 
